@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN" xmlns="http://logging.apache.org/log4j/2.0/config">
+
+    <!-- Definition of a console appender -->
+    <Appenders>
+        <Console name="console" target="SYSTEM_OUT">
+            <PatternLayout>
+                <pattern>%highlight{%d{yyyy-MM-dd HH:mm:ss,SSS} %-5p %c{1}:%L - %m%n}</pattern>
+            </PatternLayout>
+        </Console>
+
+        <!-- Definition of a file appender -->
+        <File name="file" fileName="logs/mylogfile.log">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss,SSS} %-5p %c{1}:%L - %m%n" />
+        </File>
+    </Appenders>
+
+    <!-- Definition of the root logger -->
+    <Loggers>
+        <Root level="debug">
+            <AppenderRef ref="console" />
+            <AppenderRef ref="file" />
+        </Root>
+    </Loggers>
+
+</Configuration>
