@@ -16,7 +16,7 @@ import services.UtenteService;
 @WebServlet("/login")
 public class LoginServlet extends HttpServlet {
 
-    private static final long serialVersionUID = 1 ;
+   // private static final long serialVersionUID = 1 ;
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
