@@ -10,36 +10,21 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-//import model.Bean.UtenteBean;
-//import model.Dao.UtenteDao;
 import services.UtenteService;
-
-
-
 
 @WebServlet("/login")
 public class LoginServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1 ;
 
-   /*  private UtenteDao utenteDao;
-
-    public void init() {
-        utenteDao = new UtenteDao();
-    }*/
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
 
         String email = request.getParameter("email");
         String password = request.getParameter("password");
-        //UtenteBean utenteBean = new UtenteBean();
         UtenteService utenteService = new UtenteService();
-        //utenteBean.setEmail(email);
-        //utenteBean.setPassword(password);
-
-        //String resultUtente = utenteService.loginUtente(email,password);
-
+   
         try {
 
             String resultUtente = utenteService.loginUtente(email,password);
