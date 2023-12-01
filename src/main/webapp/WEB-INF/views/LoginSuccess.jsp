@@ -8,7 +8,7 @@
 <title>Insert title here</title>
 </head>
 <body>
- <div align="center">
+ <div textalign="center">
   <h1>You have logined successfully</h1>
  </div>
 </body>
