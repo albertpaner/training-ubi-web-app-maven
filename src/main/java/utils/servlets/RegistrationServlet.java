@@ -1,6 +1,7 @@
 package utils.servlets;
 
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 
 import javax.servlet.ServletException;
@@ -22,17 +23,31 @@ public class RegistrationServlet extends HttpServlet {
 
         String email = request.getParameter("email");
         String password = request.getParameter("password");
+        int ruoloId = Integer.parseInt(request.getParameter("ruoloId"));
+        String nome = request.getParameter("nome");
+        String cognome = request.getParameter("cognome");
+        int responsabileId = Integer.parseInt(request.getParameter("responsabileId"));
+        String societaOp = request.getParameter("societaOp");
+        String mansione = request.getParameter("mansione");
+        String ambito = request.getParameter("ambito");
+        String jobFam = request.getParameter("jobFam");
+        String subFam = request.getParameter("subFam");
+        String stdJob = request.getParameter("stdJob");
+        String jobLevel = request.getParameter("jobLevel");
+
         UtenteService utenteService = new UtenteService();
 
         try {
-            if (utenteService.registrazioneUtente(email, password) != -1) {
-                response.sendRedirect("registerSuccess.jsp");
+            if (utenteService.registrazioneUtente(email, password, ruoloId, nome, cognome, responsabileId, societaOp, mansione, ambito, jobFam, subFam, stdJob, jobLevel) != -1) {
+                response.sendRedirect("RegisterSuccess.jsp");
             } else {
-                response.sendRedirect("register.jsp");
+                response.sendRedirect("Register.jsp");
             }
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
     }
