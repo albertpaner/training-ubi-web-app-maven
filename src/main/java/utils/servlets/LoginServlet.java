@@ -1,6 +1,7 @@
 package utils.servlets;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.SQLException;
 
 import javax.servlet.ServletException;
@@ -16,7 +17,6 @@ import services.UtenteService;
 public class LoginServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1 ;
-
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
@@ -36,7 +36,6 @@ public class LoginServlet extends HttpServlet {
             } 
             
             else {
-
                 //HttpSession session = request.getSession();
                 //session.setAttribute("user", username);
                 response.sendRedirect("login.jsp");
@@ -51,5 +50,8 @@ public class LoginServlet extends HttpServlet {
         catch (SQLException e) {
             e.printStackTrace();
         }
+        
+    
     }
+   
 }

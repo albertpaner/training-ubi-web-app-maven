@@ -39,9 +39,9 @@ public class RegistrationServlet extends HttpServlet {
 
         try {
             if (utenteService.registrazioneUtente(email, password, ruoloId, nome, cognome, responsabileId, societaOp, mansione, ambito, jobFam, subFam, stdJob, jobLevel) != -1) {
-                response.sendRedirect("RegisterSuccess.jsp");
+                response.sendRedirect("registerSuccess.jsp");
             } else {
-                response.sendRedirect("Register.jsp");
+                response.sendRedirect("register.jsp");
             }
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
