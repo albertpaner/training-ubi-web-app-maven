@@ -1,3 +1,4 @@
+
 import java.io.FileInputStream;
 import java.io.File;
 import java.io.IOException;
@@ -48,7 +49,7 @@ public class UserServlet extends HttpServlet {
         }
 
         request.setAttribute("users", utenti);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/listUser.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("listUser.jsp");
         dispatcher.forward(request, response);
     }
 }
