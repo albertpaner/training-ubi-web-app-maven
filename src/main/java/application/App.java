@@ -14,7 +14,7 @@ public class App {
 
     public static void main(String args[]) throws NoSuchAlgorithmException, ClassNotFoundException, SQLException {
 	UtenteDao u = new UtenteDao();
-	System.out.println(u.findAllV());
+	System.out.println(u.findAllValutatoriCounts());
 	/* 
 	System.out.println("Welcome to the new Maven Project!");
 	System.setProperty("log4j.configurationFile", "src/main/resources/log4j.xml");

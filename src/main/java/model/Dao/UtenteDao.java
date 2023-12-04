@@ -172,7 +172,7 @@ public class UtenteDao {
 		conn.close();
 		return utenteBean;
 	}
-		public List<UtenteBean> findAllV() throws ClassNotFoundException, SQLException {
+		public List<UtenteBean> findAllValutatori() throws ClassNotFoundException, SQLException {
 
 		List<UtenteBean> listaUtenti = new ArrayList<>();
 
@@ -186,7 +186,6 @@ public class UtenteDao {
 				"   FROM utente \n" + //
 				"   WHERE ruolo_id = 2 \n" + //
 				"   GROUP BY valutatore_id\n" + //
-				"   HAVING COUNT(valutatore_id) > 5\n" + //
 				");");
 		while (rs.next()) {
 			UtenteBean utenteBean = new UtenteBean();
@@ -215,6 +214,26 @@ public class UtenteDao {
 
 		conn.close();
 		return listaUtenti;
+
+	}
+
+	public List<Integer> findAllValutatoriCounts() throws ClassNotFoundException, SQLException {
+
+		List<Integer> counts = new ArrayList<>();
+
+		Connection conn = DBConnection.createConnection();
+
+		Statement stmt = conn.createStatement();
+		ResultSet rs = stmt.executeQuery("   SELECT COUNT(valutatore_id)  AS count\n" + //
+				"   FROM utente \n" + //
+				"   WHERE ruolo_id = 2 \n" + //
+				"   GROUP BY valutatore_id;");
+		while (rs.next()) {
+			counts.add(Integer.valueOf(rs.getInt("count")));
+		}
+
+		conn.close();
+		return counts;
 
 	}
 
