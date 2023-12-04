@@ -7,12 +7,15 @@ import java.sql.SQLException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import model.Dao.UtenteDao;
 import utils.DBConnection;
 
 public class App {
 
     public static void main(String args[]) throws NoSuchAlgorithmException, ClassNotFoundException, SQLException {
-
+	UtenteDao u = new UtenteDao();
+	System.out.println(u.findAllV());
+	/* 
 	System.out.println("Welcome to the new Maven Project!");
 	System.setProperty("log4j.configurationFile", "src/main/resources/log4j.xml");
 	Logger logMain = LogManager.getLogger("main");
@@ -27,10 +30,11 @@ public class App {
 	 * Hasher.hashSaltPassword(bobPswd); logMain.info("Hashed password: " +
 	 * hashedPswd + " for user: Bob");
 	 */
-
+	/*
 	Connection conn = DBConnection.createConnection();
 	logMain.info("coonection stabilita" + conn);
 	conn.close();
+	*/
     }
 
 }
