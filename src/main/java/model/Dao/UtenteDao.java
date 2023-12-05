@@ -28,7 +28,7 @@ public class UtenteDao {
 	    utenteBean.setRuoloId(rs.getInt("ruolo_id"));
 	    utenteBean.setNome(rs.getString("nome"));
 	    utenteBean.setCognome(rs.getString("cognome"));
-	    utenteBean.setResposabileId(rs.getInt("responsabile_id"));
+	    utenteBean.setValutatoreId(rs.getInt("responsabile_id"));
 	    utenteBean.setSocietaOp(rs.getString("societa_op"));
 	    utenteBean.setMansione(rs.getString("mansione"));
 	    utenteBean.setAmbito(rs.getString("ambito"));
@@ -65,7 +65,7 @@ public class UtenteDao {
 	    utenteBean.setRuoloId(rs.getInt("ruolo_id"));
 	    utenteBean.setNome(rs.getString("nome"));
 	    utenteBean.setCognome(rs.getString("cognome"));
-	    utenteBean.setResposabileId(rs.getInt("responsabile_id"));
+	    utenteBean.setValutatoreId(rs.getInt("responsabile_id"));
 	    utenteBean.setSocietaOp(rs.getString("societa_op"));
 	    utenteBean.setMansione(rs.getString("mansione"));
 	    utenteBean.setAmbito(rs.getString("ambito"));
@@ -84,7 +84,7 @@ public class UtenteDao {
 
     }
 
-    public int create(String email, String password, int ruoloId, String nome, String cognome, int resposabileId,
+    public int create(String email, String password, int ruoloId, String nome, String cognome, int valutatoreId,
 	    String societaOp, String mansione, String ambito, String jobFam, String subFam, String stdJob,
 	    String jobLevel) throws ClassNotFoundException, SQLException {
 
@@ -92,16 +92,16 @@ public class UtenteDao {
 
 	Statement stmt = conn.createStatement();
 	int rs = stmt.executeUpdate(
-		"INSERT INTO utente (email, password, ruolo_id, nome, cognome, responsabile_id, societa_op, mansione, ambito, job_fam, sub_fam, std_job, job_level) VALUES ('"
+		"INSERT INTO utente (email, password, ruolo_id, nome, cognome, valutatore_id, societa_op, mansione, ambito, job_fam, sub_fam, std_job, job_level) VALUES ('"
 			+ email + "', '" + password + "', " + ruoloId + ", '" + nome + "', '" + cognome + "', "
-			+ resposabileId + ", '" + societaOp + "', '" + mansione + "', '" + ambito + "', '" + jobFam
+			+ valutatoreId + ", '" + societaOp + "', '" + mansione + "', '" + ambito + "', '" + jobFam
 			+ "', '" + subFam + "', '" + stdJob + "', '" + jobLevel + "')");
 
 	conn.close();
 	return rs;
     }
 
-    public int update(String email, String password, int ruoloId, String nome, String cognome, int resposabileId,
+    public int update(String email, String password, int ruoloId, String nome, String cognome, int valutatoreId,
 	    String societaOp, String mansione, String ambito, String jobFam, String subFam, String stdJob,
 	    String jobLevel, int utenteId) throws ClassNotFoundException, SQLException {
 
@@ -110,7 +110,7 @@ public class UtenteDao {
 	Statement stmt = conn.createStatement();
 	int rs = stmt.executeUpdate("UPDATE utente SET email = '" + email + "', password = '" + password
 		+ "', ruolo_id = " + ruoloId + ", nome = '" + nome + "', cognome = '" + cognome
-		+ "', responsabile_id = " + resposabileId + ", societa_op = '" + societaOp + "', mansione = '"
+		+ "', valutatore_id = " + valutatoreId + ", societa_op = '" + societaOp + "', mansione = '"
 		+ mansione + "', ambito = '" + ambito + "', job_fam = '" + jobFam + "', sub_fam = '" + subFam
 		+ "', std_job = '" + stdJob + "', job_level = '" + jobLevel + "' WHERE utente_id = " + utenteId);
 
@@ -155,7 +155,7 @@ public class UtenteDao {
 	    utenteFound.setRuoloId(rs.getInt("ruolo_id"));
 	    utenteFound.setNome(rs.getString("nome"));
 	    utenteFound.setCognome(rs.getString("cognome"));
-	    utenteFound.setResposabileId(rs.getInt("responsabile_id"));
+	    utenteFound.setValutatoreId(rs.getInt("responsabile_id"));
 	    utenteFound.setSocietaOp(rs.getString("societa_op"));
 	    utenteFound.setMansione(rs.getString("mansione"));
 	    utenteFound.setAmbito(rs.getString("ambito"));
@@ -172,5 +172,73 @@ public class UtenteDao {
 	conn.close();
 	return utenteFound;
     }
+    
+public List <UtenteBean> findVal5 () throws ClassNotFoundException, SQLException {
+    	
+    	List<UtenteBean> valutatori5 = new ArrayList<>();
+    	
+    	
+    	Connection conn = DBConnection.createConnection();
+    	Statement stmt = conn.createStatement();
+    	ResultSet rs = stmt.executeQuery(
+    			
+    			"SELECT user_id, nome, cognome, email FROM utente WHERE utente_id IN (" +
+    					"SELECT valutatore_id" +
+    					"FROM utente WHERE ruolo_id = 2" +
+    			        "GROUP BY valutatore_id" +
+    			        "HAVING COUNT(valutatore_id) >= 5);" 	
+    			);
+    	
+    	while(rs.next()) {
+    		
+    		UtenteBean utenteBean = new UtenteBean();
+    		utenteBean.setUtenteId(rs.getInt("valutatore_id"));
+    		utenteBean.setEmail(rs.getString("email"));
+    		utenteBean.setNome(rs.getString("nome"));
+    		utenteBean.setCognome(rs.getString("cognome"));
+    		
+    		valutatori5.add(utenteBean);
+    		
+    	}
+    	
+    	conn.close();
+    	return valutatori5;
+
+    }
+
+public List <UtenteBean> findValDisp() throws ClassNotFoundException, SQLException {
+	
+	List<UtenteBean> valutatoriDisp = new ArrayList<>();
+	
+	
+	Connection conn = DBConnection.createConnection();
+	Statement stmt = conn.createStatement();
+	ResultSet rs = stmt.executeQuery(
+			
+			"SELECT user_id, nome, cognome, email FROM utente WHERE utente_id IN (" +
+					"SELECT valutatore_id" +
+					"FROM utente WHERE ruolo_id = 2" +
+			        "GROUP BY valutatore_id" +
+			        "HAVING COUNT(valutatore_id) < 5);" 		
+			
+		);
+	
+	while(rs.next()) {
+		
+		UtenteBean utenteBean = new UtenteBean();
+		utenteBean.setUtenteId(rs.getInt("valutatore_id"));
+		utenteBean.setEmail(rs.getString("email"));
+		utenteBean.setNome(rs.getString("nome"));
+		utenteBean.setCognome(rs.getString("cognome"));
+		
+		valutatoriDisp.add(utenteBean);
+		
+	}
+	
+	conn.close();
+	return valutatoriDisp;
+
+}
+
 
 }
