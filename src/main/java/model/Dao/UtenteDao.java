@@ -184,7 +184,7 @@ public List <UtenteBean> findVal5 () throws ClassNotFoundException, SQLException
     			
     			"SELECT user_id, nome, cognome, email FROM utente WHERE utente_id IN (" +
     					"SELECT valutatore_id" +
-    					"FROM utente WHERE ruolo_id = 2" +
+    					"FROM utente WHERE ruolo_id = 1" +
     			        "GROUP BY valutatore_id" +
     			        "HAVING COUNT(valutatore_id) >= 5);" 	
     			);
@@ -198,7 +198,7 @@ public List <UtenteBean> findVal5 () throws ClassNotFoundException, SQLException
     		utenteBean.setCognome(rs.getString("cognome"));
     		
     		valutatori5.add(utenteBean);
-    		
+    		 
     	}
     	
     	conn.close();
@@ -217,21 +217,21 @@ public List <UtenteBean> findValDisp() throws ClassNotFoundException, SQLExcepti
 			
 			"SELECT user_id, nome, cognome, email FROM utente WHERE utente_id IN (" +
 					"SELECT valutatore_id" +
-					"FROM utente WHERE ruolo_id = 2" +
+					"FROM utente WHERE ruolo_id = 1" +
 			        "GROUP BY valutatore_id" +
 			        "HAVING COUNT(valutatore_id) < 5);" 		
 			
 		);
 	
 	while(rs.next()) {
-		
+		  
 		UtenteBean utenteBean = new UtenteBean();
 		utenteBean.setUtenteId(rs.getInt("valutatore_id"));
 		utenteBean.setEmail(rs.getString("email"));
 		utenteBean.setNome(rs.getString("nome"));
 		utenteBean.setCognome(rs.getString("cognome"));
 		
-		valutatoriDisp.add(utenteBean);
+		valutatoriDisp.add(utenteBean);           //WEWE
 		
 	}
 	
