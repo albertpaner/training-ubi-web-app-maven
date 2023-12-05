@@ -9,7 +9,7 @@ public class UtenteBean {
     private int ruoloId;
     private String nome;
     private String cognome;
-    private int resposabileId;
+    private int valutatoreId;
     private String societaOp;
     private String mansione;
     private String ambito;
@@ -22,157 +22,315 @@ public class UtenteBean {
     private Date dataCreaz;
     private boolean flgDel;
 
+   
+    
+
+
     public int getUtenteId() {
-	return utenteId;
+        return utenteId;
     }
+
+
+
+
 
     public void setUtenteId(int utenteId) {
-	this.utenteId = utenteId;
+        this.utenteId = utenteId;
     }
+
+
+
+
 
     public String getEmail() {
-	return email;
+        return email;
     }
+
+
+
+
 
     public void setEmail(String email) {
-	this.email = email;
+        this.email = email;
     }
+
+
+
+
 
     public String getPassword() {
-	return password;
+        return password;
     }
+
+
+
+
 
     public void setPassword(String password) {
-	this.password = password;
+        this.password = password;
     }
+
+
+
+
 
     public int getRuoloId() {
-	return ruoloId;
+        return ruoloId;
     }
+
+
+
+
 
     public void setRuoloId(int ruoloId) {
-	this.ruoloId = ruoloId;
+        this.ruoloId = ruoloId;
     }
+
+
+
+
 
     public String getNome() {
-	return nome;
+        return nome;
     }
+
+
+
+
 
     public void setNome(String nome) {
-	this.nome = nome;
+        this.nome = nome;
     }
+
+
+
+
 
     public String getCognome() {
-	return cognome;
+        return cognome;
     }
+
+
+
+
 
     public void setCognome(String cognome) {
-	this.cognome = cognome;
+        this.cognome = cognome;
     }
 
-    public int getResposabileId() {
-	return resposabileId;
+
+
+
+
+    public int getValutatoreId() {
+        return valutatoreId;
     }
 
-    public void setResposabileId(int resposabileId) {
-	this.resposabileId = resposabileId;
+
+
+
+
+    public void setValutatoreId(int i) {
+        this.valutatoreId = i;
     }
+
+
+
+
 
     public String getSocietaOp() {
-	return societaOp;
+        return societaOp;
     }
+
+
+
+
 
     public void setSocietaOp(String societaOp) {
-	this.societaOp = societaOp;
+        this.societaOp = societaOp;
     }
+
+
+
+
 
     public String getMansione() {
-	return mansione;
+        return mansione;
     }
+
+
+
+
 
     public void setMansione(String mansione) {
-	this.mansione = mansione;
+        this.mansione = mansione;
     }
+
+
+
+
 
     public String getAmbito() {
-	return ambito;
+        return ambito;
     }
+
+
+
+
 
     public void setAmbito(String ambito) {
-	this.ambito = ambito;
+        this.ambito = ambito;
     }
+
+
+
+
 
     public String getJobFam() {
-	return jobFam;
+        return jobFam;
     }
+
+
+
+
 
     public void setJobFam(String jobFam) {
-	this.jobFam = jobFam;
+        this.jobFam = jobFam;
     }
+
+
+
+
 
     public String getSubFam() {
-	return subFam;
+        return subFam;
     }
+
+
+
+
 
     public void setSubFam(String subFam) {
-	this.subFam = subFam;
+        this.subFam = subFam;
     }
+
+
+
+
 
     public String getStdJob() {
-	return stdJob;
+        return stdJob;
     }
+
+
+
+
 
     public void setStdJob(String stdJob) {
-	this.stdJob = stdJob;
+        this.stdJob = stdJob;
     }
+
+
+
+
 
     public String getJobLevel() {
-	return jobLevel;
+        return jobLevel;
     }
+
+
+
+
 
     public void setJobLevel(String jobLevel) {
-	this.jobLevel = jobLevel;
+        this.jobLevel = jobLevel;
     }
+
+
+
+
 
     public Date getDataUltAcc() {
-	return dataUltAcc;
+        return dataUltAcc;
     }
+
+
+
+
 
     public void setDataUltAcc(Date dataUltAcc) {
-	this.dataUltAcc = dataUltAcc;
+        this.dataUltAcc = dataUltAcc;
     }
+
+
+
+
 
     public Date getDataUltMod() {
-	return dataUltMod;
+        return dataUltMod;
     }
+
+
+
+
 
     public void setDataUltMod(Date dataUltMod) {
-	this.dataUltMod = dataUltMod;
+        this.dataUltMod = dataUltMod;
     }
+
+
+
+
 
     public Date getDataCreaz() {
-	return dataCreaz;
+        return dataCreaz;
     }
+
+
+
+
 
     public void setDataCreaz(Date dataCreaz) {
-	this.dataCreaz = dataCreaz;
+        this.dataCreaz = dataCreaz;
     }
+
+
+
+
 
     public boolean isFlgDel() {
-	return flgDel;
+        return flgDel;
     }
+
+
+
+
 
     public void setFlgDel(boolean flgDel) {
-	this.flgDel = flgDel;
+        this.flgDel = flgDel;
     }
 
-    @Override
-    public String toString() {
-        return "UtenteBean [utente_id=" + utenteId + ", email=" + email + ", password=" + password + ", ruolo_id=" + ruoloId + ", nome=" + nome + ", cognome=" + cognome + ", resposabile_id=" + resposabileId + ", societa_op=" + societaOp + ", mansione=" + mansione + ", ambito=" + ambito + ", job_fam=" + jobFam + ", sub_fam=" + subFam + ", std_job=" + stdJob + ", job_level=" + jobLevel + ", data_ult_acc=" + dataUltAcc + ", data_ult_mod=" + dataUltMod + ", data_creaz=" + dataCreaz + ", flg_del=" + flgDel + "]";
-    }
+
+
+
 
     public boolean isUserBeanEmpty() {
         return this.getEmail().isEmpty();
     }
+
+
+
+
+
+    @Override
+    public String toString() {
+        return "UtenteBean [utenteId=" + utenteId + ", email=" + email + ", password=" + password + ", ruoloId="
+                + ruoloId + ", nome=" + nome + ", cognome=" + cognome + ", valutatoreId=" + valutatoreId
+                + ", societaOp=" + societaOp + ", mansione=" + mansione + ", ambito=" + ambito + ", jobFam=" + jobFam
+                + ", subFam=" + subFam + ", stdJob=" + stdJob + ", jobLevel=" + jobLevel + ", dataUltAcc=" + dataUltAcc
+                + ", dataUltMod=" + dataUltMod + ", dataCreaz=" + dataCreaz + ", flgDel=" + flgDel + "]";
+    }
+
+    
 
 }

@@ -18,7 +18,7 @@ public class UtenteService {
     static Logger logUser = LogManager.getLogger("user");
 
     public int registrazioneUtente(String email, String password, int ruoloId, String nome, String cognome,
-	    int responsabileId, String societaOp, String mansione, String ambito, String jobFam, String subFam,
+	    int valutatoreId, String societaOp, String mansione, String ambito, String jobFam, String subFam,
 	    String stdJob, String jobLevel) throws NoSuchAlgorithmException, ClassNotFoundException, SQLException {
 
 	UtenteDao utenteDao = new UtenteDao();
@@ -31,7 +31,7 @@ public class UtenteService {
 	String hashedPassword = Hasher.hashPassword(password);
 	// logUser.debug("Hashed password: " + hashedPassword + " for user: " + email);
 
-	int createdUser = utenteDao.create(email, hashedPassword, ruoloId, nome, cognome, responsabileId, societaOp,
+	int createdUser = utenteDao.create(email, hashedPassword, ruoloId, nome, cognome, valutatoreId, societaOp,
 		mansione, ambito, jobFam, subFam, stdJob, jobLevel);
 
 	logUser.debug("Created user: " + nome + " " + cognome + " with email: " + email);

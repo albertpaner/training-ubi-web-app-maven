@@ -29,7 +29,11 @@ public class UtenteDao {
 			utenteBean.setRuoloId(rs.getInt("ruolo_id"));
 			utenteBean.setNome(rs.getString("nome"));
 			utenteBean.setCognome(rs.getString("cognome"));
+<<<<<<< HEAD
 			utenteBean.setResposabileId(rs.getInt("responsabile_id"));
+=======
+			utenteBean.setValutatoreId(rs.getInt("valutatore_id"));
+>>>>>>> esame/lawrence
 			utenteBean.setSocietaOp(rs.getString("societa_op"));
 			utenteBean.setMansione(rs.getString("mansione"));
 			utenteBean.setAmbito(rs.getString("ambito"));
@@ -66,7 +70,11 @@ public class UtenteDao {
 			utenteBean.setRuoloId(rs.getInt("ruolo_id"));
 			utenteBean.setNome(rs.getString("nome"));
 			utenteBean.setCognome(rs.getString("cognome"));
+<<<<<<< HEAD
 			utenteBean.setResposabileId(rs.getInt("responsabile_id"));
+=======
+			utenteBean.setValutatoreId(rs.getInt("valutatore_id"));
+>>>>>>> esame/lawrence
 			utenteBean.setSocietaOp(rs.getString("societa_op"));
 			utenteBean.setMansione(rs.getString("mansione"));
 			utenteBean.setAmbito(rs.getString("ambito"));
@@ -143,13 +151,18 @@ public class UtenteDao {
 
 	public UtenteBean findByEmail(String email) throws ClassNotFoundException, SQLException {
 
+<<<<<<< HEAD
 		UtenteBean utenteFound = new UtenteBean();
+=======
+		UtenteBean utenteBean = new UtenteBean();
+>>>>>>> esame/lawrence
 
 		Connection conn = DBConnection.createConnection();
 
 		Statement stmt = conn.createStatement();
 		ResultSet rs = stmt.executeQuery("SELECT * FROM utente WHERE email = '" + email + "'");
 		while (rs.next()) {
+<<<<<<< HEAD
 			utenteFound.setUtenteId(rs.getInt("utente_id"));
 			utenteFound.setEmail(email);
 			utenteFound.setPassword(rs.getString("password"));
@@ -176,11 +189,50 @@ public class UtenteDao {
 
 	public List<UtenteBean> findAllValutatori() throws ClassNotFoundException, SQLException {
 		List<UtenteBean> listaValutatori = new ArrayList<>();
+=======
+			utenteBean.setUtenteId(rs.getInt("utente_id"));
+			utenteBean.setEmail(email);
+			utenteBean.setPassword(rs.getString("password"));
+			utenteBean.setRuoloId(rs.getInt("ruolo_id"));
+			utenteBean.setNome(rs.getString("nome"));
+			utenteBean.setCognome(rs.getString("cognome"));
+			utenteBean.setValutatoreId(rs.getInt("valutatore_id"));
+			utenteBean.setSocietaOp(rs.getString("societa_op"));
+			utenteBean.setMansione(rs.getString("mansione"));
+			utenteBean.setAmbito(rs.getString("ambito"));
+			utenteBean.setJobFam(rs.getString("job_fam"));
+			utenteBean.setSubFam(rs.getString("sub_fam"));
+			utenteBean.setStdJob(rs.getString("std_job"));
+			utenteBean.setJobLevel(rs.getString("job_level"));
+			utenteBean.setDataUltAcc(rs.getDate("data_ult_acc"));
+			utenteBean.setDataUltMod(rs.getDate("data_ult_mod"));
+			utenteBean.setDataCreaz(rs.getDate("data_creaz"));
+			utenteBean.setFlgDel(rs.getBoolean("flg_del"));
+		}
+
+		conn.close();
+		return utenteBean;
+	}
+		public List<UtenteBean> findAllValutatori() throws ClassNotFoundException, SQLException {
+
+		List<UtenteBean> listaUtenti = new ArrayList<>();
+>>>>>>> esame/lawrence
 
 		Connection conn = DBConnection.createConnection();
 
 		Statement stmt = conn.createStatement();
+<<<<<<< HEAD
 		ResultSet rs = stmt.executeQuery("SELECT * FROM utente");
+=======
+		ResultSet rs = stmt.executeQuery("SELECT * \n" + //
+				"FROM utente \n" + //
+				"WHERE utente_id IN (\n" + //
+				"   SELECT valutatore_id \n" + //
+				"   FROM utente \n" + //
+				"   WHERE ruolo_id = 2 \n" + //
+				"   GROUP BY valutatore_id\n" + //
+				");");
+>>>>>>> esame/lawrence
 		while (rs.next()) {
 			UtenteBean utenteBean = new UtenteBean();
 			utenteBean.setUtenteId(rs.getInt("utente_id"));
@@ -189,7 +241,11 @@ public class UtenteDao {
 			utenteBean.setRuoloId(rs.getInt("ruolo_id"));
 			utenteBean.setNome(rs.getString("nome"));
 			utenteBean.setCognome(rs.getString("cognome"));
+<<<<<<< HEAD
 			utenteBean.setResposabileId(rs.getInt("responsabile_id"));
+=======
+			utenteBean.setValutatoreId(rs.getInt("valutatore_id"));
+>>>>>>> esame/lawrence
 			utenteBean.setSocietaOp(rs.getString("societa_op"));
 			utenteBean.setMansione(rs.getString("mansione"));
 			utenteBean.setAmbito(rs.getString("ambito"));
@@ -203,11 +259,39 @@ public class UtenteDao {
 			utenteBean.setFlgDel(rs.getBoolean("flg_del"));
 
 			// ci popoliamo tutto l'oggetto
+<<<<<<< HEAD
 			listaValutatori.add(utenteBean);
 		}
 
 		conn.close();
 		return listaValutatori;
+=======
+			listaUtenti.add(utenteBean);
+		}
+
+		conn.close();
+		return listaUtenti;
+
+	}
+
+	public List<Integer> findAllValutatoriCounts() throws ClassNotFoundException, SQLException {
+
+		List<Integer> counts = new ArrayList<>();
+
+		Connection conn = DBConnection.createConnection();
+
+		Statement stmt = conn.createStatement();
+		ResultSet rs = stmt.executeQuery("   SELECT COUNT(valutatore_id)  AS count\n" + //
+				"   FROM utente \n" + //
+				"   WHERE ruolo_id = 2 \n" + //
+				"   GROUP BY valutatore_id;");
+		while (rs.next()) {
+			counts.add(Integer.valueOf(rs.getInt("count")));
+		}
+
+		conn.close();
+		return counts;
+>>>>>>> esame/lawrence
 
 	}
 

@@ -21,8 +21,8 @@
         <label for="cognome"><b>Cognome</b></label>
         <input type="text" placeholder="Enter Cognome" name="cognome" required>
 
-        <label for="responsabileId"><b>Responsabile ID</b></label>
-        <input type="number" placeholder="Enter Responsabile ID" name="responsabileId" required>
+        <label for="valutatoreId"><b>Responsabile ID</b></label>
+        <input type="number" placeholder="Enter Responsabile ID" name="valutatoreId" required>
 
         <label for="societaOp"><b>Societa Op</b></label>
         <input type="text" placeholder="Enter Societa Op" name="societaOp" required>
