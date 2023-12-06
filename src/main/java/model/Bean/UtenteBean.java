@@ -58,10 +58,10 @@ public class UtenteBean {
 		this.cognome = cognome;
 	}
 	public int getValutatoreId() {
-		return ValutatoreId;
+		return valutatoreId;
 	}
 	public void setValutatoreId(int valutatoreId) {
-		ValutatoreId = valutatoreId;
+		valutatoreId = valutatoreId;
 	}
 	public String getSocietaOp() {
 		return societaOp;
@@ -130,10 +130,8 @@ public class UtenteBean {
 		this.flgDel = flgDel;
 	}
 	public boolean isUserBeanEmpty() {
-		return this.getEmail().isEmpty();
+		return this.getEmail().isEmpty() || this.getPassword().isEmpty();
 	}
-
-	
 
 
 }

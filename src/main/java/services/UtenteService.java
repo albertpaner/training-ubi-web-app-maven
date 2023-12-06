@@ -8,8 +8,8 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+//import org.apache.logging.log4j.LogManager;
+//import org.apache.logging.log4j.Logger;
 
 import model.Bean.UtenteBean;
 import model.Dao.UtenteDao;
@@ -25,7 +25,7 @@ import utils.converters.CountConverter;
 
 public class UtenteService {
 
-    static Logger logUser = LogManager.getLogger("user");
+    //static Logger logUser = LogManager.getLogger("user");
 	private UtenteDao utenteDao;
 
 	public UtenteService(UtenteDao utenteDao) {
@@ -39,7 +39,7 @@ public class UtenteService {
 	// UtenteDao utenteDao = new UtenteDao();
 
 	if (!utenteDao.findByEmail(email).isUserBeanEmpty()) {
-	    logUser.error("User already exists: " + email);
+	    //logUser.error("User already exists: " + email);
 	    return -1;
 	}
 
@@ -49,7 +49,7 @@ public class UtenteService {
 	int createdUser = utenteDao.create(email, hashedPassword, ruoloId, nome, cognome, responsabileId, societaOp,
 		mansione, ambito, jobFam, subFam, stdJob, jobLevel);
 
-	logUser.debug("Created user: " + nome + " " + cognome + " with email: " + email);
+	//logUser.debug("Created user: " + nome + " " + cognome + " with email: " + email);
 	return createdUser;
     }
 
@@ -58,7 +58,7 @@ public class UtenteService {
 	// UtenteDao utenteDao = new UtenteDao();
 
 	if (utenteDao.findByEmail(email).isUserBeanEmpty()) {
-	    logUser.error("User not found: " + email);
+	    //logUser.error("User not found: " + email);
 	    return "try again";
 	}
 
@@ -68,10 +68,10 @@ public class UtenteService {
 
 	if (utenteFound.getPassword().equals(hashedPassword)) {
 	    String jwt = EncryptJwt.issueToken(utenteFound.getUtenteId());
-	    logUser.debug("Issued token: " + jwt + " for user: " + email);
+	    //logUser.debug("Issued token: " + jwt + " for user: " + email);
 	    return jwt;
 	} else {
-	    logUser.error("Wrong password for user: " + email);
+	    //logUser.error("Wrong password for user: " + email);
 	    return "try again";
 	}
 
@@ -130,8 +130,5 @@ public HashMap<String, List<CountDto>> getEvaluators() throws ClassNotFoundExcep
 			}
 		}
 */
-
-	}
-
 
 }
