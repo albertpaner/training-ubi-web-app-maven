@@ -9,7 +9,6 @@ public class CountDto {
     private String email;
     private int count;
     
-    
 	public int getValutatoreId() {
 		return ValutatoreId;
 	}
