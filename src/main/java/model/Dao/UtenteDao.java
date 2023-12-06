@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import model.Bean.UtenteBean;
@@ -14,7 +15,8 @@ import utils.DBConnection;
 public class UtenteDao {
 	private Connection conn;
 
-	public UtenteDao() {}
+	public UtenteDao() {
+	}
 
 	public UtenteDao(Connection conn) throws ClassNotFoundException, SQLException {
 		this.conn = conn;
@@ -167,94 +169,69 @@ public class UtenteDao {
 		return utenteFound;
 	}
 
-	public List<UtenteBean> findVal5() throws SQLException {
+	public HashMap<String, List<UtenteBean>> splitEvaluators(int soglia) throws SQLException {
 
-		List<UtenteBean> valutatori5 = new ArrayList<>();
+		HashMap<String, List<UtenteBean>> resultMap = new HashMap<>();
+		List<UtenteBean> valutatoriPiu = new ArrayList<>();
+		List<UtenteBean> valutatoriMeno = new ArrayList<>();
 
 		Statement stmt = conn.createStatement();
-		ResultSet rs = stmt.executeQuery(
 
+		ResultSet rs = stmt.executeQuery(
 				"SELECT user_id, nome, cognome, email FROM utente WHERE utente_id IN (" +
 						"SELECT valutatore_id" +
 						"FROM utente WHERE ruolo_id = 1" +
 						"GROUP BY valutatore_id" +
-						"HAVING COUNT(valutatore_id) >= 5);");
+						"HAVING COUNT(valutatore_id) >= " + soglia + ");");
 
 		while (rs.next()) {
-
 			UtenteBean utenteBean = new UtenteBean();
 			utenteBean.setUtenteId(rs.getInt("valutatore_id"));
 			utenteBean.setEmail(rs.getString("email"));
 			utenteBean.setNome(rs.getString("nome"));
 			utenteBean.setCognome(rs.getString("cognome"));
-
-			valutatori5.add(utenteBean);
-
+			valutatoriPiu.add(utenteBean);
 		}
 
-		conn.close();
-		return valutatori5;
+		resultMap.put("valutatori_occupati", valutatoriPiu);
 
-	}
-
-	public List<UtenteBean> findValDisp() throws ClassNotFoundException, SQLException {
-
-		List<UtenteBean> valutatoriDisp = new ArrayList<>();
-
-		Connection conn = DBConnection.createConnection();
-		Statement stmt = conn.createStatement();
-		ResultSet rs = stmt.executeQuery(
-
+		rs = stmt.executeQuery(
 				"SELECT user_id, nome, cognome, email FROM utente WHERE utente_id IN (" +
 						"SELECT valutatore_id" +
 						"FROM utente WHERE ruolo_id = 1" +
 						"GROUP BY valutatore_id" +
-						"HAVING COUNT(valutatore_id) < 5);"
-
-		);
+						"HAVING COUNT(valutatore_id) < " + soglia + ");");
 
 		while (rs.next()) {
-
 			UtenteBean utenteBean = new UtenteBean();
 			utenteBean.setUtenteId(rs.getInt("valutatore_id"));
 			utenteBean.setEmail(rs.getString("email"));
 			utenteBean.setNome(rs.getString("nome"));
 			utenteBean.setCognome(rs.getString("cognome"));
-
-			valutatoriDisp.add(utenteBean);
-
+			valutatoriMeno.add(utenteBean);
 		}
 
-		conn.close();
-		return valutatoriDisp;
+		resultMap.put("valutatori_disponibili", valutatoriMeno);
 
+		conn.close();
+
+		return resultMap;
 	}
 
-	public List<UtenteBean> findValutatiByValutatore(int id) throws ClassNotFoundException, SQLException {
+	public int countValuedByEvaluator(int evalId) throws ClassNotFoundException, SQLException {
+		int count = 0;
 
-		List<UtenteBean> listaValutati = new ArrayList<>();
-
-		DBConnection dBConn = new DBConnection();
-		Connection conn = dBConn.createConnection();
-		PreparedStatement ps = conn.prepareStatement("SELECT nome, cognome, email"+
-		"FROM utente WHERE ruolo_id = 2 AND valutatore_id = ?");
-		ps.setFloat(1, id);
+		PreparedStatement ps = conn.prepareStatement("SELECT COUNT(*) FROM utente" +
+				"WHERE ruolo_id = 2 AND valutatore_id = ?");
+		ps.setFloat(1, evalId);
 		ResultSet rs = ps.executeQuery();
 
-		while (rs.next()) {
-
-			UtenteBean utenteBean = new UtenteBean();
-			utenteBean.setNome(rs.getString("nome"));
-			utenteBean.setCognome(rs.getString("cognome"));
-			utenteBean.setEmail(rs.getString("email"));
-
-			listaValutati.add(utenteBean);
-
+		if (rs.next()) {
+			count = rs.getInt(1);
 		}
 
 		conn.close();
-		return listaValutati;
-
+		return count;
 	}
 
 }

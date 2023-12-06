@@ -42,8 +42,8 @@ public class CountDto {
     
     @Override
 	public String toString() {
-		return " [ nome=" + nome + ", cognome=" + cognome + ", email=" + email
-				+ ", count=" + count + "]";
+		return " [ evaluator=" + nome + cognome + ", email=" + email
+				+ ", number_users_valued=" + count + "]";
 	}
     
 }

@@ -1,3 +1,4 @@
+<%@ page import = "java.util.List", "model.Dto" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,10 +13,10 @@
         </tr>
         <%
             List<CountDto> evaluatorsOccupied = request.getAttribute("valutatori_occupati");
-            for (CountDto dto : evaluatorsOccupied) {
+            for (CountDto count : evaluatorsOccupied) {
         %>
         <tr>
-            <td><%= dto.toString() %></td>
+            <td><%= count.toString() %></td>
         </tr>
         <% } %>
     </table>
@@ -27,10 +28,10 @@
         </tr>
         <%
             List<CountDto> evaluatorsFree = request.getAttribute("valutatori_disponibili");
-            for (CountDto dto : evaluatorsFree) {
+            for (CountDto count : evaluatorsFree) {
         %>
         <tr>
-            <td><%= dto.toString() %></td>
+            <td><%= count.toString() %></td>
         </tr>
         <% } %>
     </table>

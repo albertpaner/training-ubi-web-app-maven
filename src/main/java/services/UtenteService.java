@@ -79,34 +79,32 @@ public class UtenteService {
 
 	}
 
-	public HashMap<String, List<CountDto>> getEvaluators() throws ClassNotFoundException, SQLException {
+	public HashMap<String, List<CountDto>> getEvaluators() throws SQLException, ClassNotFoundException {
 		// UtenteDao utenteDao = new UtenteDao();
 
+		HashMap<String, List<UtenteBean>> usersFetched = utenteDao.splitEvaluators(5);
+		
+
+		List<UtenteBean> valutatoriOccupati = usersFetched.get("valutatori_occupati");
+		List<UtenteBean> valutatoriDisponibili = usersFetched.get("valutatori_disponibili");
+
+		List<CountDto> valutatoriOccupatiDto = new ArrayList<>();
+		for (UtenteBean utente : valutatoriOccupati) {
+			CountDto countDto = CountConverter.toDto(utente);
+			countDto.setCount(utenteDao.countValuedByEvaluator(utente.getValutatoreId()));
+			valutatoriOccupatiDto.add(countDto);
+		}
+
+		List<CountDto> valutatoriDisponibiliDto = new ArrayList<>();
+		for (UtenteBean utente : valutatoriDisponibili) {
+			CountDto countDto = CountConverter.toDto(utente);
+			countDto.setCount(utenteDao.countValuedByEvaluator(utente.getValutatoreId()));
+			valutatoriDisponibiliDto.add(countDto);
+		}
+
 		HashMap<String, List<CountDto>> usersToShow = new HashMap<>();
-
-		List<UtenteBean> utentiPiuValutati = utenteDao.findVal5();
-		List<UtenteBean> utentiMenoValutati = utenteDao.findValDisp();
-		String valutatoriOccupati = "valutatori_occupati";
-		String valutatoriDisponibili = "valutatori_disponibili";
-
-		List<CountDto> utentiPiuValutatiDto = new ArrayList<>();
-		for (UtenteBean utente : utentiPiuValutati) {
-			CountDto countDto = CountConverter.toDto(utente);
-			List<UtenteBean> utentiBeans = utenteDao.findValutatiByValutatore(utente.getValutatoreId());
-			countDto.setCount(utentiBeans.size());
-			utentiPiuValutatiDto.add(countDto);
-		}
-
-		List<CountDto> utentiMenoValutatiDto = new ArrayList<>();
-		for (UtenteBean utente : utentiMenoValutati) {
-			CountDto countDto = CountConverter.toDto(utente);
-			List<UtenteBean> utentiBeans = utenteDao.findValutatiByValutatore(utente.getValutatoreId());
-			countDto.setCount(utentiBeans.size());
-			utentiMenoValutatiDto.add(countDto);
-		}
-
-		usersToShow.put(valutatoriOccupati, utentiPiuValutatiDto);
-		usersToShow.put(valutatoriDisponibili, utentiMenoValutatiDto);
+		usersToShow.put("valutatori_occupati", valutatoriOccupatiDto);
+		usersToShow.put("valutatori_disponibili", valutatoriDisponibiliDto);
 
 		return usersToShow;
 	}
