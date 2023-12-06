@@ -89,12 +89,18 @@ public HashMap<String, List<CountDto>> getEvaluators() throws ClassNotFoundExcep
 	
 	List<CountDto> utentiPiuValutatiDto = new ArrayList<>();
 	for(UtenteBean utente : utentiPiuValutati) {
-		utentiPiuValutatiDto.add(CountConverter.toDto(utente));
+		CountDto countDto = CountConverter.toDto(utente);
+		List<UtenteBean> utentiBeans = utenteDao.findValutatiByValutatore(utente.getValutatoreId());
+		countDto.setCount(utentiBeans.size());
+		utentiPiuValutatiDto.add(countDto);
 	}
 
 	List<CountDto> utentiMenoValutatiDto = new ArrayList<>();
 	for(UtenteBean utente : utentiMenoValutati) {
-		utentiMenoValutatiDto.add(CountConverter.toDto(utente));
+		CountDto countDto = CountConverter.toDto(utente);
+		List<UtenteBean> utentiBeans = utenteDao.findValutatiByValutatore(utente.getValutatoreId());
+		countDto.setCount(utentiBeans.size());
+		utentiMenoValutatiDto.add(countDto);
 	}
 	
 	usersToShow.put(valutatoriOccupati, utentiPiuValutatiDto);
@@ -104,7 +110,7 @@ public HashMap<String, List<CountDto>> getEvaluators() throws ClassNotFoundExcep
 	return usersToShow;
 }
 
-
+/* 
 	public void rearrengeValutatori() {
 		UtenteDao utenteDao = new UtenteDao();
 		// List<UtenteBean> utentiPiuValutati = utenteDao.findAllByRole(1);
@@ -123,7 +129,7 @@ public HashMap<String, List<CountDto>> getEvaluators() throws ClassNotFoundExcep
 				utentiMenoValutati.add(0, utente);
 			}
 		}
-
+*/
 
 	}
 
