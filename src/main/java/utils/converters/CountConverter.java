@@ -10,9 +10,9 @@ public class CountConverter {
     public static CountDto toDto(UtenteBean utenteBean) {
 
         CountDto countDto = new CountDto();
+        
         countDto.setValutatoreId(utenteBean.getValutatoreId());
-        countDto.setUserEmail(utenteBean.getEmail());
-        countDto.setRoleId(utenteBean.getRuoloId());
+        countDto.setEmail(utenteBean.getEmail());
         countDto.setNome(utenteBean.getNome());
         countDto.setCognome(utenteBean.getCognome());
         

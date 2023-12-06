@@ -9,7 +9,7 @@ public class UtenteBean {
     private int ruoloId;
     private String nome;
     private String cognome;
-    private int ValutatoreId;
+    private int valutatoreId;
     private String societaOp;
     private String mansione;
     private String ambito;
