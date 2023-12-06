@@ -18,20 +18,19 @@ import javax.servlet.http.HttpServletResponse;
 import model.Dao.UtenteDao;
 import model.Dto.CountDto;
 import services.UtenteService;
+import utils.DBConnection;
 
 @WebServlet("/listuser")
 public class UserServlet extends HttpServlet {
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
 
-//new user servlet
-        UtenteDao utenteDao = new UtenteDao();
-        UtenteService utenteService = new UtenteService(utenteDao);
+        // new user servlet
         HashMap<String, List<CountDto>> evaluators = new HashMap<>();
+
         try {
-            evaluators = utenteService.getEvaluators();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (SQLException e) {
+            evaluators = new UtenteService(new UtenteDao(DBConnection.createConnection())).getEvaluators();
+        } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }
 
@@ -40,9 +39,10 @@ public class UserServlet extends HttpServlet {
 
         request.setAttribute("valutatori_occupati", evaluatorsOccupied);
         request.setAttribute("valutatori_disponibili", evaluatorsFree);
-        /* 
-        RequestDispatcher dispatcher = request.getRequestDispatcher("listUser.jsp");
-        dispatcher.forward(request, response); */
-        response.sendRedirect("listUser.jsp");
+        /*
+         * RequestDispatcher dispatcher = request.getRequestDispatcher("listUser.jsp");
+         * dispatcher.forward(request, response);
+         */
+        response.sendRedirect("listuser.jsp");
     }
 }

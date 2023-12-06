@@ -26,7 +26,7 @@ public class RegistrationServlet extends HttpServlet {
         int ruoloId = Integer.parseInt(request.getParameter("ruoloId"));
         String nome = request.getParameter("nome");
         String cognome = request.getParameter("cognome");
-        int responsabileId = Integer.parseInt(request.getParameter("responsabileId"));
+        int valutatoreId = Integer.parseInt(request.getParameter("valutatoreId"));
         String societaOp = request.getParameter("societaOp");
         String mansione = request.getParameter("mansione");
         String ambito = request.getParameter("ambito");
@@ -38,17 +38,13 @@ public class RegistrationServlet extends HttpServlet {
         UtenteService utenteService = new UtenteService();
 
         try {
-            if (utenteService.registrazioneUtente(email, password, ruoloId, nome, cognome, responsabileId, societaOp, mansione, ambito, jobFam, subFam, stdJob, jobLevel) != -1) {
+            if (utenteService.registrazioneUtente(email, password, ruoloId, nome, cognome, valutatoreId, societaOp, mansione, ambito, jobFam, subFam, stdJob, jobLevel) != -1) {
                 response.sendRedirect("registerSuccess.jsp");
             } else {
                 response.sendRedirect("register.jsp");
             }
-        } catch (ClassNotFoundException e) {
+        } catch (ClassNotFoundException | SQLException | NoSuchAlgorithmException e) {
             e.printStackTrace();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
+        }  
     }
 }

@@ -15,7 +15,7 @@ import model.Bean.UtenteBean;
 import model.Dao.UtenteDao;
 import model.Dto.CountDto;
 import model.Dto.UtenteDto;
- 
+
 import model.Bean.UtenteBean;
 import model.Dao.UtenteDao;
 import model.Dto.UtenteDto;
@@ -25,113 +25,112 @@ import utils.converters.CountConverter;
 
 public class UtenteService {
 
-    //static Logger logUser = LogManager.getLogger("user");
+	// static Logger logUser = LogManager.getLogger("user");
 	private UtenteDao utenteDao;
 
 	public UtenteService() {
 	}
 
 	public UtenteService(UtenteDao utenteDao) {
-        this.utenteDao = utenteDao;
-    }
-
-    public int registrazioneUtente(String email, String password, int ruoloId, String nome, String cognome,
-	    int responsabileId, String societaOp, String mansione, String ambito, String jobFam, String subFam,
-	    String stdJob, String jobLevel) throws NoSuchAlgorithmException, ClassNotFoundException, SQLException {
-
-	// UtenteDao utenteDao = new UtenteDao();
-
-	if (!utenteDao.findByEmail(email).isUserBeanEmpty()) {
-	    //logUser.error("User already exists: " + email);
-	    return -1;
+		this.utenteDao = utenteDao;
 	}
 
-	String hashedPassword = Hasher.hashPassword(password);
-	// logUser.debug("Hashed password: " + hashedPassword + " for user: " + email);
+	public int registrazioneUtente(String email, String password, int ruoloId, String nome, String cognome,
+			int responsabileId, String societaOp, String mansione, String ambito, String jobFam, String subFam,
+			String stdJob, String jobLevel) throws SQLException {
 
-	int createdUser = utenteDao.create(email, hashedPassword, ruoloId, nome, cognome, responsabileId, societaOp,
-		mansione, ambito, jobFam, subFam, stdJob, jobLevel);
-
-	//logUser.debug("Created user: " + nome + " " + cognome + " with email: " + email);
-	return createdUser;
-    }
-
-    public String loginUtente(String email, String password) throws ClassNotFoundException, SQLException {
-
-	// UtenteDao utenteDao = new UtenteDao();
-
-	if (utenteDao.findByEmail(email).isUserBeanEmpty()) {
-	    //logUser.error("User not found: " + email);
-	    return "try again";
-	}
-
-	UtenteBean utenteFound = utenteDao.findByEmail(email);
-
-	String hashedPassword = Hasher.hashPassword(password);
-
-	if (utenteFound.getPassword().equals(hashedPassword)) {
-	    String jwt = EncryptJwt.issueToken(utenteFound.getUtenteId());
-	    //logUser.debug("Issued token: " + jwt + " for user: " + email);
-	    return jwt;
-	} else {
-	    //logUser.error("Wrong password for user: " + email);
-	    return "try again";
-	}
-
-    }
-
-public HashMap<String, List<CountDto>> getEvaluators() throws ClassNotFoundException, SQLException {
-	// UtenteDao utenteDao = new UtenteDao();
-	
-	HashMap<String, List<CountDto>> usersToShow = new HashMap<>();
-	
-	List<UtenteBean> utentiPiuValutati = utenteDao.findVal5();
-	List<UtenteBean> utentiMenoValutati = utenteDao.findValDisp();
-	String valutatoriOccupati = "valutatori_occupati";
-	String valutatoriDisponibili = "valutatori_disponibili";
-	
-	List<CountDto> utentiPiuValutatiDto = new ArrayList<>();
-	for(UtenteBean utente : utentiPiuValutati) {
-		CountDto countDto = CountConverter.toDto(utente);
-		List<UtenteBean> utentiBeans = utenteDao.findValutatiByValutatore(utente.getValutatoreId());
-		countDto.setCount(utentiBeans.size());
-		utentiPiuValutatiDto.add(countDto);
-	}
-
-	List<CountDto> utentiMenoValutatiDto = new ArrayList<>();
-	for(UtenteBean utente : utentiMenoValutati) {
-		CountDto countDto = CountConverter.toDto(utente);
-		List<UtenteBean> utentiBeans = utenteDao.findValutatiByValutatore(utente.getValutatoreId());
-		countDto.setCount(utentiBeans.size());
-		utentiMenoValutatiDto.add(countDto);
-	}
-	
-	usersToShow.put(valutatoriOccupati, utentiPiuValutatiDto);
-	usersToShow.put(valutatoriDisponibili, utentiMenoValutatiDto);
-	
-
-	return usersToShow;
-}
-
-/* 
-	public void rearrengeValutatori() {
-		UtenteDao utenteDao = new UtenteDao();
-		// List<UtenteBean> utentiPiuValutati = utenteDao.findAllByRole(1);
-		// List<UtenteBean> utentiMenoValutati = utenteDao.findAllByRole(2);
-
-		Collections.sort(utentiPiuValutati, new Comparator<UtenteBean>() {
-			@Override
-			public int compare(UtenteBean u1, UtenteBean u2) {
-				return Integer.compare(u1.getAge(), u2.getAge());
-			}
-		});
-
-		if (utentiPiuValutati.size() > 5) {
-			for (int i = utentiPiuValutati.size() - 1; i >= 5; i--) {
-				UtenteBean utente = utentiPiuValutati.remove(i);
-				utentiMenoValutati.add(0, utente);
-			}
+		if (!utenteDao.findByEmail(email).isUserBeanEmpty()) {
+			// logUser.error("User already exists: " + email);
+			return -1;
 		}
-*/
+
+		String hashedPassword = Hasher.hashPassword(password);
+		// logUser.debug("Hashed password: " + hashedPassword + " for user: " + email);
+
+		int createdUser = utenteDao.create(email, hashedPassword, ruoloId, nome, cognome, responsabileId, societaOp,
+				mansione, ambito, jobFam, subFam, stdJob, jobLevel);
+
+		// logUser.debug("Created user: " + nome + " " + cognome + " with email: " +
+		// email);
+		return createdUser;
+	}
+
+	public String loginUtente(String email, String password) throws ClassNotFoundException, SQLException {
+
+		// UtenteDao utenteDao = new UtenteDao();
+
+		if (utenteDao.findByEmail(email).isUserBeanEmpty()) {
+			// logUser.error("User not found: " + email);
+			return "try again";
+		}
+
+		UtenteBean utenteFound = utenteDao.findByEmail(email);
+
+		String hashedPassword = Hasher.hashPassword(password);
+
+		if (utenteFound.getPassword().equals(hashedPassword)) {
+			String jwt = EncryptJwt.issueToken(utenteFound.getUtenteId());
+			// logUser.debug("Issued token: " + jwt + " for user: " + email);
+			return jwt;
+		} else {
+			// logUser.error("Wrong password for user: " + email);
+			return "try again";
+		}
+
+	}
+
+	public HashMap<String, List<CountDto>> getEvaluators() throws ClassNotFoundException, SQLException {
+		// UtenteDao utenteDao = new UtenteDao();
+
+		HashMap<String, List<CountDto>> usersToShow = new HashMap<>();
+
+		List<UtenteBean> utentiPiuValutati = utenteDao.findVal5();
+		List<UtenteBean> utentiMenoValutati = utenteDao.findValDisp();
+		String valutatoriOccupati = "valutatori_occupati";
+		String valutatoriDisponibili = "valutatori_disponibili";
+
+		List<CountDto> utentiPiuValutatiDto = new ArrayList<>();
+		for (UtenteBean utente : utentiPiuValutati) {
+			CountDto countDto = CountConverter.toDto(utente);
+			List<UtenteBean> utentiBeans = utenteDao.findValutatiByValutatore(utente.getValutatoreId());
+			countDto.setCount(utentiBeans.size());
+			utentiPiuValutatiDto.add(countDto);
+		}
+
+		List<CountDto> utentiMenoValutatiDto = new ArrayList<>();
+		for (UtenteBean utente : utentiMenoValutati) {
+			CountDto countDto = CountConverter.toDto(utente);
+			List<UtenteBean> utentiBeans = utenteDao.findValutatiByValutatore(utente.getValutatoreId());
+			countDto.setCount(utentiBeans.size());
+			utentiMenoValutatiDto.add(countDto);
+		}
+
+		usersToShow.put(valutatoriOccupati, utentiPiuValutatiDto);
+		usersToShow.put(valutatoriDisponibili, utentiMenoValutatiDto);
+
+		return usersToShow;
+	}
+
+	/*
+	 * public void rearrengeValutatori() {
+	 * UtenteDao utenteDao = new UtenteDao();
+	 * // List<UtenteBean> utentiPiuValutati = utenteDao.findAllByRole(1);
+	 * // List<UtenteBean> utentiMenoValutati = utenteDao.findAllByRole(2);
+	 * 
+	 * Collections.sort(utentiPiuValutati, new Comparator<UtenteBean>() {
+	 * 
+	 * @Override
+	 * public int compare(UtenteBean u1, UtenteBean u2) {
+	 * return Integer.compare(u1.getAge(), u2.getAge());
+	 * }
+	 * });
+	 * 
+	 * if (utentiPiuValutati.size() > 5) {
+	 * for (int i = utentiPiuValutati.size() - 1; i >= 5; i--) {
+	 * UtenteBean utente = utentiPiuValutati.remove(i);
+	 * utentiMenoValutati.add(0, utente);
+	 * }
+	 * }
+	 */
 
 }

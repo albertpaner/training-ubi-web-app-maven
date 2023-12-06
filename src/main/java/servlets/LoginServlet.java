@@ -16,7 +16,6 @@ import services.UtenteService;
 @WebServlet("/login")
 public class LoginServlet extends HttpServlet {
 
-   // private static final long serialVersionUID = 1 ;
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
@@ -31,7 +30,7 @@ public class LoginServlet extends HttpServlet {
 
             if (!resultUtente.equals("try again")) {
                 //HttpSession session = request.getSession();
-                // session.setAttribute("username",username);
+                //session.setAttribute("username",username);
                 response.sendRedirect("loginsuccess.jsp");
             } 
             
@@ -43,14 +42,9 @@ public class LoginServlet extends HttpServlet {
 
         } 
         
-        catch (ClassNotFoundException e) {
+        catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         } 
-        
-        catch (SQLException e) {
-            e.printStackTrace();
-        }
-        
     
     }
    
