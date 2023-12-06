@@ -7,6 +7,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Properties;
 import javax.servlet.RequestDispatcher;
@@ -17,6 +18,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import model.Bean.UtenteBean;
 import model.Dao.UtenteDao;
+import model.Dto.CountDto;
+import services.UtenteService;
 
 public class UserServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -38,16 +41,16 @@ public class UserServlet extends HttpServlet {
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-
+//new servlet
         UtenteDao utenteDao = new UtenteDao();
+        UtenteService utenteService = new UtenteService(utenteDao);
+        HashMap<String, List<CountDto>> evaluators = utenteService.getEvaluators();
 
-        List<UtenteBean> utenti = utenteDao.findAll();
+        List<CountDto> evaluatorsOccupied = evaluators.get("valutatori_occupati");
+        List<CountDto> evaluatorsFree = evaluators.get("valutatori_disponibili");
 
-        for (UtenteBean utente : utenti) {
-            users.add(utente.getEmail());
-        }
-
-        request.setAttribute("users", utenti);
+        request.setAttribute("valutatori_occupati", evaluatorsOccupied);
+        request.setAttribute("valutatori_disponibili", evaluatorsFree);
         RequestDispatcher dispatcher = request.getRequestDispatcher("/listUser.jsp");
         dispatcher.forward(request, response);
     }
