@@ -28,6 +28,9 @@ public class UtenteService {
     //static Logger logUser = LogManager.getLogger("user");
 	private UtenteDao utenteDao;
 
+	public UtenteService() {
+	}
+
 	public UtenteService(UtenteDao utenteDao) {
         this.utenteDao = utenteDao;
     }

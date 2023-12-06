@@ -1,19 +1,39 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
-    <title>User List</title>
+    <meta charset="ISO-8859-1">
+    <title>Evaluators</title>
 </head>
 <body>
-    <h1>User List</h1>
-    <ul>
-        <% 
-            List<UtenteBean> users = (List<UtenteBean>) request.getAttribute("users");
-            for (UtenteBean user : users) {
+    <h1>Evaluators Occupied</h1>
+    <table border="1">
+        <tr>
+            <th> Details</th>
+        </tr>
+        <%
+            List<CountDto> evaluatorsOccupied = request.getAttribute("valutatori_occupati");
+            for (CountDto dto : evaluatorsOccupied) {
         %>
-            <li><%= user.getEmail() %></li>
+        <tr>
+            <td><%= dto.toString() %></td>
+        </tr>
         <% } %>
-    </ul>
+    </table>
+
+    <h1>Evaluators Free</h1>
+    <table border="1">
+        <tr>
+            <th> Details</th>
+        </tr>
+        <%
+            List<CountDto> evaluatorsFree = request.getAttribute("valutatori_disponibili");
+            for (CountDto dto : evaluatorsFree) {
+        %>
+        <tr>
+            <td><%= dto.toString() %></td>
+        </tr>
+        <% } %>
+    </table>
 </body>
 </html>

@@ -7,7 +7,7 @@ public class CountDto {
     private String nome;
     private String cognome;
     private String email;
-    private int count;
+    private int count = 0;
     
 	public int getValutatoreId() {
 		return ValutatoreId;
@@ -40,6 +40,10 @@ public class CountDto {
 		this.count = count;
 	}
     
-    
+    @Override
+	public String toString() {
+		return " [ nome=" + nome + ", cognome=" + cognome + ", email=" + email
+				+ ", count=" + count + "]";
+	}
     
 }

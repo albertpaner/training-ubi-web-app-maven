@@ -1,3 +1,5 @@
+package servlets;
+
 import java.io.FileInputStream;
 import java.io.File;
 import java.io.IOException;
@@ -5,6 +7,7 @@ import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -23,10 +26,6 @@ import services.UtenteService;
 
 public class UserServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        List<String> users = new ArrayList<String>();
-        Connection conn;
-        Statement stmt;
-        ResultSet rs;
 
         String driver, url, username, password;
 
@@ -44,7 +43,14 @@ public class UserServlet extends HttpServlet {
 //new user servlet
         UtenteDao utenteDao = new UtenteDao();
         UtenteService utenteService = new UtenteService(utenteDao);
-        HashMap<String, List<CountDto>> evaluators = utenteService.getEvaluators();
+        HashMap<String, List<CountDto>> evaluators = new HashMap<>();
+        try {
+            evaluators = utenteService.getEvaluators();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
         List<CountDto> evaluatorsOccupied = evaluators.get("valutatori_occupati");
         List<CountDto> evaluatorsFree = evaluators.get("valutatori_disponibili");

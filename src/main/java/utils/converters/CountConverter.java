@@ -2,7 +2,6 @@ package utils.converters;
 
 import model.Bean.UtenteBean;
 import model.Dto.CountDto;
-import model.Dto.UtenteDto;
 
 public class CountConverter {
 
