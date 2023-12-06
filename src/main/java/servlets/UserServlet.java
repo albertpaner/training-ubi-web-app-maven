@@ -19,23 +19,10 @@ import model.Dao.UtenteDao;
 import model.Dto.CountDto;
 import services.UtenteService;
 
-@WebServlet("/listUser")
+@WebServlet("/listuser")
 public class UserServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        String driver, url, username, password;
-
-        try (InputStream input = new FileInputStream(new File("db.properties"))) {
-            Properties prop = new Properties();
-            prop.load(input);
-
-            driver = prop.getProperty("DRIVER");
-            url = prop.getProperty("URL");
-            username = prop.getProperty("USERNAME");
-            password = prop.getProperty("PASSWORD");
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
 //new user servlet
         UtenteDao utenteDao = new UtenteDao();
         UtenteService utenteService = new UtenteService(utenteDao);
