@@ -4,6 +4,7 @@ import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 
@@ -12,6 +13,7 @@ import org.apache.logging.log4j.Logger;
 
 import model.Bean.UtenteBean;
 import model.Dao.UtenteDao;
+import model.Dto.CountDto;
 import model.Dto.UtenteDto;
 
 import model.Bean.UtenteBean;
@@ -19,6 +21,7 @@ import model.Dao.UtenteDao;
 import model.Dto.UtenteDto;
 import utils.EncryptJwt;
 import utils.Hasher;
+import utils.converters.CountConverter;
 
 public class UtenteService {
 
@@ -74,7 +77,7 @@ public class UtenteService {
 
     }
 
-public HashMap<String, List<CountDto>> findUsersToShow() throws ClassNotFoundException, SQLException {
+public HashMap<String, List<CountDto>> getEvaluators() throws ClassNotFoundException, SQLException {
 	// UtenteDao utenteDao = new UtenteDao();
 	
 	HashMap<String, List<CountDto>> usersToShow = new HashMap<>();
@@ -84,10 +87,18 @@ public HashMap<String, List<CountDto>> findUsersToShow() throws ClassNotFoundExc
 	String valutatoriOccupati = "valutatori_occupati";
 	String valutatoriDisponibili = "valutatori_disponibili";
 	
-	for(utente : )
+	List<CountDto> utentiPiuValutatiDto = new ArrayList<>();
+	for(UtenteBean utente : utentiPiuValutati) {
+		utentiPiuValutatiDto.add(CountConverter.toDto(utente));
+	}
+
+	List<CountDto> utentiMenoValutatiDto = new ArrayList<>();
+	for(UtenteBean utente : utentiMenoValutati) {
+		utentiMenoValutatiDto.add(CountConverter.toDto(utente));
+	}
 	
-	usersToShow.put(valutatoriOccupati, null);
-	usersToShow.put(valutatoriDisponibili, null);
+	usersToShow.put(valutatoriOccupati, utentiPiuValutatiDto);
+	usersToShow.put(valutatoriDisponibili, utentiMenoValutatiDto);
 	
 
 	return usersToShow;
