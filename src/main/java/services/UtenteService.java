@@ -74,26 +74,19 @@ public class UtenteService {
 
     }
 
-public HashMap<String, List<UtenteDto>> findUsersToShow() throws ClassNotFoundException, SQLException {
+public HashMap<String, List<CountDto>> findUsersToShow() throws ClassNotFoundException, SQLException {
 	// UtenteDao utenteDao = new UtenteDao();
 	
-	HashMap<String, List<UtenteDto>> usersToShow = new HashMap<>();
+	HashMap<String, List<CountDto>> usersToShow = new HashMap<>();
 	
-	/* List<UtenteBean> utentiValutatori = utenteDao.findAllByRole(1);
+	List<UtenteBean> utentiPiuValutati = utenteDao.findVal5();
+	List<UtenteBean> utentiMenoValutati = utenteDao.findValDisp();
+	String valutatoriOccupati = "valutatori_occupati";
+	String valutatoriDisponibili = "valutatori_disponibili";
 	
-	List<UtenteBean> utentiConPiuValutati = new ArrayList<UtenteBean>();
-	List<UtenteBean> utentiConMenoValutati = new ArrayList<UtenteBean>();
-
-	for (UtenteBean utente : utentiValutatori) {
-		if (utenteDao.countValutati(utente.getUtenteId()) > 5) {
-			utentiConPiuValutati.add(utente);
-		} else {
-			utentiConMenoValutati.add(utente);
-		}
-	}
-
-	usersToShow.put("UtentiPiuValutati", convertToDtoList(utentiPiuValutati));
-	usersToShow.put("UtentiMenoValutati", convertToDtoList(utentiMenoValutati)); */
+	usersToShow.put(valutatoriOccupati, null);
+	usersToShow.put(valutatoriDisponibili, null);
+	
 
 	return usersToShow;
 }
@@ -101,8 +94,8 @@ public HashMap<String, List<UtenteDto>> findUsersToShow() throws ClassNotFoundEx
 
 	public void rearrengeValutatori() {
 		UtenteDao utenteDao = new UtenteDao();
-		List<UtenteBean> utentiPiuValutati = utenteDao.findAllByRole(1);
-		List<UtenteBean> utentiMenoValutati = utenteDao.findAllByRole(2);
+		// List<UtenteBean> utentiPiuValutati = utenteDao.findAllByRole(1);
+		// List<UtenteBean> utentiMenoValutati = utenteDao.findAllByRole(2);
 
 		Collections.sort(utentiPiuValutati, new Comparator<UtenteBean>() {
 			@Override
