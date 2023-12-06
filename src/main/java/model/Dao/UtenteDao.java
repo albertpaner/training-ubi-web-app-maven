@@ -240,7 +240,7 @@ public List <UtenteBean> findValDisp() throws ClassNotFoundException, SQLExcepti
 
 }
 
-public List <UtenteBean> findValutatiByValutatore() throws ClassNotFoundException, SQLException{
+public List <UtenteBean> findValutatiByValutatore(int id) throws ClassNotFoundException, SQLException{
 
 	List<UtenteBean> listaValutati = new ArrayList<>();
 
