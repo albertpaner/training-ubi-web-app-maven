@@ -16,7 +16,7 @@ public class CountConverter {
         countDto.setNome(utenteBean.getNome());
         countDto.setCognome(utenteBean.getCognome());
         
-        return CountDto;
+        return countDto;
         }
     
         /*public static UtenteBean toBean(CountDto CountDto) {
