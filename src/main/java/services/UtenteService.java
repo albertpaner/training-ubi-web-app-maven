@@ -84,6 +84,8 @@ public HashMap<String, List<CountDto>> findUsersToShow() throws ClassNotFoundExc
 	String valutatoriOccupati = "valutatori_occupati";
 	String valutatoriDisponibili = "valutatori_disponibili";
 	
+	for(utente : )
+	
 	usersToShow.put(valutatoriOccupati, null);
 	usersToShow.put(valutatoriDisponibili, null);
 	
