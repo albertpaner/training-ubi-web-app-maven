@@ -2,24 +2,38 @@ package services;
 
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import model.Bean.UtenteBean;
 import model.Dao.UtenteDao;
+import model.Dto.UtenteDto;
+
+import model.Bean.UtenteBean;
+import model.Dao.UtenteDao;
+import model.Dto.UtenteDto;
 import utils.EncryptJwt;
 import utils.Hasher;
 
 public class UtenteService {
 
     static Logger logUser = LogManager.getLogger("user");
+	private UtenteDao utenteDao;
+
+	public UtenteService(UtenteDao utenteDao) {
+        this.utenteDao = utenteDao;
+    }
 
     public int registrazioneUtente(String email, String password, int ruoloId, String nome, String cognome,
 	    int responsabileId, String societaOp, String mansione, String ambito, String jobFam, String subFam,
 	    String stdJob, String jobLevel) throws NoSuchAlgorithmException, ClassNotFoundException, SQLException {
 
-	UtenteDao utenteDao = new UtenteDao();
+	// UtenteDao utenteDao = new UtenteDao();
 
 	if (!utenteDao.findByEmail(email).isUserBeanEmpty()) {
 	    logUser.error("User already exists: " + email);
@@ -38,7 +52,7 @@ public class UtenteService {
 
     public String loginUtente(String email, String password) throws ClassNotFoundException, SQLException {
 
-	UtenteDao utenteDao = new UtenteDao();
+	// UtenteDao utenteDao = new UtenteDao();
 
 	if (utenteDao.findByEmail(email).isUserBeanEmpty()) {
 	    logUser.error("User not found: " + email);
@@ -59,5 +73,53 @@ public class UtenteService {
 	}
 
     }
+
+public HashMap<String, List<UtenteDto>> findUsersToShow() throws ClassNotFoundException, SQLException {
+	// UtenteDao utenteDao = new UtenteDao();
+	
+	HashMap<String, List<UtenteDto>> usersToShow = new HashMap<>();
+	
+	/* List<UtenteBean> utentiValutatori = utenteDao.findAllByRole(1);
+	
+	List<UtenteBean> utentiConPiuValutati = new ArrayList<UtenteBean>();
+	List<UtenteBean> utentiConMenoValutati = new ArrayList<UtenteBean>();
+
+	for (UtenteBean utente : utentiValutatori) {
+		if (utenteDao.countValutati(utente.getUtenteId()) > 5) {
+			utentiConPiuValutati.add(utente);
+		} else {
+			utentiConMenoValutati.add(utente);
+		}
+	}
+
+	usersToShow.put("UtentiPiuValutati", convertToDtoList(utentiPiuValutati));
+	usersToShow.put("UtentiMenoValutati", convertToDtoList(utentiMenoValutati)); */
+
+	return usersToShow;
+}
+
+
+	public void rearrengeValutatori() {
+		UtenteDao utenteDao = new UtenteDao();
+		List<UtenteBean> utentiPiuValutati = utenteDao.findAllByRole(1);
+		List<UtenteBean> utentiMenoValutati = utenteDao.findAllByRole(2);
+
+		Collections.sort(utentiPiuValutati, new Comparator<UtenteBean>() {
+			@Override
+			public int compare(UtenteBean u1, UtenteBean u2) {
+				return Integer.compare(u1.getAge(), u2.getAge());
+			}
+		});
+
+		if (utentiPiuValutati.size() > 5) {
+			for (int i = utentiPiuValutati.size() - 1; i >= 5; i--) {
+				UtenteBean utente = utentiPiuValutati.remove(i);
+				utentiMenoValutati.add(0, utente);
+			}
+		}
+
+
+	}
+
 
 }
