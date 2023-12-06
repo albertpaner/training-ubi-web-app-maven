@@ -240,5 +240,32 @@ public List <UtenteBean> findValDisp() throws ClassNotFoundException, SQLExcepti
 
 }
 
+public List <UtenteBean> findValutatiByValutatore() throws ClassNotFoundException, SQLException{
+
+	List<UtenteBean> listaValutati = new ArrayList<>();
+
+	DBConnection dBConn = new DBConnection();
+	Connection conn = dBConn.createConnection();
+	PreparedStatement ps = conn.prepareStatement("SELECT nome, cognome, email FROM utente WHERE ruolo_id = 2 AND valutatore_id = ?");
+	ps.setFloat(1, id);
+	ResultSet rs = ps.executeQuery();
+
+	while (rs.next()) {
+
+		UtenteBean utenteBean = new UtenteBean();
+		utenteBean.setNome(rs.getString("nome"));
+		utenteBean.setCognome(rs.getString("cognome"));
+		utenteBean.setEmail(rs.getString("email"));
+
+		listaValutati.add(utenteBean);
+		
+	}
+
+	conn.close();
+	return listaValutati;
+
+
+}
+
 
 }
