@@ -46,7 +46,7 @@ public class UserServlet extends HttpServlet {
         for (UtenteBean utente : utenti) {
             users.add(utente.getEmail());
         }
-
+        																						//TEST//gg
         request.setAttribute("users", utenti);
         RequestDispatcher dispatcher = request.getRequestDispatcher("/listUser.jsp");
         dispatcher.forward(request, response);
