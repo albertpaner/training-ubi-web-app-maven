@@ -129,6 +129,9 @@ public class UtenteBean {
 	public void setFlgDel(boolean flgDel) {
 		this.flgDel = flgDel;
 	}
+	public boolean isUserBeanEmpty() {
+		return this.getEmail().isEmpty();
+	}
 
 	
 
