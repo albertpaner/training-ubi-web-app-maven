@@ -41,7 +41,7 @@ public class UserServlet extends HttpServlet {
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-//new servlet
+//new user servlet
         UtenteDao utenteDao = new UtenteDao();
         UtenteService utenteService = new UtenteService(utenteDao);
         HashMap<String, List<CountDto>> evaluators = utenteService.getEvaluators();
