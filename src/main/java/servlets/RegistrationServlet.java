@@ -1,17 +1,15 @@
 package servlets;
 
-import java.io.IOException;
-import java.security.NoSuchAlgorithmException;
-import java.sql.SQLException;
+import exceptions.RegistrationFailedException;
+import services.UtenteService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
-import services.UtenteService;
+import java.io.IOException;
+import java.sql.SQLException;
 
 @WebServlet("/register")
 public class RegistrationServlet extends HttpServlet {
@@ -45,6 +43,8 @@ public class RegistrationServlet extends HttpServlet {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-        }  
+        } catch (RegistrationFailedException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

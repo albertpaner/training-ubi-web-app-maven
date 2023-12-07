@@ -1,26 +1,32 @@
 package servlets;
 
-import java.io.IOException;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import model.Dao.UtenteDao;
+import model.Dto.EvalCountDto;
+import services.UtenteService;
+import utils.DBConnection;
 
-//import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
-import model.Dao.UtenteDao;
-import model.Dto.EvalCountDto;
-import services.UtenteService;
-import utils.DBConnection;
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 @WebServlet("/distributeEvaluators")
 public class DistributeEvaluatorsServlet extends HttpServlet {
+
+    /*
+    private UtenteService utenteService;
+
+    public DistributeEvaluatorsServlet() {
+        this.utenteService = new UtenteService(new UtenteDao(DBConnection.createConnection()));
+    }
+    * */
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
