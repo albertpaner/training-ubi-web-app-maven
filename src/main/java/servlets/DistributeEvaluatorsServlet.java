@@ -19,7 +19,7 @@ import model.Dto.EvalCountDto;
 import services.UtenteService;
 import utils.DBConnection;
 
-@WebServlet("/DistributeEvaluatorsServlet")
+@WebServlet("/distributeEvaluators")
 public class DistributeEvaluatorsServlet extends HttpServlet {
 
     @Override
@@ -55,8 +55,6 @@ public class DistributeEvaluatorsServlet extends HttpServlet {
         request.setAttribute("valutatori_occupati", evaluatorsOccupied);
         request.setAttribute("valutatori_disponibili", evaluatorsFree);
 
-        response.sendRedirect("listuser.jsp");
-        //RequestDispatcher dispatcher = request.getRequestDispatcher("listuser.jsp");
-        //dispatcher.forward(request, response);
+        response.sendRedirect("distribute_evaluators.jsp");
     }
 }

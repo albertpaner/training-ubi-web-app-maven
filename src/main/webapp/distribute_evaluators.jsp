@@ -1,12 +1,12 @@
 <%@ page import = "java.util.List"%>
-<%@ page import = "model.Dto.CountDto" %>
+<%@ page import = "model.Dto.EvalCountDto" %>
 <!DOCTYPE html>
 <html>
 <head>
     <title>Evaluators</title>
 </head>
 <body>
-    <form action="UserServlet" method="get">
+    <form action="distributeEvaluators" method="get">
         <h1>Evaluators Occupied <%= session.getAttribute("flg") %></h1>
     <table border="1" aria-describedby="descriptionOccupied">
             <caption id="descriptionOccupied">These are occupied evaluators.</caption>
@@ -15,8 +15,8 @@
         </tr>
         <%--
         <%
-                    List<CountDto> evaluatorsOccupied = (List<CountDto>)request.getAttribute("valutatori_occupati");
-                    for (CountDto count : evaluatorsOccupied) {
+                    List<EvalCountDto> evaluatorsOccupied = (List<EvalCountDto>)request.getAttribute("valutatori_occupati");
+                    for (EvalCountDto count : evaluatorsOccupied) {
                 %>
                 <tr>
                     <td><%= count.toString() %></td>
@@ -33,8 +33,8 @@
         </tr>
         <%--
         <%
-            List<CountDto> evaluatorsFree = (List<CountDto>)request.getAttribute("valutatori_disponibili");
-            for (CountDto count : evaluatorsFree) {
+            List<EvalCountDto> evaluatorsFree = (List<EvalCountDto>)request.getAttribute("valutatori_disponibili");
+            for (EvalCountDto count : evaluatorsFree) {
         %>
         <tr>
             <td><%= count.toString() %></td>
