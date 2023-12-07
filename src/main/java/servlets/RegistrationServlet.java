@@ -1,26 +1,23 @@
 package servlets;
 
 import exceptions.RegistrationFailedException;
-import model.Dao.UtenteDao;
 import services.UtenteService;
-import utils.DBConnection;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.SQLException;
 
 @WebServlet("/register")
 public class RegistrationServlet extends HttpServlet {
 
-    private static final long serialVersionUID = 1;
+    private static final long serialVersionUID = 1 ;
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    throws ServletException, IOException {
 
         String email = request.getParameter("email");
         String password = request.getParameter("password");
@@ -36,17 +33,17 @@ public class RegistrationServlet extends HttpServlet {
         String stdJob = request.getParameter("stdJob");
         String jobLevel = request.getParameter("jobLevel");
 
-        HttpSession session = request.getSession();
+        UtenteService utenteService = new UtenteService();
+
         try {
-            UtenteService utenteRegisterService = new UtenteService(new UtenteDao(DBConnection.createConnection()));
-            if (utenteRegisterService.registrazioneUtente(email, password, ruoloId, nome, cognome, valutatoreId, societaOp, mansione, ambito, jobFam, subFam, stdJob, jobLevel)) {
-                session.setAttribute("successMsg", "Registered Successfully");
-                response.sendRedirect("register_success.jsp");
+            if (utenteService.registrazioneUtente(email, password, ruoloId, nome, cognome, valutatoreId, societaOp, mansione, ambito, jobFam, subFam, stdJob, jobLevel) != -1) {
+                response.sendRedirect("registerSuccess.jsp");
             } else {
-                session.setAttribute("errorMsg", "Registration Failed");
                 response.sendRedirect("register.jsp");
             }
-        } catch (ClassNotFoundException | SQLException | RegistrationFailedException e) {
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (RegistrationFailedException e) {
             throw new RuntimeException(e);
         }
     }
