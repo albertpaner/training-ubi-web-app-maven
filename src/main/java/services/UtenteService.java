@@ -27,9 +27,10 @@ public class UtenteService {
         this.utenteDao = utenteDao;
     }
 
-    public int registrazioneUtente(String email, String password, int ruoloId, String nome, String cognome,
+    public boolean registrazioneUtente(String email, String password, int ruoloId, String nome, String cognome,
                                    int valutatoreId, String societaOp, String mansione, String ambito, String jobFam, String subFam,
                                    String stdJob, String jobLevel) throws SQLException, RegistrationFailedException {
+        boolean registrationSuccess = false;
 
         if (!utenteDao.findByEmail(email).isUserBeanEmpty()) {
             throw new RegistrationFailedException("User already exists: " + email);
@@ -40,10 +41,10 @@ public class UtenteService {
 
         int createdUser = utenteDao.create(email, hashedPassword, ruoloId, nome, cognome, valutatoreId, societaOp,
                 mansione, ambito, jobFam, subFam, stdJob, jobLevel);
-
+        registrationSuccess = createdUser > 0;
         // logUser.debug("Created user: " + nome + " " + cognome + " with email: " +
         // email);
-        return createdUser;
+        return registrationSuccess;
     }
 
     public String loginUtente(String email, String password) throws ClassNotFoundException, SQLException, LoginUserNotFoundException, LoginPasswordFailedException {
