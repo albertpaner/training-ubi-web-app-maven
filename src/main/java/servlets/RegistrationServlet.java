@@ -14,7 +14,10 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.SQLException;
 
-@WebServlet("/register")
+@WebServlet(
+        name = "RegistrationServlet",
+        urlPatterns = {"/register"}
+)
 public class RegistrationServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1;
