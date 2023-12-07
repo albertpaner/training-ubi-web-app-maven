@@ -1,14 +1,14 @@
 package utils.converters;
 
 import model.Bean.UtenteBean;
-import model.Dto.CountDto;
+import model.Dto.EvalCountDto;
 
 public class CountConverter {
 
  
-    public static CountDto toDto(UtenteBean utenteBean) {
+    public static EvalCountDto toDto(UtenteBean utenteBean) {
 
-        CountDto countDto = new CountDto();
+        EvalCountDto countDto = new EvalCountDto();
         
         countDto.setValutatoreId(utenteBean.getValutatoreId());
         countDto.setEmail(utenteBean.getEmail());

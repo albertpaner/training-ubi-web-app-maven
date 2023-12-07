@@ -1,13 +1,24 @@
 package model.Dto;
 
 
-public class CountDto {
+public class EvalCountDto {
 
     private int ValutatoreId;
     private String nome;
     private String cognome;
     private String email;
     private int count = 0;
+
+	public EvalCountDto() {
+	}
+
+	public EvalCountDto(int valutatoreId, String nome, String cognome, String email, int count) {
+		ValutatoreId = valutatoreId;
+		this.nome = nome;
+		this.cognome = cognome;
+		this.email = email;
+		this.count = count;
+	}
     
 	public int getValutatoreId() {
 		return ValutatoreId;

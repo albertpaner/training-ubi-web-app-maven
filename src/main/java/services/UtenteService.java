@@ -13,7 +13,7 @@ import java.util.List;
 
 import model.Bean.UtenteBean;
 import model.Dao.UtenteDao;
-import model.Dto.CountDto;
+import model.Dto.EvalCountDto;
 import model.Dto.UtenteDto;
 
 import model.Bean.UtenteBean;
@@ -79,30 +79,30 @@ public class UtenteService {
 
 	}
 
-	public HashMap<String, List<CountDto>> getEvaluators() throws SQLException, ClassNotFoundException {
+	public HashMap<String, List<EvalCountDto>> getEvaluatorsOccupiedFree(int soglia) throws SQLException, ClassNotFoundException {
 		// UtenteDao utenteDao = new UtenteDao();
 
-		HashMap<String, List<UtenteBean>> usersFetched = utenteDao.splitEvaluators(5);
+		HashMap<String, List<UtenteBean>> usersFetched = utenteDao.splitEvaluators(soglia);
 		
 
 		List<UtenteBean> valutatoriOccupati = usersFetched.get("valutatori_occupati");
 		List<UtenteBean> valutatoriDisponibili = usersFetched.get("valutatori_disponibili");
 
-		List<CountDto> valutatoriOccupatiDto = new ArrayList<>();
+		List<EvalCountDto> valutatoriOccupatiDto = new ArrayList<>();
 		for (UtenteBean utente : valutatoriOccupati) {
-			CountDto countDto = CountConverter.toDto(utente);
+			EvalCountDto countDto = CountConverter.toDto(utente);
 			countDto.setCount(utenteDao.countValuedByEvaluator(utente.getValutatoreId()));
 			valutatoriOccupatiDto.add(countDto);
 		}
 
-		List<CountDto> valutatoriDisponibiliDto = new ArrayList<>();
+		List<EvalCountDto> valutatoriDisponibiliDto = new ArrayList<>();
 		for (UtenteBean utente : valutatoriDisponibili) {
-			CountDto countDto = CountConverter.toDto(utente);
+			EvalCountDto countDto = CountConverter.toDto(utente);
 			countDto.setCount(utenteDao.countValuedByEvaluator(utente.getValutatoreId()));
 			valutatoriDisponibiliDto.add(countDto);
 		}
 
-		HashMap<String, List<CountDto>> usersToShow = new HashMap<>();
+		HashMap<String, List<EvalCountDto>> usersToShow = new HashMap<>();
 		usersToShow.put("valutatori_occupati", valutatoriOccupatiDto);
 		usersToShow.put("valutatori_disponibili", valutatoriDisponibiliDto);
 

@@ -43,7 +43,7 @@ public class RegistrationServlet extends HttpServlet {
             } else {
                 response.sendRedirect("register.jsp");
             }
-        } catch (ClassNotFoundException | SQLException | NoSuchAlgorithmException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }  
     }
