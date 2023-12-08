@@ -1,18 +1,17 @@
 package utils;
 
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.algorithms.Algorithm;
+import model.Bean.UtenteBean;
+import model.Dao.UtenteDao;
+
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.Properties;
-
-import com.auth0.jwt.JWT;
-import com.auth0.jwt.algorithms.Algorithm;
-import java.io.File;
-import java.io.FileInputStream;
-
-import model.Bean.UtenteBean;
-import model.Dao.UtenteDao;
 
 public class EncryptJwt {
 

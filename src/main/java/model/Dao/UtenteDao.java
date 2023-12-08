@@ -16,6 +16,13 @@ public class UtenteDao {
         this.conn = conn;
     }
 
+    /**
+     * This method corresponds to READ operation on the database.
+     * It returns a list of all the users in the database.
+     *
+     * @return A list of all the users in the database.
+     * @throws SQLException If a database access error occurs or this method is called on a closed connection.
+     * */
     public List<UtenteBean> findAll() throws SQLException {
 
         List<UtenteBean> listaUtenti = new ArrayList<>();
@@ -54,6 +61,13 @@ public class UtenteDao {
 
     }
 
+    /**
+     * This method finds a user in the database by its ID.
+     *
+     * @param utenteId The ID of the user to be found.
+     * @return The user with the specified ID.
+     * @throws SQLException If a database access error occurs or this method is called on a closed connection.
+     * */
     public UtenteBean findById(int utenteId) throws SQLException {
 
         UtenteBean utenteBean = new UtenteBean();
@@ -88,6 +102,21 @@ public class UtenteDao {
 
     }
 
+    /**
+     * this method corresponds to CREATE operation on the database.
+     * It creates a new user in the database.
+     *
+     * @param email The email of the user to be created.
+     * @param password The password of the user to be created.
+     * @param ruoloId The role ID of the user to be created.
+     * @param nome The name of the user to be created.
+     * @param cognome The surname of the user to be created.
+     * @param valutatoreId The ID of the user's evaluator.
+     * @param dataNascita The date of birth of the user to be created.
+     *
+     * @return The number of rows affected by the insert operation.
+     * @throws SQLException If a database access error occurs or this method is called on a closed connection.
+     * */
     public int create(String email, String password, int ruoloId, String nome, String cognome, int valutatoreId, Date dataNascita) throws SQLException {
 
         Statement stmt = conn.createStatement();
@@ -100,6 +129,21 @@ public class UtenteDao {
         return rs;
     }
 
+    /**
+     * this method corresponds to UPDATE operation on the database.
+     * It updates an existing user or inserts a new user in the database.
+     *
+     * @param email The email of the user to be updated.
+     * @param password The password of the user to be updated.
+     * @param ruoloId The role ID of the user to be updated.
+     * @param nome The name of the user to be updated.
+     * @param cognome The surname of the user to be updated
+     * @param valutatoreId The ID of the user's evaluator.
+     * @param dataNascita The date of birth of the user to be updated.
+     *
+     * @return The number of rows affected by the update operation.
+     * @throws SQLException If a database access error occurs or this method is called on a closed connection.
+     * */
     public int update(String email, String password, int ruoloId, String nome, String cognome, int valutatoreId,
                       Date dataNascita, int utenteId) throws SQLException {
 
@@ -112,6 +156,14 @@ public class UtenteDao {
         return rs;
     }
 
+    /**
+     * this method corresponds to DELETE operation on the database.
+     * It logically deletes an existing user in the database.
+     *
+     * @param utenteId The ID of the user to be deleted.
+     * @return The number of rows affected by the update operation.
+     * @throws SQLException If a database access error occurs or this method is called on a closed connection.
+     * */
     public int logicDelete(int utenteId) throws SQLException {
 
         Statement stmt = conn.createStatement();
@@ -121,6 +173,14 @@ public class UtenteDao {
         return rs;
     }
 
+    /**
+     * this method corresponds to DELETE operation on the database.
+     * It physically deletes an existing user in the database.
+     *
+     * @param utenteId The ID of the user to be deleted.
+     * @return The number of rows affected by the delete operation.
+     * @throws SQLException If a database access error occurs or this method is called on a closed connection.
+     * */
     public int delete(int utenteId) throws SQLException {
 
         Statement stmt = conn.createStatement();

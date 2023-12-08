@@ -124,7 +124,12 @@ public class UtenteBean {
 		this.flgDel = flgDel;
 	}
 
-
+	/**
+	 * This method is used to print the utente BEAN in a readable way
+	 *
+	 * @return the string representation of the utente BEAN
+	 * @see java.lang.Object#toString()
+	 * */
 	@Override
 	public String toString() {
 		return "{" +

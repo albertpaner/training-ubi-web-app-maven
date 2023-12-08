@@ -1,11 +1,15 @@
 package utils.converters;
 
-import model.Bean.UtenteBean;
-import model.Dto.EvalCountDto;
-
 public class CountConverter {
 
- 
+    /**
+     * This method converts a UtenteBean object into a CountDto object.
+     *
+     * @param utenteBean the UtenteBean object to be converted
+     *                   (valutatoreId, nome, cognome, email)
+     *
+     * @return the EvalCountDto object
+     * */
     public static EvalCountDto toDto(UtenteBean utenteBean) {
 
         EvalCountDto countDto = new EvalCountDto();

@@ -22,6 +22,22 @@ import java.sql.SQLException;
 public class RegistrationServlet extends HttpServlet {
 
 
+    /**
+     *  This method is called when the user clicks on the "Register" button
+     *  in the register.jsp page.
+     *  It takes the parameters from the request and calls the registration method
+     *  of the UtenteService class.
+     *  If the registration is successful, the user is redirected to the register_success.jsp page.
+     *  Otherwise, the user is redirected to the register.jsp page.
+     *
+     *  @param request the HttpServletRequest object containing the request parameters
+     *                 (email, password, ruoloId, nome, cognome, valutatoreId, dataNascita)
+     *  @param response the HttpServletResponse object containing the response
+     *                  (successMsg or errorMsg)
+     *  @throws ServletException
+     *  @throws IOException
+     *
+     */
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
@@ -45,7 +61,7 @@ public class RegistrationServlet extends HttpServlet {
         HttpSession session = request.getSession();
         try {
             UtenteService utenteRegisterService = new UtenteService(new UtenteDao(DBConnection.createConnection()));
-            if (utenteRegisterService.registrazioneUtente(email, password, ruoloId, nome, cognome, valutatoreId, dataNascita)) {
+            if (utenteRegisterService.registrazioneUtente(email, password, ruoloId, nome, cognome, valutatoreId, dataNascita)>0) {
                 session.setAttribute("successMsg", "Registered Successfully");
                 response.sendRedirect("register_success.jsp");
             } else {
