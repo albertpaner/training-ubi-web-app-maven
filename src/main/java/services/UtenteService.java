@@ -108,14 +108,13 @@ public class UtenteService {
 
         List<EvalCountDto> valutatoriOccupatiDto = usersToShow.get("valutatori_occupati");
         List<EvalCountDto> valutatoriDisponibiliDto = usersToShow.get("valutatori_disponibili");
+        int evatorId = 0;
 
-        Collections.sort(utentiPiuValutati,
-                new Comparator<UtenteBean>() {
-                    @Override
-                    public int compare(UtenteBean u1, UtenteBean u2) {
-                        return u1.getDataNascita().compareTo(u2.getDataNascita());
-                    }
-                }
+        for (EvalCountDto valutatore : valutatoriOccupatiDto) {
+            evatorId = valutatore.getValutatoreId();
+            List<UtenteBean> utentiValutatiDa = utenteDao.findValuedByEvaluator(evatorId);
+            utentiValutatiDa = sortingUtenti(utentiValutatiDa);
+        }
     /*
         if (utentiPiuValutati.size() > soglia) {
             for (int i = utentiPiuValutati.size() - 1; i >= soglia; i--) {
@@ -125,6 +124,18 @@ public class UtenteService {
         }
     */
 
+    }
+
+    public List<UtenteBean> sortingUtenti(List<UtenteBean> utentiToSort) {
+        Collections.sort(utentiToSort,
+                new Comparator<UtenteBean>() {
+                    @Override
+                    public int compare(UtenteBean u1, UtenteBean u2) {
+                        return u1.getDataNascita().compareTo(u2.getDataNascita());
+                    }
+                }
+        );
+        return utentiToSort;
     }
 
 }
