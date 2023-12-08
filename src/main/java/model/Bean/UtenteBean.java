@@ -124,9 +124,6 @@ public class UtenteBean {
 		this.flgDel = flgDel;
 	}
 
-	public boolean isUserBeanEmpty() {
-		return this.getEmail().isEmpty() || this.getPassword().isEmpty();
-	}
 
 	@Override
 	public String toString() {

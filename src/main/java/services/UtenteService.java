@@ -17,6 +17,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Comparator;
+import java.util.Optional;
 
 public class UtenteService {
 
@@ -34,8 +35,8 @@ public class UtenteService {
                                        int valutatoreId, Date dataNascita) throws SQLException, RegistrationFailedException {
         boolean registrationSuccess = false;
 
-        if (!utenteDao.findByEmail(email).isUserBeanEmpty()) {
-            throw new RegistrationFailedException("User already exists: " + email);
+        if (findByEmail(email).isPresent()) {
+            throw new RegistrationFailedException("User already exists with the email: " + email);
         }
 
         String hashedPassword = Hasher.hashPassword(password);
@@ -49,16 +50,24 @@ public class UtenteService {
         return registrationSuccess;
     }
 
+    public Optional<UtenteBean> findByEmail(String email) throws SQLException {
+        List<UtenteBean> allUsers = utenteDao.findAll();
+        return allUsers.stream()
+                .filter(user -> user.getEmail().equals(email))
+                .findFirst();
+    }
+
     public String loginUtente(String email, String password)
             throws ClassNotFoundException, SQLException, LoginUserNotFoundException, LoginPasswordFailedException {
 
         // UtenteDao utenteDao = new UtenteDao();
+        Optional<UtenteBean> maybeUtente = findByEmail(email);
 
-        if (utenteDao.findByEmail(email).isUserBeanEmpty()) {
-            throw new LoginUserNotFoundException("User not found: " + email);
+        if (!maybeUtente.isPresent()) {
+            throw new LoginUserNotFoundException("User not found with email: " + email);
         }
 
-        UtenteBean utenteFound = utenteDao.findByEmail(email);
+        UtenteBean utenteFound = maybeUtente.get();
 
         String hashedPassword = Hasher.hashPassword(password);
 
@@ -77,25 +86,22 @@ public class UtenteService {
     public HashMap<String, List<EvalCountDto>> getEvaluatorsOccupiedFree(int soglia)
             throws SQLException, ClassNotFoundException {
         // UtenteDao utenteDao = new UtenteDao();
+        HashMap<UtenteBean, List<UtenteBean>> lordsAndPeasants = new HashMap<>();
 
-        HashMap<String, List<UtenteBean>> usersFetched = utenteDao.splitEvaluators(soglia);
+        List<UtenteBean> allUsers = utenteDao.findAll();
 
-        List<UtenteBean> valutatoriOccupati = usersFetched.get("valutatori_occupati");
-        List<UtenteBean> valutatoriDisponibili = usersFetched.get("valutatori_disponibili");
+        List<UtenteBean> allEvaluators = allUsers.stream()
+                .filter(user -> user.getRuoloId() == 1)
+                .filter(user -> !user.isFlgDel())
+                .toList();
 
-        List<EvalCountDto> valutatoriOccupatiDto = new ArrayList<>();
-        for (UtenteBean utente : valutatoriOccupati) {
-            EvalCountDto countDto = CountConverter.toDto(utente);
-            countDto.setCount(utenteDao.countValuedByEvaluator(utente.getValutatoreId()));
-            valutatoriOccupatiDto.add(countDto);
+        for (UtenteBean evaluator : allEvaluators) {
+            List<UtenteBean> allValuedUsers = utenteDao.findValuedByEvaluator(evaluator.getUtenteId());
+            lordsAndPeasants.put(evaluator, allValuedUsers);
         }
 
-        List<EvalCountDto> valutatoriDisponibiliDto = new ArrayList<>();
-        for (UtenteBean utente : valutatoriDisponibili) {
-            EvalCountDto countDto = CountConverter.toDto(utente);
-            countDto.setCount(utenteDao.countValuedByEvaluator(utente.getValutatoreId()));
-            valutatoriDisponibiliDto.add(countDto);
-        }
+
+
 
         HashMap<String, List<EvalCountDto>> usersToShow = new HashMap<>();
         usersToShow.put("valutatori_occupati", valutatoriOccupatiDto);

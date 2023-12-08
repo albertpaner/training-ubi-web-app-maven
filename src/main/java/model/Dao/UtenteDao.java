@@ -4,7 +4,6 @@ import model.Bean.UtenteBean;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class UtenteDao {
@@ -131,39 +130,14 @@ public class UtenteDao {
         return rs;
     }
 
-    public UtenteBean findByEmail(String email) throws SQLException {
-
-        UtenteBean utenteBean = new UtenteBean();
-
-        Statement stmt = conn.createStatement();
-        ResultSet rs = stmt.executeQuery("SELECT * FROM utente WHERE email = '" + email + "'");
-        while (rs.next()) {
-            utenteBean.setUtenteId(rs.getInt("utente_id"));
-            utenteBean.setEmail(email);
-            utenteBean.setPassword(rs.getString("password"));
-            utenteBean.setRuoloId(rs.getInt("ruolo_id"));
-            utenteBean.setNome(rs.getString("nome"));
-            utenteBean.setCognome(rs.getString("cognome"));
-            utenteBean.setValutatoreId(rs.getInt("valutatore_id"));
-			/* 
-			utenteBean.setSocietaOp(rs.getString("societa_op"));
-			utenteBean.setMansione(rs.getString("mansione"));
-			utenteBean.setAmbito(rs.getString("ambito"));
-			utenteBean.setJobFam(rs.getString("job_fam"));
-			utenteBean.setSubFam(rs.getString("sub_fam"));
-			utenteBean.setStdJob(rs.getString("std_job"));
-			utenteBean.setJobLevel(rs.getString("job_level")); */
-            utenteBean.setDataNascita(rs.getDate("data_nascita"));
-            utenteBean.setDataUltAcc(rs.getDate("data_ult_acc"));
-            utenteBean.setDataUltMod(rs.getDate("data_ult_mod"));
-            utenteBean.setDataCreaz(rs.getDate("data_creaz"));
-            utenteBean.setFlgDel(rs.getBoolean("flg_del"));
-        }
-
-        conn.close();
-        return utenteBean;
-    }
-
+    /**
+     * This method updates the last access time of a user in the database.
+     * The last access time is set to the current time.
+     *
+     * @param utenteId The ID of the user whose last access time is to be updated.
+     * @return The number of rows affected by the update operation.
+     * @throws SQLException If a database access error occurs or this method is called on a closed connection.
+     */
     public int updateLastAccess(int utenteId) throws SQLException {
 
         Statement stmt = conn.createStatement();
@@ -173,6 +147,22 @@ public class UtenteDao {
         return rs;
     }
 
+    /**
+     * This method updates the last modification time of a user in the database.
+     * The last modification time is set to the current time.
+     * @param utenteId The ID of the user whose last modification time is to be updated.
+     * @return The number of rows affected by the update operation.
+     * @throws SQLException If a database access error occurs or this method is called on a closed connection.
+     */
+    public int updateValutatoreId(int utenteId, int valutatoreId) throws SQLException {
+
+        Statement stmt = conn.createStatement();
+        int rs = stmt.executeUpdate("UPDATE utente SET valutatore_id = " + valutatoreId + " WHERE utente_id = " + utenteId);
+
+        return rs;
+    }
+
+    /*
     public HashMap<String, List<UtenteBean>> splitEvaluators(int soglia) throws SQLException {
 
         HashMap<String, List<UtenteBean>> resultMap = new HashMap<>();
@@ -265,12 +255,6 @@ public class UtenteDao {
 
         return utentiValutatiDa;
     }
+    */
 
-    public boolean updateValutatoreId(int utenteId, int valutatoreId) throws SQLException {
-
-        Statement stmt = conn.createStatement();
-        int rs1 = stmt.executeUpdate("UPDATE utente SET valutatore_id = " + valutatoreId + " WHERE utente_id = " + utenteId);
-
-        return rs1 > 0;
-    }
 }
