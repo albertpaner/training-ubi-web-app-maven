@@ -12,7 +12,10 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 
-@WebServlet("/login")
+@WebServlet(
+        name = "LoginServlet",
+        urlPatterns = {"/login"}
+)
 public class LoginServlet extends HttpServlet {
 
 

@@ -16,7 +16,10 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 
-@WebServlet("/distributeEvaluators")
+@WebServlet(
+        name = "DistributeEvaluatorsServlet",
+        urlPatterns = {"/distribute_evaluators"}
+)
 public class DistributeEvaluatorsServlet extends HttpServlet {
 
     /*
