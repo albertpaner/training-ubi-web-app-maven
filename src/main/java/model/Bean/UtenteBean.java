@@ -10,127 +10,140 @@ public class UtenteBean {
     private String nome;
     private String cognome;
     private int valutatoreId;
-    private String societaOp;
+   /* private String societaOp;
     private String mansione;
     private String ambito;
     private String jobFam;
     private String subFam;
     private String stdJob;
-    private String jobLevel;
+    private String jobLevel; */
+	private Date dataNascita; 
     private Date dataUltAcc;
     private Date dataUltMod;
     private Date dataCreaz;
     private boolean flgDel;
+
+
 	public int getUtenteId() {
-		return utenteId;
+		return this.utenteId;
 	}
+
 	public void setUtenteId(int utenteId) {
 		this.utenteId = utenteId;
 	}
+
 	public String getEmail() {
-		return email;
+		return this.email;
 	}
+
 	public void setEmail(String email) {
 		this.email = email;
 	}
+
 	public String getPassword() {
-		return password;
+		return this.password;
 	}
+
 	public void setPassword(String password) {
 		this.password = password;
 	}
+
 	public int getRuoloId() {
-		return ruoloId;
+		return this.ruoloId;
 	}
+
 	public void setRuoloId(int ruoloId) {
 		this.ruoloId = ruoloId;
 	}
+
 	public String getNome() {
-		return nome;
+		return this.nome;
 	}
+
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
+
 	public String getCognome() {
-		return cognome;
+		return this.cognome;
 	}
+
 	public void setCognome(String cognome) {
 		this.cognome = cognome;
 	}
+
 	public int getValutatoreId() {
-		return valutatoreId;
+		return this.valutatoreId;
 	}
+
 	public void setValutatoreId(int valutatoreId) {
-		valutatoreId = valutatoreId;
+		this.valutatoreId = valutatoreId;
 	}
-	public String getSocietaOp() {
-		return societaOp;
+
+	public Date getDataNascita() {
+		return this.dataNascita;
 	}
-	public void setSocietaOp(String societaOp) {
-		this.societaOp = societaOp;
+
+	public void setDataNascita(Date dataNascita) {
+		this.dataNascita = dataNascita;
 	}
-	public String getMansione() {
-		return mansione;
-	}
-	public void setMansione(String mansione) {
-		this.mansione = mansione;
-	}
-	public String getAmbito() {
-		return ambito;
-	}
-	public void setAmbito(String ambito) {
-		this.ambito = ambito;
-	}
-	public String getJobFam() {
-		return jobFam;
-	}
-	public void setJobFam(String jobFam) {
-		this.jobFam = jobFam;
-	}
-	public String getSubFam() {
-		return subFam;
-	}
-	public void setSubFam(String subFam) {
-		this.subFam = subFam;
-	}
-	public String getStdJob() {
-		return stdJob;
-	}
-	public void setStdJob(String stdJob) {
-		this.stdJob = stdJob;
-	}
-	public String getJobLevel() {
-		return jobLevel;
-	}
-	public void setJobLevel(String jobLevel) {
-		this.jobLevel = jobLevel;
-	}
+
 	public Date getDataUltAcc() {
-		return dataUltAcc;
+		return this.dataUltAcc;
 	}
+
 	public void setDataUltAcc(Date dataUltAcc) {
 		this.dataUltAcc = dataUltAcc;
 	}
+
 	public Date getDataUltMod() {
-		return dataUltMod;
+		return this.dataUltMod;
 	}
+
 	public void setDataUltMod(Date dataUltMod) {
 		this.dataUltMod = dataUltMod;
 	}
+
 	public Date getDataCreaz() {
-		return dataCreaz;
+		return this.dataCreaz;
 	}
+
 	public void setDataCreaz(Date dataCreaz) {
 		this.dataCreaz = dataCreaz;
 	}
+
 	public boolean isFlgDel() {
-		return flgDel;
+		return this.flgDel;
 	}
+
+	public boolean getFlgDel() {
+		return this.flgDel;
+	}
+
 	public void setFlgDel(boolean flgDel) {
 		this.flgDel = flgDel;
 	}
+
 	public boolean isUserBeanEmpty() {
 		return this.getEmail().isEmpty() || this.getPassword().isEmpty();
+	}
+
+	@Override
+	public String toString() {
+		return "{" +
+			" utente_id='" + getUtenteId() + "'" +
+			", email='" + getEmail() + "'" +
+			", password='" + getPassword() + "'" +
+			", ruolo_id='" + getRuoloId() + "'" +
+			", nome='" + getNome() + "'" +
+			", cognome='" + getCognome() + "'" +
+			", valutatore_id='" + getValutatoreId() + "'" +
+			", data_nascita='" + getDataNascita() + "'" +
+			", data_ultimo_accesso='" + getDataUltAcc() + "'" +
+			", data_ultima_modifica='" + getDataUltMod() + "'" +
+			", data_creazione='" + getDataCreaz() + "'" +
+			", flg_delete='" + isFlgDel() + "'" +
+			"}";
 	}
 
 

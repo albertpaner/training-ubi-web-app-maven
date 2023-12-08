@@ -1,6 +1,7 @@
 package model.Dao;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -37,13 +38,15 @@ public class UtenteDao {
 			utenteBean.setNome(rs.getString("nome"));
 			utenteBean.setCognome(rs.getString("cognome"));
 			utenteBean.setValutatoreId(rs.getInt("valutatore_id"));
+			/* 
 			utenteBean.setSocietaOp(rs.getString("societa_op"));
 			utenteBean.setMansione(rs.getString("mansione"));
 			utenteBean.setAmbito(rs.getString("ambito"));
 			utenteBean.setJobFam(rs.getString("job_fam"));
 			utenteBean.setSubFam(rs.getString("sub_fam"));
 			utenteBean.setStdJob(rs.getString("std_job"));
-			utenteBean.setJobLevel(rs.getString("job_level"));
+			utenteBean.setJobLevel(rs.getString("job_level")); */
+			utenteBean.setDataNascita(rs.getDate("data_nascita"));
 			utenteBean.setDataUltAcc(rs.getDate("data_ult_acc"));
 			utenteBean.setDataUltMod(rs.getDate("data_ult_mod"));
 			utenteBean.setDataCreaz(rs.getDate("data_creaz"));
@@ -72,13 +75,15 @@ public class UtenteDao {
 			utenteBean.setNome(rs.getString("nome"));
 			utenteBean.setCognome(rs.getString("cognome"));
 			utenteBean.setValutatoreId(rs.getInt("valutatore_id"));
+			/* 
 			utenteBean.setSocietaOp(rs.getString("societa_op"));
 			utenteBean.setMansione(rs.getString("mansione"));
 			utenteBean.setAmbito(rs.getString("ambito"));
 			utenteBean.setJobFam(rs.getString("job_fam"));
 			utenteBean.setSubFam(rs.getString("sub_fam"));
 			utenteBean.setStdJob(rs.getString("std_job"));
-			utenteBean.setJobLevel(rs.getString("job_level"));
+			utenteBean.setJobLevel(rs.getString("job_level")); */
+			utenteBean.setDataNascita(rs.getDate("data_nascita"));
 			utenteBean.setDataUltAcc(rs.getDate("data_ult_acc"));
 			utenteBean.setDataUltMod(rs.getDate("data_ult_mod"));
 			utenteBean.setDataCreaz(rs.getDate("data_creaz"));
@@ -90,31 +95,25 @@ public class UtenteDao {
 
 	}
 
-	public int create(String email, String password, int ruoloId, String nome, String cognome, int valutatoreId,
-			String societaOp, String mansione, String ambito, String jobFam, String subFam, String stdJob,
-			String jobLevel) throws SQLException {
+	public int create(String email, String password, int ruoloId, String nome, String cognome, int valutatoreId, Date dataNascita) throws SQLException {
 
 		Statement stmt = conn.createStatement();
 		int rs = stmt.executeUpdate(
-				"INSERT INTO utente (email, password, ruolo_id, nome, cognome, valutatore_id, societa_op, mansione, ambito, job_fam, sub_fam, std_job, job_level) VALUES ('"
+				"INSERT INTO utente (email, password, ruolo_id, nome, cognome, valutatore_id, data_nascita) VALUES ('"
 						+ email + "', '" + password + "', " + ruoloId + ", '" + nome + "', '" + cognome + "', "
-						+ valutatoreId + ", '" + societaOp + "', '" + mansione + "', '" + ambito + "', '" + jobFam
-						+ "', '" + subFam + "', '" + stdJob + "', '" + jobLevel + "')");
+						+ valutatoreId + ", '" + dataNascita + "')");
 
 		conn.close();
 		return rs;
 	}
 
 	public int update(String email, String password, int ruoloId, String nome, String cognome, int valutatoreId,
-			String societaOp, String mansione, String ambito, String jobFam, String subFam, String stdJob,
-			String jobLevel, int utenteId) throws SQLException {
+			Date dataNascita, int utenteId) throws SQLException {
 
 		Statement stmt = conn.createStatement();
 		int rs = stmt.executeUpdate("UPDATE utente SET email = '" + email + "', password = '" + password
 				+ "', ruolo_id = " + ruoloId + ", nome = '" + nome + "', cognome = '" + cognome
-				+ "', valutatore_id = " + valutatoreId + ", societa_op = '" + societaOp + "', mansione = '"
-				+ mansione + "', ambito = '" + ambito + "', job_fam = '" + jobFam + "', sub_fam = '" + subFam
-				+ "', std_job = '" + stdJob + "', job_level = '" + jobLevel + "' WHERE utente_id = " + utenteId);
+				+ "', valutatore_id = " + valutatoreId + ", data_nascita = '" + dataNascita + "' WHERE utente_id = " + utenteId);
 
 		conn.close();
 		return rs;
@@ -152,13 +151,15 @@ public class UtenteDao {
 			utenteFound.setNome(rs.getString("nome"));
 			utenteFound.setCognome(rs.getString("cognome"));
 			utenteFound.setValutatoreId(rs.getInt("valutatore_id"));
+			/* 
 			utenteFound.setSocietaOp(rs.getString("societa_op"));
 			utenteFound.setMansione(rs.getString("mansione"));
 			utenteFound.setAmbito(rs.getString("ambito"));
 			utenteFound.setJobFam(rs.getString("job_fam"));
 			utenteFound.setSubFam(rs.getString("sub_fam"));
 			utenteFound.setStdJob(rs.getString("std_job"));
-			utenteFound.setJobLevel(rs.getString("job_level"));
+			utenteFound.setJobLevel(rs.getString("job_level")); */
+			utenteFound.setDataNascita(rs.getDate("data_nascita"));
 			utenteFound.setDataUltAcc(rs.getDate("data_ult_acc"));
 			utenteFound.setDataUltMod(rs.getDate("data_ult_mod"));
 			utenteFound.setDataCreaz(rs.getDate("data_creaz"));
@@ -167,6 +168,17 @@ public class UtenteDao {
 
 		conn.close();
 		return utenteFound;
+	}
+
+	public int updateLastAccess(int utenteId) throws SQLException {
+
+		Date lastAccessDate = null;
+
+		Statement stmt = conn.createStatement();
+		int rs = stmt.executeUpdate("UPDATE utente SET data_ult_acc = NOW() WHERE utente_id = " + utenteId);
+
+		conn.close();
+		return rs;
 	}
 
 	public HashMap<String, List<UtenteBean>> splitEvaluators(int soglia) throws SQLException {
@@ -190,6 +202,7 @@ public class UtenteDao {
 			utenteBean.setEmail(rs.getString("email"));
 			utenteBean.setNome(rs.getString("nome"));
 			utenteBean.setCognome(rs.getString("cognome"));
+			utenteBean.setDataNascita(rs.getDate("data_nascita"));
 			valutatoriPiu.add(utenteBean);
 		}
 
@@ -208,6 +221,7 @@ public class UtenteDao {
 			utenteBean.setEmail(rs.getString("email"));
 			utenteBean.setNome(rs.getString("nome"));
 			utenteBean.setCognome(rs.getString("cognome"));
+			utenteBean.setDataNascita(rs.getDate("data_nascita"));
 			valutatoriMeno.add(utenteBean);
 		}
 
@@ -233,5 +247,6 @@ public class UtenteDao {
 		conn.close();
 		return count;
 	}
+
 
 }
