@@ -1,48 +1,31 @@
-<%@ page import = "java.util.List"%>
-<%@ page import = "model.Dto.EvalCountDto" %>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Evaluators</title>
+    <meta charset="ISO-8859-1">
+    <title>Distribute Evaluators</title>
 </head>
 <body>
-    <form action="distributeEvaluators" method="get">
-        <h1>Evaluators Occupied <%= session.getAttribute("flg") %></h1>
-    <table border="1" aria-describedby="descriptionOccupied">
-            <caption id="descriptionOccupied">These are occupied evaluators.</caption>
-        <tr>
-            <th> Details</th>
-        </tr>
-        <%--
-        <%
-                    List<EvalCountDto> evaluatorsOccupied = (List<EvalCountDto>)request.getAttribute("valutatori_occupati");
-                    for (EvalCountDto count : evaluatorsOccupied) {
-                %>
-                <tr>
-                    <td><%= count.toString() %></td>
-                </tr>
-                <% } %>
-        --%>
-    </table>
+    <h1>Evaluators</h1>
 
-    <h1>Evaluators Available</h1>
-    <table border="1" aria-describedby="descriptionAvailable">
-        <caption id="descriptionAvailable">These are available evaluators.</caption>
-        <tr>
-            <th> Details</th>
-        </tr>
-        <%--
-        <%
-            List<EvalCountDto> evaluatorsFree = (List<EvalCountDto>)request.getAttribute("valutatori_disponibili");
-            for (EvalCountDto count : evaluatorsFree) {
-        %>
-        <tr>
-            <td><%= count.toString() %></td>
-        </tr>
-        <% } %>
-        --%>
-    </table>
-    
-    </form>   
+    <h2>Occupied Evaluators</h2>
+    <ul>
+        <c:forEach var="evaluator" items="${valutatori_occupati}">
+            <li>${evaluator.nome} ${evaluator.cognome} - ${evaluator.email}</li>
+        </c:forEach>
+    </ul>
+
+    <h2>Free Evaluators</h2>
+    <ul>
+        <c:forEach var="evaluator" items="${valutatori_disponibili}">
+            <li>${evaluator.nome} ${evaluator.cognome} - ${evaluator.email}</li>
+        </c:forEach>
+    </ul>
+
+    <!-- Form to trigger doPost method -->
+    <form action="distributeEvaluators" method="post">
+        <input type="submit" value="Rearrange Evaluators">
+    </form>
 </body>
 </html>

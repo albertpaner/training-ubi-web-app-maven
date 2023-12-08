@@ -166,8 +166,6 @@ public class UtenteDao {
 
     public int updateLastAccess(int utenteId) throws SQLException {
 
-        Date lastAccessDate = null;
-
         Statement stmt = conn.createStatement();
         int rs = stmt.executeUpdate("UPDATE utente SET data_ult_acc = NOW() WHERE utente_id = " + utenteId);
 
@@ -266,5 +264,13 @@ public class UtenteDao {
         }
 
         return utentiValutatiDa;
+    }
+
+    public boolean updateValutatoreId(int utenteId, int valutatoreId) throws SQLException {
+
+        Statement stmt = conn.createStatement();
+        int rs1 = stmt.executeUpdate("UPDATE utente SET valutatore_id = " + valutatoreId + " WHERE utente_id = " + utenteId);
+
+        return rs1 > 0;
     }
 }

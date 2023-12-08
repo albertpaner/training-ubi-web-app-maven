@@ -104,7 +104,7 @@ public class UtenteService {
         return usersToShow;
     }
 
-    public void rearrengeValutatori(HashMap<String, List<EvalCountDto>> usersToShow, int soglia) {
+    public void rearrengeValutatori(HashMap<String, List<EvalCountDto>> usersToShow, int soglia) throws SQLException {
 
         List<EvalCountDto> valutatoriOccupatiDto = usersToShow.get("valutatori_occupati");
         List<EvalCountDto> valutatoriDisponibiliDto = usersToShow.get("valutatori_disponibili");
@@ -113,20 +113,18 @@ public class UtenteService {
         for (EvalCountDto valutatore : valutatoriOccupatiDto) {
             evatorId = valutatore.getValutatoreId();
             List<UtenteBean> utentiValutatiDa = utenteDao.findValuedByEvaluator(evatorId);
-            utentiValutatiDa = sortingUtenti(utentiValutatiDa);
-        }
-    /*
-        if (utentiPiuValutati.size() > soglia) {
-            for (int i = utentiPiuValutati.size() - 1; i >= soglia; i--) {
-                UtenteBean utente = utentiPiuValutati.remove(i);
-                utentiMenoValutati.add(0, utente);
+            sortingUtenti(utentiValutatiDa);
+            if (utentiValutatiDa.size() > soglia) {
+                for (int i = utentiValutatiDa.size() - 1; i >= soglia; i--) {
+                    UtenteBean utenteSwap = utentiValutatiDa.remove(i);
+                    utenteDao.updateValutatoreId(utenteSwap.getUtenteId(), valutatoriDisponibiliDto.get(0).getValutatoreId());
+                }
             }
         }
-    */
 
     }
 
-    public List<UtenteBean> sortingUtenti(List<UtenteBean> utentiToSort) {
+    public void sortingUtenti(List<UtenteBean> utentiToSort) {
         Collections.sort(utentiToSort,
                 new Comparator<UtenteBean>() {
                     @Override
@@ -135,7 +133,6 @@ public class UtenteService {
                     }
                 }
         );
-        return utentiToSort;
     }
 
 }
