@@ -31,9 +31,9 @@
 	</servlet-mapping>
 
 	<welcome-file-list>
+		<welcome-file>login.jsp</welcome-file>
 		<welcome-file>distribute_evaluators.jsp</welcome-file>
 		<welcome-file>registration.jsp</welcome-file>
-		<welcome-file>login.jsp</welcome-file>
 	</welcome-file-list>
 
 </web-app>
