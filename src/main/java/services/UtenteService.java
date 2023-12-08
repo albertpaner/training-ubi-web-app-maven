@@ -173,7 +173,7 @@ public class UtenteService {
         List<EvalCountDto> valutatoriDisponibiliDto = new ArrayList<>();
 
         for (UtenteBean lord : lordsAndPeasants.keySet()) {
-            EvalCountDto evaluatorDto = CountConverter.toDto(lord);
+            EvalCountDto evaluatorDto = CountConverter.beanToDto(lord);
             int howManyPeasants = lordsAndPeasants.get(lord).size();
             evaluatorDto.setCount(howManyPeasants);
 

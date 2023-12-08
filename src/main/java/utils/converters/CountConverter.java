@@ -1,5 +1,8 @@
 package utils.converters;
 
+import model.Bean.UtenteBean;
+import model.Dto.EvalCountDto;
+
 public class CountConverter {
 
     /**
@@ -10,7 +13,7 @@ public class CountConverter {
      *
      * @return the EvalCountDto object
      * */
-    public static EvalCountDto toDto(UtenteBean utenteBean) {
+    public static EvalCountDto beanToDto(UtenteBean utenteBean) {
 
         EvalCountDto countDto = new EvalCountDto();
         
