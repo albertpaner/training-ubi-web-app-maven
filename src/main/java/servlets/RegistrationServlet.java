@@ -47,14 +47,6 @@ public class RegistrationServlet extends HttpServlet {
         String nome = request.getParameter("nome");
         String cognome = request.getParameter("cognome");
         int valutatoreId = Integer.parseInt(request.getParameter("valutatoreId"));
-        /*
-        String societaOp = request.getParameter("societaOp");
-        String mansione = request.getParameter("mansione");
-        String ambito = request.getParameter("ambito");
-        String jobFam = request.getParameter("jobFam");
-        String subFam = request.getParameter("subFam");
-        String stdJob = request.getParameter("stdJob");
-        String jobLevel = request.getParameter("jobLevel");*/
         Date dataNascita = Date.valueOf(request.getParameter("dataNascita"));
 
 

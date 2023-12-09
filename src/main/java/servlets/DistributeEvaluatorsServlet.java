@@ -22,14 +22,21 @@ import java.util.List;
 )
 public class DistributeEvaluatorsServlet extends HttpServlet {
 
-    /*
-    private UtenteService utenteService;
-    // dependency injection??
-    public DistributeEvaluatorsServlet() {
-        this.utenteService = new UtenteService(new UtenteDao(DBConnection.createConnection()));
-    }
-    * */
 
+    /**
+     * This method is called when the user clicks on the "Distribute Evaluators" button
+     * in the distribute_evaluators.jsp page.
+     * It takes the parameters from the request and calls the
+     * {@link services.UtenteService#getEvaluatorsOccupiedFree(int)} method
+     * of the UtenteService class.
+     *
+     * @param request  the HttpServletRequest object containing the request parameters
+     *                 (soglia)
+     * @param response the HttpServletResponse object containing the response
+     *                 (valutatori_occupati, valutatori_disponibili)
+     * @throws ServletException
+     * @throws IOException
+     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -47,17 +54,6 @@ public class DistributeEvaluatorsServlet extends HttpServlet {
 
         List<EvalCountDto> evaluatorsOccupied = evaluators.get("valutatori_occupati");
         List<EvalCountDto> evaluatorsFree = evaluators.get("valutatori_disponibili");
-         /*
-        List<EvalCountDto> evaluatorsOccupied = new ArrayList<>();
-        List<EvalCountDto> evaluatorsFree = new ArrayList<>();
-
-        // Add mock data to evaluatorsOccupied
-        EvalCountDto mockOccupied = new EvalCountDto(1, "OccupiedEvaluator1", "Last1", "occupied1@example.com", 8);
-        evaluatorsOccupied.add(mockOccupied);
-
-        // Add mock data to evaluatorsFree
-        EvalCountDto mockFree = new EvalCountDto(2, "FreeEvaluator1", "Last2", "free1@example.com", 3);
-        evaluatorsFree.add(mockFree);*/
 
         request.setAttribute("valutatori_occupati", evaluatorsOccupied);
         request.setAttribute("valutatori_disponibili", evaluatorsFree);
@@ -94,6 +90,7 @@ public class DistributeEvaluatorsServlet extends HttpServlet {
         UtenteService utenteService = new UtenteService(new UtenteDao(DBConnection.createConnection()));
         evaluators = utenteService.getEvaluatorsOccupiedFree(soglia);
         utenteService.rearrengeValutatori(evaluators, soglia);
+
         return evaluators;
     }
 }

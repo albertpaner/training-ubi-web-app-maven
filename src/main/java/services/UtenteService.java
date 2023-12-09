@@ -31,19 +31,19 @@ public class UtenteService {
      * It checks if the user already exists in the database.
      * If the user does not exist, it creates a new user in the database.
      *
-     * @param email The email of the user.
-     * @param password The password of the user.
-     * @param ruoloId The ID of the user's role.
-     * @param nome The name of the user.
-     * @param cognome The surname of the user.
+     * @param email        The email of the user.
+     * @param password     The password of the user.
+     * @param ruoloId      The ID of the user's role.
+     * @param nome         The name of the user.
+     * @param cognome      The surname of the user.
      * @param valutatoreId The ID of the user's evaluator.
-     * @param dataNascita The date of birth of the user.
+     * @param dataNascita  The date of birth of the user.
      * @return The ID of the created user.
-     * @throws SQLException If a database access error occurs.
+     * @throws SQLException                If a database access error occurs.
      * @throws RegistrationFailedException If the user already exists in the database.
      */
     public int registrazioneUtente(String email, String password, int ruoloId, String nome, String cognome,
-                                       int valutatoreId, Date dataNascita) throws SQLException, RegistrationFailedException {
+                                   int valutatoreId, Date dataNascita) throws SQLException, RegistrationFailedException {
 
         if (findByEmail(email).isPresent()) {
             throw new RegistrationFailedException("User already exists with the email: " + email);
@@ -82,10 +82,10 @@ public class UtenteService {
      * It checks if the user exists in the database and if the password is correct.
      * If the user exists and the password is correct, it issues a JWT token for the user.
      *
-     * @param email The email of the user.
+     * @param email    The email of the user.
      * @param password The password of the user.
      * @return A JWT token for the user.
-     * */
+     */
     public String loginUtente(String email, String password)
             throws ClassNotFoundException, SQLException, LoginUserNotFoundException, LoginPasswordFailedException {
 
@@ -118,7 +118,7 @@ public class UtenteService {
      * @param evatorId The ID of the evaluator.
      * @return A list of users who are assigned to the given evaluator.
      * @throws SQLException If a database access error occurs.
-     * */
+     */
     private List<UtenteBean> findValuedByEvaluator(int evatorId) throws SQLException {
         List<UtenteBean> allUsers = utenteDao.findAll();
         return allUsers.stream()
@@ -132,7 +132,7 @@ public class UtenteService {
      * It returns a HashMap where the keys are evaluators and the values are lists of users valued by the evaluator.
      *
      * @return A HashMap where the keys are evaluators and the values are lists of users.
-     * @throws SQLException If a database access error occurs.
+     * @throws SQLException           If a database access error occurs.
      * @throws ClassNotFoundException If the JDBC Driver class is not found.
      */
     private HashMap<UtenteBean, List<UtenteBean>> fetchEvaluatorsAndValued() throws SQLException, ClassNotFoundException {
@@ -161,7 +161,7 @@ public class UtenteService {
      *
      * @param soglia The threshold value for the number of users.
      * @return A HashMap where the keys are "valutatori_occupati" and "valutatori_disponibili", and the values are lists of EvalCountDto objects.
-     * @throws SQLException If a database access error occurs.
+     * @throws SQLException           If a database access error occurs.
      * @throws ClassNotFoundException If the JDBC Driver class is not found.
      */
     public HashMap<String, List<EvalCountDto>> getEvaluatorsOccupiedFree(int soglia)
@@ -197,7 +197,7 @@ public class UtenteService {
      * The reassignment is done based on the user's date of birth, with the youngest users being reassigned first.
      *
      * @param usersToShow A HashMap of evaluators and their corresponding users.
-     * @param soglia The threshold value for the number of users an evaluator can have.
+     * @param soglia      The threshold value for the number of users an evaluator can have.
      * @throws SQLException If a database access error occurs.
      */
     public void rearrengeValutatori(HashMap<String, List<EvalCountDto>> usersToShow, int soglia) throws SQLException {
@@ -227,14 +227,8 @@ public class UtenteService {
      * @param utentiToSort The list of UtenteBean objects to be sorted.
      */
     public void sortingUtentiEta(List<UtenteBean> utentiToSort) {
-        Collections.sort(utentiToSort,
-                new Comparator<UtenteBean>() {
-                    @Override
-                    public int compare(UtenteBean u1, UtenteBean u2) {
-                        return u1.getDataNascita().compareTo(u2.getDataNascita());
-                    }
-                }
-        );
+        //utentiToSort.sort((u1, u2) -> u1.getDataNascita().compareTo(u2.getDataNascita()));
+        utentiToSort.sort(Comparator.comparing(UtenteBean::getDataNascita));
     }
 
 }

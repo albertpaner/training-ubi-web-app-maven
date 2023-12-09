@@ -1,53 +1,28 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
+<head>
+    <meta charset="UTF-8">
+    <title>User Registration</title>
+</head>
 <body>
-
-<h2>Registration Form</h2>
-
-<form action="RegistrationServlet" method="post">
-    <div class="container">
-        <label for="email"><b>Email</b></label>
-        <input type="text" placeholder="Enter Email" name="email" required>
-
-        <label for="password"><b>Password</b></label>
-        <input type="password" placeholder="Enter Password" name="password" required>
-
-        <label for="ruoloId"><b>Ruolo ID</b></label>
-        <input type="number" placeholder="Enter Ruolo ID" name="ruoloId" required>
-
-        <label for="nome"><b>Nome</b></label>
-        <input type="text" placeholder="Enter Nome" name="nome" required>
-
-        <label for="cognome"><b>Cognome</b></label>
-        <input type="text" placeholder="Enter Cognome" name="cognome" required>
-
-        <label for="responsabileId"><b>Responsabile ID</b></label>
-        <input type="number" placeholder="Enter Responsabile ID" name="responsabileId" required>
-
-        <label for="societaOp"><b>Societa Op</b></label>
-        <input type="text" placeholder="Enter Societa Op" name="societaOp" required>
-
-        <label for="mansione"><b>Mansione</b></label>
-        <input type="text" placeholder="Enter Mansione" name="mansione" required>
-
-        <label for="ambito"><b>Ambito</b></label>
-        <input type="text" placeholder="Enter Ambito" name="ambito" required>
-
-        <label for="jobFam"><b>Job Fam</b></label>
-        <input type="text" placeholder="Enter Job Fam" name="jobFam" required>
-
-        <label for="subFam"><b>Sub Fam</b></label>
-        <input type="text" placeholder="Enter Sub Fam" name="subFam" required>
-
-        <label for="stdJob"><b>Std Job</b></label>
-        <input type="text" placeholder="Enter Std Job" name="stdJob" required>
-
-        <label for="jobLevel"><b>Job Level</b></label>
-        <input type="text" placeholder="Enter Job Level" name="jobLevel" required>
-
-        <button type="submit">Register</button>
-    </div>
-</form>
-
+    <h2>User Registration Form</h2>
+    <form action="register" method="post">
+        <label for="email">Email:</label><br>
+        <input type="email" id="email" name="email" required><br>
+        <label for="password">Password:</label><br>
+        <input type="password" id="password" name="password" required><br>
+        <label for="ruoloId">Role ID:</label><br>
+        <input type="number" id="ruoloId" name="ruoloId" required><br>
+        <label for="nome">Name:</label><br>
+        <input type="text" id="nome" name="nome" required><br>
+        <label for="cognome">Surname:</label><br>
+        <input type="text" id="cognome" name="cognome" required><br>
+        <label for="valutatoreId">Evaluator ID:</label><br>
+        <input type="number" id="valutatoreId" name="valutatoreId" required><br>
+        <label for="dataNascita">Date of Birth:</label><br>
+        <input type="date" id="dataNascita" name="dataNascita" required><br>
+        <input type="submit" value="Register">
+    </form>
 </body>
 </html>
