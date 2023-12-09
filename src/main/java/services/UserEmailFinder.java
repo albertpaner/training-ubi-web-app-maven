@@ -1,6 +1,6 @@
 package services;
 
-import model.Bean.UtenteBean;
+import model.bean.UtenteBean;
 
 import java.sql.SQLException;
 import java.util.Optional;

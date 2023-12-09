@@ -1,7 +1,7 @@
 package utils.converters;
 
-import model.Dto.ValutazioneDto;
-import model.Bean.ValutazioneBean;
+import model.dto.ValutazioneDto;
+import model.bean.ValutazioneBean;
 
 public class ValutazioneConverter {
 

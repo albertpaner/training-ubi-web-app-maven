@@ -2,9 +2,8 @@ package servlets;
 
 import exceptions.LoginPasswordFailedException;
 import exceptions.LoginUserNotFoundException;
-import model.Dao.UtenteDao;
+import model.dao.UtenteDao;
 import services.user.UtenteLogin;
-import utils.DBConnection;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -42,7 +41,7 @@ public class LoginServlet extends HttpServlet {
         String password = request.getParameter("password");
 
         try {
-            UtenteLogin utenteLoginService = new UtenteLogin(new UtenteDao(DBConnection.createConnection()));
+            UtenteLogin utenteLoginService = new UtenteLogin(new UtenteDao());
             String jwt = utenteLoginService.loginUtente(email, password);
 
             HttpSession session = request.getSession();

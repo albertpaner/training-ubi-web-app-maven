@@ -1,6 +1,4 @@
-package model.Dto;
-
-import model.Bean.ValutazioneBean;
+package model.dto;
 
 public class ValutazioneDto {
     private int valutazioneId;

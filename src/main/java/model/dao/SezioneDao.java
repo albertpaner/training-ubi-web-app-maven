@@ -1,4 +1,4 @@
-package model.Dao;
+package model.dao;
 
 import java.sql.Connection;
 import java.sql.Date;
@@ -13,7 +13,7 @@ import java.util.List;
 
 //import com.mysql.cj.xdevapi.Statement;
 
-import model.Bean.SezioneBean;
+import model.bean.SezioneBean;
 import utils.DBConnection;
 
 public class SezioneDao {

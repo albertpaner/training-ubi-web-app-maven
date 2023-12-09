@@ -1,7 +1,6 @@
-package model.Dao;
+package model.dao;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -9,7 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.Bean.ParametriBean;
+import model.bean.ParametriBean;
 import utils.DBConnection;
 
 public class ParametriDao {

@@ -1,4 +1,4 @@
-package model.Dto;
+package model.dto;
 
 /**
  * This class represents a Data Transfer Object for the evaluator identity

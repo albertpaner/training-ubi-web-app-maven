@@ -1,7 +1,7 @@
 package utils.converters;
 
-import model.Bean.RuoloBean;
-import model.Dto.RuoloDto;
+import model.bean.RuoloBean;
+import model.dto.RuoloDto;
 
 public class RuoloConverter {
 

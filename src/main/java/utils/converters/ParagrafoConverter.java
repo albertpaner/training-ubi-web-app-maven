@@ -1,7 +1,7 @@
 package utils.converters;
 
-import model.Bean.ParagrafoBean;
-import model.Dto.ParagrafoDto;
+import model.bean.ParagrafoBean;
+import model.dto.ParagrafoDto;
 
 public class ParagrafoConverter {
 	

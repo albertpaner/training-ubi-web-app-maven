@@ -1,7 +1,7 @@
 package utils.converters;
 
-import model.Bean.UtenteBean;
-import model.Dto.UtenteDto;
+import model.bean.UtenteBean;
+import model.dto.UtenteDto;
 
 public class UtenteConverter {
 

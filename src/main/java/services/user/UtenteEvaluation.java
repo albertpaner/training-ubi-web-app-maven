@@ -1,16 +1,13 @@
 package services.user;
 
-import model.Bean.UtenteBean;
-import model.Dao.UtenteDao;
-import model.Dto.EvalCountDto;
+import model.bean.UtenteBean;
+import model.dao.UtenteDao;
+import model.dto.EvalCountDto;
 import services.UtenteService;
 import utils.converters.CountConverter;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 public class UtenteEvaluation extends UtenteService {
 
@@ -113,13 +110,26 @@ public class UtenteEvaluation extends UtenteService {
         int evatorId = 0;
 
         for (EvalCountDto valutatore : valutatoriOccupatiDto) {
+
             evatorId = valutatore.getValutatoreId();
             List<UtenteBean> utentiValutatiDa = findValuedByEvaluator(evatorId);
             sortingUtentiEta(utentiValutatiDa);
+
             if (utentiValutatiDa.size() > soglia) {
+
                 for (int i = utentiValutatiDa.size() - 1; i >= soglia; i--) {
                     UtenteBean utenteChange = utentiValutatiDa.remove(i);
-                    //updateValutatoreId(utenteChange.getUtenteId(), valutatoriDisponibiliDto.get(0).getValutatoreId());
+
+                    utenteDao.update(Arrays.asList(
+                            utenteChange.getEmail(),
+                            utenteChange.getPassword(),
+                            utenteChange.getRuoloId(),
+                            utenteChange.getNome(),
+                            utenteChange.getCognome(),
+                            valutatoriDisponibiliDto.get(0).getValutatoreId(),
+                            utenteChange.getDataNascita(),
+                            utenteChange.getUtenteId()
+                    ));
                 }
             }
         }

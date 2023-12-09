@@ -2,8 +2,8 @@ package services.user;
 
 import exceptions.LoginPasswordFailedException;
 import exceptions.LoginUserNotFoundException;
-import model.Bean.UtenteBean;
-import model.Dao.UtenteDao;
+import model.bean.UtenteBean;
+import model.dao.UtenteDao;
 import services.UtenteService;
 import utils.EncryptJwt;
 import utils.Hasher;

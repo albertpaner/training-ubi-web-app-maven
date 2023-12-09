@@ -1,4 +1,4 @@
-package model.Bean;
+package model.bean;
 
 public class RuoloBean {
 

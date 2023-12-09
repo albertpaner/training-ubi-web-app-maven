@@ -1,4 +1,4 @@
-package model.Dao;
+package model.dao;
 
 import java.sql.Connection;
 import java.sql.Date;
@@ -9,7 +9,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.Bean.ParagrafoBean;
+import model.bean.ParagrafoBean;
 import utils.DBConnection;
 
 public class ParagrafoDao {

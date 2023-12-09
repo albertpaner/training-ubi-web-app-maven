@@ -1,7 +1,7 @@
 package utils.converters;
 
-import model.Bean.ParametriBean;
-import model.Dto.ParametriDto;
+import model.bean.ParametriBean;
+import model.dto.ParametriDto;
 
 public class ParametriConverter {
     public ParametriDto toDto(ParametriBean parametriBean) {

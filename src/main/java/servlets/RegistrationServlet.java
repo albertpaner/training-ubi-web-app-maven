@@ -1,9 +1,8 @@
 package servlets;
 
 import exceptions.RegistrationFailedException;
-import model.Dao.UtenteDao;
+import model.dao.UtenteDao;
 import services.user.UtenteRegister;
-import utils.DBConnection;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,6 +13,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.Date;
 import java.sql.SQLException;
+import java.util.Arrays;
 
 @WebServlet(
         name = "RegistrationServlet",
@@ -53,8 +53,9 @@ public class RegistrationServlet extends HttpServlet {
 
         HttpSession session = request.getSession();
         try {
-            UtenteRegister utenteRegisterService = new UtenteRegister(new UtenteDao(DBConnection.createConnection()));
-            if (utenteRegisterService.registrazioneUtente(email, password, ruoloId, nome, cognome, valutatoreId, dataNascita)>0) {
+            UtenteRegister utenteRegisterService = new UtenteRegister(new UtenteDao());
+
+            if (utenteRegisterService.registrazioneUtente(Arrays.asList(email, password, ruoloId, nome, cognome, valutatoreId, dataNascita))>0) {
                 session.setAttribute("successMsg", "Registered Successfully");
                 response.sendRedirect("register_success.jsp");
             } else {

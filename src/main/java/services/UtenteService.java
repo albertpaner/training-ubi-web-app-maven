@@ -1,7 +1,7 @@
 package services;
 
-import model.Bean.UtenteBean;
-import model.Dao.UtenteDao;
+import model.bean.UtenteBean;
+import model.dao.UtenteDao;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -21,13 +21,13 @@ public abstract class UtenteService implements UserEmailFinder{
     }
 
     /**
-     * This method returns an optional user from the database based on the user's email.
-     * If the user exists, the method returns an Optional object containing the user.
-     * If the user does not exist, the method returns an empty Optional object.
+     * This method searches for a user in the database based on their email.
+     * It returns an Optional<UtenteBean> object that contains the user if found, or an empty Optional if the user is not found.
+     * The method also filters out users who have been marked for deletion (isFlgDel() returns true).
      *
-     * @param email
-     * @return
-     * @throws SQLException
+     * @param email The email of the user to be searched.
+     * @return An Optional<UtenteBean> object that contains the user if found, or an empty Optional if the user is not found.
+     * @throws SQLException If a database access error occurs.
      */
     public Optional<UtenteBean> findByEmail(String email) throws SQLException {
         List<UtenteBean> allUsers = utenteDao.findAll();

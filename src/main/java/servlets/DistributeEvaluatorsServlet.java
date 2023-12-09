@@ -1,7 +1,7 @@
 package servlets;
 
-import model.Dao.UtenteDao;
-import model.Dto.EvalCountDto;
+import model.dao.UtenteDao;
+import model.dto.EvalCountDto;
 import services.user.UtenteEvaluation;
 import utils.DBConnection;
 
@@ -79,7 +79,7 @@ public class DistributeEvaluatorsServlet extends HttpServlet {
         HashMap<String, List<EvalCountDto>> evaluators = new HashMap<>();
         try {
             evaluators = fetchEvaluators(3);
-            UtenteEvaluation utenteEvaluation = new UtenteEvaluation(new UtenteDao(DBConnection.createConnection()));
+            UtenteEvaluation utenteEvaluation = new UtenteEvaluation(new UtenteDao());
             utenteEvaluation.rearrengeValutatori(evaluators, 3);
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
@@ -112,7 +112,7 @@ public class DistributeEvaluatorsServlet extends HttpServlet {
      * */
     private HashMap<String, List<EvalCountDto>> fetchEvaluators(int soglia) throws ClassNotFoundException, SQLException {
         HashMap<String, List<EvalCountDto>> evaluators = new HashMap<>();
-        UtenteEvaluation utenteEvaluation = new UtenteEvaluation(new UtenteDao(DBConnection.createConnection()));
+        UtenteEvaluation utenteEvaluation = new UtenteEvaluation(new UtenteDao());
         evaluators = utenteEvaluation.getEvaluatorsOccupiedFree(soglia);
         utenteEvaluation.rearrengeValutatori(evaluators, soglia);
 

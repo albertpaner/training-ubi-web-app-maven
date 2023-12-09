@@ -1,4 +1,4 @@
-package model.Dao;
+package model.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -8,7 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.Bean.ValutazioneBean;
+import model.bean.ValutazioneBean;
 import utils.DBConnection;
 
 public class ValutazioneDao {

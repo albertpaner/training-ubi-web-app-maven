@@ -1,7 +1,7 @@
 package utils.converters;
 
-import model.Bean.SezioneBean;
-import model.Dto.SezioneDto;
+import model.bean.SezioneBean;
+import model.dto.SezioneDto;
 
 public class SezioneConverter{
 

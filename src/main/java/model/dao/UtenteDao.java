@@ -1,19 +1,17 @@
-package model.Dao;
+package model.dao;
 
-import model.Bean.UtenteBean;
+import model.bean.UtenteBean;
+import utils.DBConnection;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class UtenteDao {
-    private Connection conn;
 
-    public UtenteDao() {
-    }
-
-    public UtenteDao(Connection conn) throws ClassNotFoundException, SQLException {
-        this.conn = conn;
+    protected final Connection conn;
+    public UtenteDao() throws SQLException, ClassNotFoundException {
+        this.conn = DBConnection.createConnection();
     }
 
     /**
@@ -22,7 +20,7 @@ public class UtenteDao {
      *
      * @return A list of all the users in the database.
      * @throws SQLException If a database access error occurs or this method is called on a closed connection.
-     * */
+     */
     public List<UtenteBean> findAll() throws SQLException {
 
         List<UtenteBean> listaUtenti = new ArrayList<>();
@@ -38,14 +36,6 @@ public class UtenteDao {
             utenteBean.setNome(rs.getString("nome"));
             utenteBean.setCognome(rs.getString("cognome"));
             utenteBean.setValutatoreId(rs.getInt("valutatore_id"));
-			/* 
-			utenteBean.setSocietaOp(rs.getString("societa_op"));
-			utenteBean.setMansione(rs.getString("mansione"));
-			utenteBean.setAmbito(rs.getString("ambito"));
-			utenteBean.setJobFam(rs.getString("job_fam"));
-			utenteBean.setSubFam(rs.getString("sub_fam"));
-			utenteBean.setStdJob(rs.getString("std_job"));
-			utenteBean.setJobLevel(rs.getString("job_level")); */
             utenteBean.setDataNascita(rs.getDate("data_nascita"));
             utenteBean.setDataUltAcc(rs.getDate("data_ult_acc"));
             utenteBean.setDataUltMod(rs.getDate("data_ult_mod"));
@@ -67,7 +57,7 @@ public class UtenteDao {
      * @param utenteId The ID of the user to be found.
      * @return The user with the specified ID.
      * @throws SQLException If a database access error occurs or this method is called on a closed connection.
-     * */
+     */
     public UtenteBean findById(int utenteId) throws SQLException {
 
         UtenteBean utenteBean = new UtenteBean();
@@ -98,18 +88,18 @@ public class UtenteDao {
      * this method corresponds to CREATE operation on the database.
      * It creates a new user in the database.
      *
-     * @param email The email of the user to be created.
-     * @param password The password of the user to be created.
-     * @param ruoloId The role ID of the user to be created.
-     * @param nome The name of the user to be created.
-     * @param cognome The surname of the user to be created.
-     * @param valutatoreId The ID of the user's evaluator.
-     * @param dataNascita The date of birth of the user to be created.
-     *
+     * @param userParams A list of parameters to be inserted in the database.
      * @return The number of rows affected by the insert operation.
      * @throws SQLException If a database access error occurs or this method is called on a closed connection.
-     * */
-    public int create(String email, String password, int ruoloId, String nome, String cognome, int valutatoreId, Date dataNascita) throws SQLException {
+     */
+    public int create(List<Object> userParams) throws SQLException {
+        String email = (String) userParams.get(0);
+        String password = (String) userParams.get(1);
+        int ruoloId = (Integer) userParams.get(2);
+        String nome = (String) userParams.get(3);
+        String cognome = (String) userParams.get(4);
+        int valutatoreId = (Integer) userParams.get(5);
+        Date dataNascita = (Date) userParams.get(6);
 
         Statement stmt = conn.createStatement();
         int rs = stmt.executeUpdate(
@@ -123,21 +113,21 @@ public class UtenteDao {
 
     /**
      * this method corresponds to UPDATE operation on the database.
-     * It updates an existing user or inserts a new user in the database.
+     * It updates an existing user in the database.
      *
-     * @param email The email of the user to be updated.
-     * @param password The password of the user to be updated.
-     * @param ruoloId The role ID of the user to be updated.
-     * @param nome The name of the user to be updated.
-     * @param cognome The surname of the user to be updated
-     * @param valutatoreId The ID of the user's evaluator.
-     * @param dataNascita The date of birth of the user to be updated.
-     *
+     * @param userParams A list of user parameters to be updated in the database.
      * @return The number of rows affected by the update operation.
      * @throws SQLException If a database access error occurs or this method is called on a closed connection.
-     * */
-    public int update(String email, String password, int ruoloId, String nome, String cognome, int valutatoreId,
-                      Date dataNascita, int utenteId) throws SQLException {
+     */
+    public int update(List<Object> userParams) throws SQLException {
+        String email = (String) userParams.get(0);
+        String password = (String) userParams.get(1);
+        int ruoloId = (Integer) userParams.get(2);
+        String nome = (String) userParams.get(3);
+        String cognome = (String) userParams.get(4);
+        int valutatoreId = (Integer) userParams.get(5);
+        Date dataNascita = (Date) userParams.get(6);
+        int utenteId = (Integer) userParams.get(7);
 
         Statement stmt = conn.createStatement();
         int rs = stmt.executeUpdate("UPDATE utente SET email = '" + email + "', password = '" + password
@@ -155,8 +145,8 @@ public class UtenteDao {
      * @param utenteId The ID of the user to be deleted.
      * @return The number of rows affected by the update operation.
      * @throws SQLException If a database access error occurs or this method is called on a closed connection.
-     * */
-    public int logicDelete(int utenteId) throws SQLException {
+     */
+    public int logicalDelete(int utenteId) throws SQLException {
 
         Statement stmt = conn.createStatement();
         int rs = stmt.executeUpdate("UPDATE utente SET flg_del = 1 WHERE utente_id = " + utenteId);
@@ -172,7 +162,7 @@ public class UtenteDao {
      * @param utenteId The ID of the user to be deleted.
      * @return The number of rows affected by the delete operation.
      * @throws SQLException If a database access error occurs or this method is called on a closed connection.
-     * */
+     */
     public int delete(int utenteId) throws SQLException {
 
         Statement stmt = conn.createStatement();

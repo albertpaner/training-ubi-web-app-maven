@@ -2,8 +2,8 @@ package utils;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
-import model.Bean.UtenteBean;
-import model.Dao.UtenteDao;
+import model.bean.UtenteBean;
+import model.dao.UtenteDao;
 
 import java.io.File;
 import java.io.FileInputStream;

@@ -1,7 +1,7 @@
 package utils.converters;
 
-import model.Bean.UtenteBean;
-import model.Dto.EvalCountDto;
+import model.bean.UtenteBean;
+import model.dto.EvalCountDto;
 
 public class CountConverter {
 
