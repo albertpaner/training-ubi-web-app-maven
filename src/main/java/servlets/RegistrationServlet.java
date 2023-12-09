@@ -2,7 +2,7 @@ package servlets;
 
 import exceptions.RegistrationFailedException;
 import model.Dao.UtenteDao;
-import services.UtenteService;
+import services.user.UtenteRegister;
 import utils.DBConnection;
 
 import javax.servlet.ServletException;
@@ -21,8 +21,8 @@ import java.sql.SQLException;
 )
 public class RegistrationServlet extends HttpServlet {
 
-
     /**
+     *  Handles the HTTP POST method for user registration.
      *  This method is called when the user clicks on the "Register" button
      *  in the register.jsp page.
      *  It takes the parameters from the request and calls the registration method
@@ -36,6 +36,7 @@ public class RegistrationServlet extends HttpServlet {
      *                  (successMsg or errorMsg)
      *  @throws ServletException
      *  @throws IOException
+     *  @see services.user.UtenteRegister#registrazioneUtente(String, String, int, String, String, int, Date)
      *
      */
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -52,7 +53,7 @@ public class RegistrationServlet extends HttpServlet {
 
         HttpSession session = request.getSession();
         try {
-            UtenteService utenteRegisterService = new UtenteService(new UtenteDao(DBConnection.createConnection()));
+            UtenteRegister utenteRegisterService = new UtenteRegister(new UtenteDao(DBConnection.createConnection()));
             if (utenteRegisterService.registrazioneUtente(email, password, ruoloId, nome, cognome, valutatoreId, dataNascita)>0) {
                 session.setAttribute("successMsg", "Registered Successfully");
                 response.sendRedirect("register_success.jsp");

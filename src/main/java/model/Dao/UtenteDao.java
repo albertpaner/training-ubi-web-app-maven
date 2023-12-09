@@ -82,14 +82,6 @@ public class UtenteDao {
             utenteBean.setNome(rs.getString("nome"));
             utenteBean.setCognome(rs.getString("cognome"));
             utenteBean.setValutatoreId(rs.getInt("valutatore_id"));
-			/* 
-			utenteBean.setSocietaOp(rs.getString("societa_op"));
-			utenteBean.setMansione(rs.getString("mansione"));
-			utenteBean.setAmbito(rs.getString("ambito"));
-			utenteBean.setJobFam(rs.getString("job_fam"));
-			utenteBean.setSubFam(rs.getString("sub_fam"));
-			utenteBean.setStdJob(rs.getString("std_job"));
-			utenteBean.setJobLevel(rs.getString("job_level")); */
             utenteBean.setDataNascita(rs.getDate("data_nascita"));
             utenteBean.setDataUltAcc(rs.getDate("data_ult_acc"));
             utenteBean.setDataUltMod(rs.getDate("data_ult_mod"));
@@ -207,114 +199,5 @@ public class UtenteDao {
         return rs;
     }
 
-    /**
-     * This method updates the last modification time of a user in the database.
-     * The last modification time is set to the current time.
-     * @param utenteId The ID of the user whose last modification time is to be updated.
-     * @return The number of rows affected by the update operation.
-     * @throws SQLException If a database access error occurs or this method is called on a closed connection.
-     */
-    public int updateValutatoreId(int utenteId, int valutatoreId) throws SQLException {
-
-        Statement stmt = conn.createStatement();
-        int rs = stmt.executeUpdate("UPDATE utente SET valutatore_id = " + valutatoreId + " WHERE utente_id = " + utenteId);
-
-        return rs;
-    }
-
-    /*
-    public HashMap<String, List<UtenteBean>> splitEvaluators(int soglia) throws SQLException {
-
-        HashMap<String, List<UtenteBean>> resultMap = new HashMap<>();
-        List<UtenteBean> valutatoriPiu = new ArrayList<>();
-        List<UtenteBean> valutatoriMeno = new ArrayList<>();
-
-        Statement stmt = conn.createStatement();
-
-        ResultSet rs = stmt.executeQuery(
-                "SELECT user_id, nome, cognome, email FROM utente WHERE utente_id IN (" +
-                        "SELECT valutatore_id" +
-                        "FROM utente WHERE ruolo_id = 1" +
-                        "GROUP BY valutatore_id" +
-                        "HAVING COUNT(valutatore_id) >= " + soglia + ");");
-
-        while (rs.next()) {
-            UtenteBean utenteBean = new UtenteBean();
-            utenteBean.setUtenteId(rs.getInt("valutatore_id"));
-            utenteBean.setEmail(rs.getString("email"));
-            utenteBean.setNome(rs.getString("nome"));
-            utenteBean.setCognome(rs.getString("cognome"));
-            utenteBean.setDataNascita(rs.getDate("data_nascita"));
-            valutatoriPiu.add(utenteBean);
-        }
-
-        resultMap.put("valutatori_occupati", valutatoriPiu);
-
-        rs = stmt.executeQuery(
-                "SELECT user_id, nome, cognome, email FROM utente WHERE utente_id IN (" +
-                        "SELECT valutatore_id" +
-                        "FROM utente WHERE ruolo_id = 1" +
-                        "GROUP BY valutatore_id" +
-                        "HAVING COUNT(valutatore_id) < " + soglia + ");");
-
-        while (rs.next()) {
-            UtenteBean utenteBean = new UtenteBean();
-            utenteBean.setUtenteId(rs.getInt("valutatore_id"));
-            utenteBean.setEmail(rs.getString("email"));
-            utenteBean.setNome(rs.getString("nome"));
-            utenteBean.setCognome(rs.getString("cognome"));
-            utenteBean.setDataNascita(rs.getDate("data_nascita"));
-            valutatoriMeno.add(utenteBean);
-        }
-
-        resultMap.put("valutatori_disponibili", valutatoriMeno);
-
-        conn.close();
-
-        return resultMap;
-    }
-
-    public int countValuedByEvaluator(int evalId) throws ClassNotFoundException, SQLException {
-        int count = 0;
-
-        PreparedStatement ps = conn.prepareStatement("SELECT COUNT(*) FROM utente" +
-                "WHERE ruolo_id = 2 AND valutatore_id = ?");
-        ps.setFloat(1, evalId);
-        ResultSet rs = ps.executeQuery();
-
-        if (rs.next()) {
-            count = rs.getInt(1);
-        }
-
-        conn.close();
-        return count;
-    }
-
-
-    public List<UtenteBean> findValuedByEvaluator(int evatorId) throws SQLException {
-        List<UtenteBean> utentiValutatiDa = new ArrayList<>();
-
-        Statement stmt = conn.createStatement();
-        ResultSet rs = stmt.executeQuery("SELECT * FROM utente WHERE ruolo_id = 2 AND valutatore_id = " + evatorId);
-        while (rs.next()) {
-            UtenteBean utenteBean = new UtenteBean();
-            utenteBean.setUtenteId(rs.getInt("utente_id"));
-            utenteBean.setEmail(rs.getString("email"));
-            utenteBean.setPassword(rs.getString("password"));
-            utenteBean.setRuoloId(rs.getInt("ruolo_id"));
-            utenteBean.setNome(rs.getString("nome"));
-            utenteBean.setCognome(rs.getString("cognome"));
-            utenteBean.setValutatoreId(rs.getInt("valutatore_id"));
-            utenteBean.setDataNascita(rs.getDate("data_nascita"));
-            utenteBean.setDataUltAcc(rs.getDate("data_ult_acc"));
-            utenteBean.setDataUltMod(rs.getDate("data_ult_mod"));
-            utenteBean.setDataCreaz(rs.getDate("data_creaz"));
-            utenteBean.setFlgDel(rs.getBoolean("flg_del"));
-            utentiValutatiDa.add(utenteBean);
-        }
-
-        return utentiValutatiDa;
-    }
-    */
 
 }

@@ -2,7 +2,7 @@ package servlets;
 
 import model.Dao.UtenteDao;
 import model.Dto.EvalCountDto;
-import services.UtenteService;
+import services.user.UtenteEvaluation;
 import utils.DBConnection;
 
 import javax.servlet.ServletException;
@@ -24,18 +24,16 @@ public class DistributeEvaluatorsServlet extends HttpServlet {
 
 
     /**
-     * This method is called when the user clicks on the "Distribute Evaluators" button
-     * in the distribute_evaluators.jsp page.
-     * It takes the parameters from the request and calls the
-     * {@link services.UtenteService#getEvaluatorsOccupiedFree(int)} method
-     * of the UtenteService class.
+     * Handles the HTTP GET method for displaying evaluators.
+     * This method is called when the servlet receives a GET request.
+     * It fetches all evaluators and their corresponding users from the database.
+     * It returns a HashMap where the keys are evaluators and the values are lists of users valued by the evaluator.
+     * @param request  The request object that contains the request the client has made of the servlet.
+     * @param response The response object that contains the response the servlet sends to the client.
+     * @throws ServletException If the request for the GET could not be handled.
+     * @throws IOException      If an input or output error is detected when the servlet handles the GET request.
      *
-     * @param request  the HttpServletRequest object containing the request parameters
-     *                 (soglia)
-     * @param response the HttpServletResponse object containing the response
-     *                 (valutatori_occupati, valutatori_disponibili)
-     * @throws ServletException
-     * @throws IOException
+     * @see #fetchEvaluators(int)
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -61,6 +59,19 @@ public class DistributeEvaluatorsServlet extends HttpServlet {
         request.getRequestDispatcher("distribute_evaluators.jsp").forward(request, response);
     }
 
+    /**
+     * Handles the HTTP POST method for rearranging evaluators.
+     * This method is called when the servlet receives a POST request.
+     * It fetches all evaluators and their corresponding users from the database.
+     * It then calls the `rearrengeValutatori` method to rearrange the evaluators.
+     * This method is triggered when a button is pressed on the front-end.
+     *
+     * @param request  The request object that contains the request the client has made of the servlet.
+     * @param response The response object that contains the response the servlet sends to the client.
+     * @throws ServletException If the request for the POST could not be handled.
+     * @throws IOException      If an input or output error is detected when the servlet handles the POST request.
+     *
+     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -68,6 +79,8 @@ public class DistributeEvaluatorsServlet extends HttpServlet {
         HashMap<String, List<EvalCountDto>> evaluators = new HashMap<>();
         try {
             evaluators = fetchEvaluators(3);
+            UtenteEvaluation utenteEvaluation = new UtenteEvaluation(new UtenteDao(DBConnection.createConnection()));
+            utenteEvaluation.rearrengeValutatori(evaluators, 3);
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }
@@ -85,11 +98,23 @@ public class DistributeEvaluatorsServlet extends HttpServlet {
         request.getRequestDispatcher("distribute_evaluators.jsp").forward(request, response);
     }
 
+    /**
+     * This method returns a HashMap where the keys are "valutatori_occupati" and "valutatori_disponibili",
+     * and the values are lists of EvalCountDto objects.
+     *
+     * @param soglia The threshold value for the number of users.
+     * @return A HashMap where the keys are "valutatori_occupati" and "valutatori_disponibili", and the values are lists of EvalCountDto objects.
+     * @throws SQLException           If a database access error occurs.
+     * @throws ClassNotFoundException If the JDBC Driver class is not found.
+     *
+     * @see EvalCountDto
+     * @see UtenteEvaluation#getEvaluatorsOccupiedFree(int)
+     * */
     private HashMap<String, List<EvalCountDto>> fetchEvaluators(int soglia) throws ClassNotFoundException, SQLException {
         HashMap<String, List<EvalCountDto>> evaluators = new HashMap<>();
-        UtenteService utenteService = new UtenteService(new UtenteDao(DBConnection.createConnection()));
-        evaluators = utenteService.getEvaluatorsOccupiedFree(soglia);
-        utenteService.rearrengeValutatori(evaluators, soglia);
+        UtenteEvaluation utenteEvaluation = new UtenteEvaluation(new UtenteDao(DBConnection.createConnection()));
+        evaluators = utenteEvaluation.getEvaluatorsOccupiedFree(soglia);
+        utenteEvaluation.rearrengeValutatori(evaluators, soglia);
 
         return evaluators;
     }

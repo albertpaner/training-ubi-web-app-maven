@@ -1,9 +1,13 @@
 package model.Dto;
 
+/**
+ * This class represents a Data Transfer Object for the evaluator identity
+ * and the number of users valued by the evaluator.
+ * */
 public class EvalCountDto {
 
     private int valutatoreId;
-    private String nome;
+	private String nome;
     private String cognome;
     private String email;
     private int count = 0;
