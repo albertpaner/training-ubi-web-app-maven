@@ -13,14 +13,7 @@ public class UtenteConverter {
 		utenteDto.setRoleId(utenteBean.getRuoloId());
 		utenteDto.setFirstName(utenteBean.getNome());
 		utenteDto.setLastName(utenteBean.getCognome());
-		utenteDto.setUserManagerId(utenteBean.getValutatoreId());
-		utenteDto.setCompanyOp(utenteBean.getSocietaOp());
-		utenteDto.setUserJob(utenteBean.getMansione());
-		utenteDto.setUserScope(utenteBean.getAmbito());
-		utenteDto.setUserJobFamily(utenteBean.getJobFam());
-		utenteDto.setUserSubFamily(utenteBean.getSubFam());
-		utenteDto.setUserStandardJob(utenteBean.getStdJob());
-		utenteDto.setUserJobLevel(utenteBean.getJobLevel());
+		utenteDto.setUserEvaluatorId(utenteBean.getValutatoreId());
 
 		return utenteDto;
 	}
@@ -33,14 +26,8 @@ public class UtenteConverter {
 		utenteBean.setRuoloId(utenteDto.getRoleId());
 		utenteBean.setNome(utenteDto.getFirstName());
 		utenteBean.setCognome(utenteDto.getLastName());
-		utenteBean.setValutatoreId(utenteDto.getUserManagerId());
-		utenteBean.setSocietaOp(utenteDto.getCompanyOp());
-		utenteBean.setMansione(utenteDto.getUserJob());
-		utenteBean.setAmbito(utenteDto.getUserScope());
-		utenteBean.setJobFam(utenteDto.getUserJobFamily());
-		utenteBean.setSubFam(utenteDto.getUserSubFamily());
-		utenteBean.setStdJob(utenteDto.getUserStandardJob());
-		utenteBean.setJobLevel(utenteDto.getUserJobLevel());
+		utenteBean.setValutatoreId(utenteDto.getUserEvaluatorId());
+
 		return utenteBean;
 	}
 }

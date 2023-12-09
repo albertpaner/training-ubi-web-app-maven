@@ -1,17 +1,18 @@
 package model.dao;
 
 import model.bean.UtenteBean;
-import utils.DBConnection;
 
-import java.sql.*;
+import java.sql.Date;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UtenteDao {
+public class UtenteDao extends Dao implements Crud<UtenteBean> {
 
-    protected final Connection conn;
     public UtenteDao() throws SQLException, ClassNotFoundException {
-        this.conn = DBConnection.createConnection();
+        super();
     }
 
     /**

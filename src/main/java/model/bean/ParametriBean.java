@@ -2,13 +2,13 @@ package model.bean;
 
 import java.sql.Date;
 
-public class ParametriBean {
+public class ParametriBean extends Bean{
 	int paramId;
 	int paragrafoId;
 	String descrParam;
 	Date dataUltMod;
 	Date dataCreazione;
-	Boolean flgDel;
+
 	int valutId;
 
 	public ParametriBean() {
@@ -54,13 +54,6 @@ public class ParametriBean {
 		this.dataCreazione = dataCreazione;
 	}
 
-	public Boolean getFlgDel() {
-		return flgDel;
-	}
-
-	public void setFlgDel(Boolean flgDel) {
-		this.flgDel = flgDel;
-	}
 
 	public int getValutId() {
 		return valutId;
@@ -70,11 +63,5 @@ public class ParametriBean {
 		this.valutId = valutId;
 	}
 
-	@Override
-	public String toString() {
-		return "ParametriBean [paramId=" + paramId + ", paragrafoId=" + paragrafoId + ", descrParam=" + descrParam
-				+ ", dataUltMod=" + dataUltMod + ", dataCreazione=" + dataCreazione + ", flgDel=" + flgDel
-				+ ", valutId=" + valutId + "]";
-	}
 
 }

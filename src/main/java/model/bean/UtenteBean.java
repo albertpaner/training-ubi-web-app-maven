@@ -2,7 +2,7 @@ package model.bean;
 
 import java.sql.Date;
 
-public class UtenteBean {
+public class UtenteBean extends Bean{
     private int utenteId;
     private String email;
     private String password;
@@ -10,18 +10,11 @@ public class UtenteBean {
     private String nome;
     private String cognome;
     private int valutatoreId;
-   /* private String societaOp;
-    private String mansione;
-    private String ambito;
-    private String jobFam;
-    private String subFam;
-    private String stdJob;
-    private String jobLevel; */
 	private Date dataNascita; 
     private Date dataUltAcc;
     private Date dataUltMod;
     private Date dataCreaz;
-    private boolean flgDel;
+
 
 
 	public int getUtenteId() {
@@ -112,17 +105,7 @@ public class UtenteBean {
 		this.dataCreaz = dataCreaz;
 	}
 
-	public boolean isFlgDel() {
-		return this.flgDel;
-	}
 
-	public boolean getFlgDel() {
-		return this.flgDel;
-	}
-
-	public void setFlgDel(boolean flgDel) {
-		this.flgDel = flgDel;
-	}
 
 	/**
 	 * This method is used to print the utente BEAN in a readable way
@@ -144,7 +127,7 @@ public class UtenteBean {
 			", data_ultimo_accesso='" + getDataUltAcc() + "'" +
 			", data_ultima_modifica='" + getDataUltMod() + "'" +
 			", data_creazione='" + getDataCreaz() + "'" +
-			", flg_delete='" + isFlgDel() + "'" +
+			", flg_delete='" + getFlgDel() + "'" +
 			"}";
 	}
 

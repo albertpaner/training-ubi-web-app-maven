@@ -11,9 +11,10 @@ import java.util.List;
 import model.bean.ValutazioneBean;
 import utils.DBConnection;
 
-public class ValutazioneDao {
+public class ValutazioneDao extends Dao{
 
-    public ValutazioneDao() {
+    public ValutazioneDao() throws SQLException, ClassNotFoundException {
+        super();
     }
 
     public List<ValutazioneBean> findAll() throws ClassNotFoundException, SQLException {
@@ -28,7 +29,7 @@ public class ValutazioneDao {
 
         while (rs.next()) {
             valutazioneBean = new ValutazioneBean();
-            valutazioneBean.setValut_id(rs.getInt("valut_id"));
+            valutazioneBean.setValutId(rs.getInt("valut_id"));
             valutazioneBean.setValoreVal(rs.getInt("valore_val"));
             valutazioneBean.setDescrVal(rs.getString("descr_val"));
             valutazioneBean.setDescrVal(rs.getString("descr_val"));

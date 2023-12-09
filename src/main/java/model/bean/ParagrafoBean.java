@@ -2,7 +2,7 @@ package model.bean;
 
 import java.sql.Date;
 
-public class ParagrafoBean {
+public class ParagrafoBean extends Bean{
 
 	int paragrafoId;
 	int sezioneId;
@@ -10,7 +10,6 @@ public class ParagrafoBean {
 	String descrPar;
 	Date dataUltMod;
 	Date dataCreaz;
-	boolean flgDel;
 
 	public ParagrafoBean() {
 	}
@@ -63,19 +62,6 @@ public class ParagrafoBean {
 		this.dataCreaz = dataCreaz;
 	}
 
-	public boolean isFlgDel() {
-		return flgDel;
-	}
 
-	public void setFlgDel(boolean flgDel) {
-		this.flgDel = flgDel;
-	}
-
-	@Override
-	public String toString() {
-		return "ParagrafoBean [paragrafoId=" + paragrafoId + ", sezioneId=" + sezioneId + ", titoloPar=" + titoloPar
-				+ ", descrPar=" + descrPar + ", dataUltMod=" + dataUltMod + ", dataCreaz=" + dataCreaz + ", flgDel="
-				+ flgDel + "]";
-	}
 
 }

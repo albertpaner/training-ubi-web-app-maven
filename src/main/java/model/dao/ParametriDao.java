@@ -1,19 +1,16 @@
 package model.dao;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
-
 import model.bean.ParametriBean;
 import utils.DBConnection;
 
-public class ParametriDao {
-	public ParametriDao() {
-	};
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
+
+public class ParametriDao extends Dao{
+	public ParametriDao() throws SQLException, ClassNotFoundException {
+		super();
+	}
 
 	public List<ParametriBean> findAll() throws ClassNotFoundException, SQLException {
 		List<ParametriBean> listaParametri = new ArrayList<>();

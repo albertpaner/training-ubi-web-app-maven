@@ -2,14 +2,13 @@ package model.bean;
 
 import java.sql.Date;
 
-public class SezioneBean {
+public class SezioneBean extends Bean {
 
     int sezioneId;
     String titoloSez;
     String descrSez;
     Date dataUltAcc;
     Date dataUltMod;
-    Boolean flgDel;
 
     public SezioneBean() {
     }
@@ -54,18 +53,6 @@ public class SezioneBean {
         this.dataUltMod = dataUltMod;
     }
 
-    public Boolean getFlgDel() {
-        return flgDel;
-    }
 
-    public void setFlgDel(Boolean flgDel) {
-        this.flgDel = flgDel;
-    }
-
-    @Override
-    public String toString() {
-        return "SezioneBean [sezioneId=" + sezioneId + ", titoloSez=" + titoloSez + ", descrSez=" + descrSez
-                + ", dataUltAcc=" + dataUltAcc + ", dataUltMod=" + dataUltMod + ", flgDel=" + flgDel + "]";
-    }
 
 }

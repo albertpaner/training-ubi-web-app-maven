@@ -21,10 +21,5 @@ public class RuoloDto {
 	this.descrRl = descrRl;
     }
 
-    @Override
-    public String toString() {
-        return "RuoloBean [ruoloId=" + ruoloId + ", descrRl=" + descrRl + "]";
-    }
-
 
 }

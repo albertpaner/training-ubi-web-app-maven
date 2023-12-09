@@ -1,10 +1,10 @@
 package model.bean;
 
-public class RuoloBean {
+public class RuoloBean extends Bean{
 
     int ruoloId;
     String descrRl;
-    Boolean flgDel;
+
 
     public int getRuoloId() {
         return ruoloId;
@@ -20,19 +20,6 @@ public class RuoloBean {
 
     public void setDescrRl(String descrRl) {
         this.descrRl = descrRl;
-    }
-
-    public Boolean getFlgDel() {
-        return flgDel;
-    }
-
-    public void setFlgDel(Boolean flgDel) {
-        this.flgDel = flgDel;
-    }
-
-    @Override
-    public String toString() {
-        return "RuoloBean [ruoloId=" + ruoloId + ", descrRl=" + descrRl + ", flgDel=" + flgDel + "]";
     }
 
     

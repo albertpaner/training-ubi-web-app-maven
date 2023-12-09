@@ -33,7 +33,7 @@ public abstract class UtenteService implements UserEmailFinder{
         List<UtenteBean> allUsers = utenteDao.findAll();
         return allUsers.stream()
                 .filter(user -> user.getEmail().equals(email))
-                .filter(user -> !user.isFlgDel())
+                .filter(user -> !user.getFlgDel())
                 .findFirst();
     }
 

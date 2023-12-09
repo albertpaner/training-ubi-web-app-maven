@@ -2,24 +2,24 @@ package model.bean;
 
 import java.util.Date;
 
-public class ValutazioneBean {
-    int valut_id;
+public class ValutazioneBean extends Bean{
+    int valutId;
     int valoreVal;
     String descrVal;
     int utenteId;
     Date dataUltMod;
     Date dataCreaz;
-    boolean flgDel;
+
 
     public ValutazioneBean() {
     };
 
-    public int getValut_id() {
-        return valut_id;
+    public int getValutId() {
+        return valutId;
     }
 
-    public void setValut_id(int valut_id) {
-        this.valut_id = valut_id;
+    public void setValutId(int valutId) {
+        this.valutId = valutId;
     }
 
     public int getValoreVal() {
@@ -62,19 +62,5 @@ public class ValutazioneBean {
         this.dataCreaz = dataCreaz;
     }
 
-    public boolean isFlgDel() {
-        return flgDel;
-    }
-
-    public void setFlgDel(boolean flgDel) {
-        this.flgDel = flgDel;
-    }
-
-    @Override
-    public String toString() {
-        return "ValutazioneBean [valut_id=" + valut_id + ", valoreVal=" + valoreVal + ", descrVal=" + descrVal
-                + ", utenteId=" + utenteId + ", dataUltMod=" + dataUltMod + ", dataCreaz=" + dataCreaz + ", flgDel="
-                + flgDel + "]";
-    }
 
 }

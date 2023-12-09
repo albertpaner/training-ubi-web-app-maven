@@ -6,10 +6,6 @@ public class ValutazioneDto {
     private String descrizioneValutazione;
     private int utenteId;
 
-    public ValutazioneDto() {
-        
-    }
-
 
     public int getValutazioneId() {
         return valutazioneId;
@@ -44,11 +40,6 @@ public class ValutazioneDto {
     }
 
 
-    @Override
-    public String toString() {
-        return "ValutazioneDto [valutazioneId=" + valutazioneId + ", valoreValutazione=" + valoreValutazione
-                + ", descrizioneValutazione=" + descrizioneValutazione + ", utenteId=" + utenteId + "]";
-    }
 
 }
 
