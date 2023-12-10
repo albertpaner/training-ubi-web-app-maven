@@ -11,17 +11,7 @@
     </servlet-mapping>
 
     <servlet>
-        <servlet-name>Addition</servlet-name>
-        <jsp-file>/add.jsp</jsp-file>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>Addition</servlet-name>
-        <url-pattern>/add</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
         <servlet-name>RegistrationServlet</servlet-name>
-        <display-name>RegistrationServlet</display-name>
         <servlet-class>servlets.RegistrationServlet</servlet-class>
     </servlet>
     <servlet-mapping>
@@ -31,7 +21,6 @@
 
     <servlet>
         <servlet-name>LoginServlet</servlet-name>
-        <display-name>LoginServlet</display-name>
         <servlet-class>servlets.LoginServlet</servlet-class>
     </servlet>
     <servlet-mapping>
@@ -41,7 +30,6 @@
 
     <servlet>
         <servlet-name>DistributeEvaluatorsServlet</servlet-name>
-        <display-name>DistributeEvaluatorsServlet</display-name>
         <servlet-class>servlets.DistributeEvaluatorsServlet</servlet-class>
     </servlet>
     <servlet-mapping>
@@ -51,7 +39,6 @@
 
     <welcome-file-list>
         <welcome-file>add2.jsp</welcome-file>
-        <welcome-file>add.jsp</welcome-file>
         <welcome-file>registration.jsp</welcome-file>
         <welcome-file>login.jsp</welcome-file>
         <welcome-file>distribute_evaluators.jsp</welcome-file>

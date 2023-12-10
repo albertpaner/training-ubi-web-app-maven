@@ -5,7 +5,6 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import model.dao.UtenteDao;
 import model.dto.EvalCountDto;
 import services.user.UtenteEvaluation;
@@ -21,6 +20,10 @@ import java.util.List;
 )
 public class DistributeEvaluatorsServlet extends HttpServlet {
 
+    public DistributeEvaluatorsServlet() {
+        super();
+    }
+
 
     /**
      * Handles the HTTP GET method for displaying evaluators.
@@ -31,8 +34,6 @@ public class DistributeEvaluatorsServlet extends HttpServlet {
      * @param response The response object that contains the response the servlet sends to the client.
      * @throws ServletException If the request for the GET could not be handled.
      * @throws IOException      If an input or output error is detected when the servlet handles the GET request.
-     *
-     * @see #fetchEvaluators(int)
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -40,20 +41,18 @@ public class DistributeEvaluatorsServlet extends HttpServlet {
 
         HashMap<String, List<EvalCountDto>> evaluators = new HashMap<>();
         try {
-            evaluators = fetchEvaluators(3);
+            UtenteEvaluation utenteEvaluation = new UtenteEvaluation(new UtenteDao());
+            evaluators = utenteEvaluation.getEvaluatorsOccupiedFree(3);
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }
 
-        HttpSession session = request.getSession();
-        String mock = "I see you!";
-        session.setAttribute("flg", mock);
+        List<EvalCountDto> evaluatorsOccupied = evaluators.get("occupati");
+        List<EvalCountDto> evaluatorsFree = evaluators.get("disponibili");
 
-        List<EvalCountDto> evaluatorsOccupied = evaluators.get("valutatori_occupati");
-        List<EvalCountDto> evaluatorsFree = evaluators.get("valutatori_disponibili");
-
-        request.setAttribute("valutatori_occupati", evaluatorsOccupied);
-        request.setAttribute("valutatori_disponibili", evaluatorsFree);
+        request.getSession().setAttribute("flg", "I see you!");
+        request.setAttribute("occupati", evaluatorsOccupied);
+        request.setAttribute("disponibili", evaluatorsFree);
 
         request.getRequestDispatcher("distribute_evaluators.jsp").forward(request, response);
     }
@@ -77,16 +76,13 @@ public class DistributeEvaluatorsServlet extends HttpServlet {
 
         HashMap<String, List<EvalCountDto>> evaluators = new HashMap<>();
         try {
-            evaluators = fetchEvaluators(3);
             UtenteEvaluation utenteEvaluation = new UtenteEvaluation(new UtenteDao());
+            evaluators = utenteEvaluation.getEvaluatorsOccupiedFree(3);
             utenteEvaluation.rearrengeValutatori(evaluators, 3);
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }
 
-        HttpSession session = request.getSession();
-        String mock = "I see you!";
-        session.setAttribute("flg", mock);
 
         List<EvalCountDto> evaluatorsOccupied = evaluators.get("valutatori_occupati");
         List<EvalCountDto> evaluatorsFree = evaluators.get("valutatori_disponibili");
@@ -97,24 +93,5 @@ public class DistributeEvaluatorsServlet extends HttpServlet {
         request.getRequestDispatcher("distribute_evaluators.jsp").forward(request, response);
     }
 
-    /**
-     * This method returns a HashMap where the keys are "valutatori_occupati" and "valutatori_disponibili",
-     * and the values are lists of EvalCountDto objects.
-     *
-     * @param soglia The threshold value for the number of users.
-     * @return A HashMap where the keys are "valutatori_occupati" and "valutatori_disponibili", and the values are lists of EvalCountDto objects.
-     * @throws SQLException           If a database access error occurs.
-     * @throws ClassNotFoundException If the JDBC Driver class is not found.
-     *
-     * @see EvalCountDto
-     * @see UtenteEvaluation#getEvaluatorsOccupiedFree(int)
-     * */
-    private HashMap<String, List<EvalCountDto>> fetchEvaluators(int soglia) throws ClassNotFoundException, SQLException {
-        HashMap<String, List<EvalCountDto>> evaluators = new HashMap<>();
-        UtenteEvaluation utenteEvaluation = new UtenteEvaluation(new UtenteDao());
-        evaluators = utenteEvaluation.getEvaluatorsOccupiedFree(soglia);
-        utenteEvaluation.rearrengeValutatori(evaluators, soglia);
 
-        return evaluators;
-    }
 }

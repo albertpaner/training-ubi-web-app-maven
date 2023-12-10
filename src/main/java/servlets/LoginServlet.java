@@ -21,6 +21,10 @@ import java.sql.SQLException;
 )
 public class LoginServlet extends HttpServlet {
 
+    public LoginServlet() {
+        super();
+    }
+
     /**
      * Handles the HTTP POST method for user login.
      * This method retrieves the email and password parameters from the request,

@@ -7,7 +7,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ValutazioneDao extends Dao{
+public class ValutazioneDao {
 
     public ValutazioneDao() throws SQLException, ClassNotFoundException {
         super();

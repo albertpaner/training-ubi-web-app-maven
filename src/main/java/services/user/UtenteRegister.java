@@ -11,8 +11,8 @@ import java.util.List;
 
 public class UtenteRegister extends UtenteService {
 
-    public UtenteRegister(UtenteDao utenteDao) {
-        super(utenteDao);
+    public UtenteRegister(UtenteDao utenteDao) throws SQLException, ClassNotFoundException {
+        super();
     }
 
     /**
@@ -25,7 +25,7 @@ public class UtenteRegister extends UtenteService {
      * @throws SQLException                If a database access error occurs.
      * @throws RegistrationFailedException If the user already exists in the database.
      */
-    public int registrazioneUtente(List<Object> paramsUser) throws SQLException, RegistrationFailedException {
+    public int registrazioneUtente(List<Object> paramsUser) throws SQLException, RegistrationFailedException, ClassNotFoundException {
         String email = (String) paramsUser.get(0);
         String password = (String) paramsUser.get(1);
         int ruoloId = (Integer) paramsUser.get(2);

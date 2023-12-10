@@ -10,9 +10,10 @@ public class EvalCountDto {
 	private String nome;
     private String cognome;
     private String email;
-    private int count = 0;
+    private int count;
 
 	public EvalCountDto() {
+		this.count = 0;
 	}
 
 	public EvalCountDto(int valutatoreId, String nome, String cognome, String email, int count) {

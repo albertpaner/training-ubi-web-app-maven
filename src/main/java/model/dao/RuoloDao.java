@@ -9,7 +9,7 @@ import java.util.List;
 
 
 
-public class RuoloDao extends Dao{
+public class RuoloDao {
 
 	public RuoloDao() throws SQLException, ClassNotFoundException {
 		super();

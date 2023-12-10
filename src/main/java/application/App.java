@@ -1,19 +1,36 @@
 package application;
 
 import model.dao.UtenteDao;
-import services.user.UtenteRegister;
+import model.dto.EvalCountDto;
+import services.user.UtenteEvaluation;
 
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.List;
 
 public class App {
 
     public static void main(String args[]) throws NoSuchAlgorithmException, ClassNotFoundException, SQLException {
 
-		UtenteRegister utenteRegister = new UtenteRegister(new UtenteDao());
-		System.out.println("Opened a Register Service and this is the database connected: " + utenteRegister.getUtenteDao().getConn());
+        HashMap<String, List<EvalCountDto>> evaluators = new HashMap<>();
+        try {
+            UtenteEvaluation utenteEvaluation = new UtenteEvaluation(new UtenteDao());
+            evaluators = utenteEvaluation.getEvaluatorsOccupiedFree(3);
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }
 
-		System.out.println("These are all the users in the database: " + utenteRegister.getUtenteDao().findAll());
+        List<EvalCountDto> evaluatorsOccupied = evaluators.get("occupati");
+        List<EvalCountDto> evaluatorsFree = evaluators.get("disponibili");
+        for (EvalCountDto evaluator : evaluatorsOccupied) {
+            System.out.println(evaluator.getNome() + " " + evaluator.getCognome() + " " + evaluator.getCount());
+        }
+        System.out.println("--------------------------------------------------");
+        for (EvalCountDto evaluator : evaluatorsFree) {
+            System.out.println(evaluator.getNome() + " " + evaluator.getCognome() + " " + evaluator.getCount());
+        }
+
     }
 
 }

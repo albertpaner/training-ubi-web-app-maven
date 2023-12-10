@@ -29,7 +29,7 @@ public abstract class UtenteService {
      * @return An Optional<UtenteBean> object that contains the user if found, or an empty Optional if the user is not found.
      * @throws SQLException If a database access error occurs.
      */
-    public Optional<UtenteBean> findByEmail(String email) throws SQLException {
+    public Optional<UtenteBean> findByEmail(String email) throws SQLException, ClassNotFoundException {
         List<UtenteBean> allUsers = utenteDao.findAll();
         return allUsers.stream()
                 .filter(user -> user.getEmail().equals(email))
@@ -37,7 +37,4 @@ public abstract class UtenteService {
                 .findFirst();
     }
 
-    public UtenteDao getUtenteDao() {
-        return utenteDao;
-    }
 }

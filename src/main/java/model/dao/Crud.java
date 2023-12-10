@@ -8,9 +8,9 @@ import java.util.List;
  * */
 public interface Crud<T> {
 
-    List<T> findAll() throws SQLException;
-    T findById(int id) throws SQLException;
-    int create(List<Object> params) throws SQLException;
-    int update(List<Object> params) throws SQLException;
-    int delete(int id) throws SQLException;
+    List<T> findAll() throws SQLException, ClassNotFoundException;
+    T findById(int id) throws SQLException, ClassNotFoundException;
+    int create(List<Object> params) throws SQLException, ClassNotFoundException;
+    int update(List<Object> params) throws SQLException, ClassNotFoundException;
+    int delete(int id) throws SQLException, ClassNotFoundException;
 }

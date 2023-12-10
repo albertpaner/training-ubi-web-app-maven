@@ -7,7 +7,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ParametriDao extends Dao{
+public class ParametriDao {
 	public ParametriDao() throws SQLException, ClassNotFoundException {
 		super();
 	}

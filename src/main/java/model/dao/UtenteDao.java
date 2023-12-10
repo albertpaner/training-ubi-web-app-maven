@@ -1,15 +1,13 @@
 package model.dao;
 
 import model.bean.UtenteBean;
+import utils.DBConnection;
 
-import java.sql.Date;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UtenteDao extends Dao implements Crud<UtenteBean> {
+public class UtenteDao implements Crud<UtenteBean> {
 
     public UtenteDao() throws SQLException, ClassNotFoundException {
         super();
@@ -22,8 +20,9 @@ public class UtenteDao extends Dao implements Crud<UtenteBean> {
      * @return A list of all the users in the database.
      * @throws SQLException If a database access error occurs or this method is called on a closed connection.
      */
-    public List<UtenteBean> findAll() throws SQLException {
+    public List<UtenteBean> findAll() throws SQLException, ClassNotFoundException {
 
+        Connection conn = DBConnection.createConnection();
         List<UtenteBean> listaUtenti = new ArrayList<>();
 
         Statement stmt = conn.createStatement();
@@ -59,8 +58,9 @@ public class UtenteDao extends Dao implements Crud<UtenteBean> {
      * @return The user with the specified ID.
      * @throws SQLException If a database access error occurs or this method is called on a closed connection.
      */
-    public UtenteBean findById(int utenteId) throws SQLException {
+    public UtenteBean findById(int utenteId) throws SQLException, ClassNotFoundException {
 
+        Connection conn = DBConnection.createConnection();
         UtenteBean utenteBean = new UtenteBean();
 
         Statement stmt = conn.createStatement();
@@ -93,7 +93,9 @@ public class UtenteDao extends Dao implements Crud<UtenteBean> {
      * @return The number of rows affected by the insert operation.
      * @throws SQLException If a database access error occurs or this method is called on a closed connection.
      */
-    public int create(List<Object> userParams) throws SQLException {
+    public int create(List<Object> userParams) throws SQLException, ClassNotFoundException {
+
+        Connection conn = DBConnection.createConnection();
         String email = (String) userParams.get(0);
         String password = (String) userParams.get(1);
         int ruoloId = (Integer) userParams.get(2);
@@ -120,7 +122,9 @@ public class UtenteDao extends Dao implements Crud<UtenteBean> {
      * @return The number of rows affected by the update operation.
      * @throws SQLException If a database access error occurs or this method is called on a closed connection.
      */
-    public int update(List<Object> userParams) throws SQLException {
+    public int update(List<Object> userParams) throws SQLException, ClassNotFoundException {
+
+        Connection conn = DBConnection.createConnection();
         String email = (String) userParams.get(0);
         String password = (String) userParams.get(1);
         int ruoloId = (Integer) userParams.get(2);
@@ -147,8 +151,9 @@ public class UtenteDao extends Dao implements Crud<UtenteBean> {
      * @return The number of rows affected by the update operation.
      * @throws SQLException If a database access error occurs or this method is called on a closed connection.
      */
-    public int logicalDelete(int utenteId) throws SQLException {
+    public int logicalDelete(int utenteId) throws SQLException, ClassNotFoundException {
 
+        Connection conn = DBConnection.createConnection();
         Statement stmt = conn.createStatement();
         int rs = stmt.executeUpdate("UPDATE utente SET flg_del = 1 WHERE utente_id = " + utenteId);
 
@@ -164,8 +169,9 @@ public class UtenteDao extends Dao implements Crud<UtenteBean> {
      * @return The number of rows affected by the delete operation.
      * @throws SQLException If a database access error occurs or this method is called on a closed connection.
      */
-    public int delete(int utenteId) throws SQLException {
+    public int delete(int utenteId) throws SQLException, ClassNotFoundException {
 
+        Connection conn = DBConnection.createConnection();
         Statement stmt = conn.createStatement();
         int rs = stmt.executeUpdate("DELETE FROM utente WHERE utente_id = " + utenteId);
 
@@ -181,8 +187,9 @@ public class UtenteDao extends Dao implements Crud<UtenteBean> {
      * @return The number of rows affected by the update operation.
      * @throws SQLException If a database access error occurs or this method is called on a closed connection.
      */
-    public int updateLastAccess(int utenteId) throws SQLException {
+    public int updateLastAccess(int utenteId) throws SQLException, ClassNotFoundException {
 
+        Connection conn = DBConnection.createConnection();
         Statement stmt = conn.createStatement();
         int rs = stmt.executeUpdate("UPDATE utente SET data_ult_acc = NOW() WHERE utente_id = " + utenteId);
 

@@ -19,6 +19,7 @@ public class AdderServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
         String strNum1 = req.getParameter("num1");
         String strNum2 = req.getParameter("num2");
         if (strNum1 != null && strNum2 != null) {

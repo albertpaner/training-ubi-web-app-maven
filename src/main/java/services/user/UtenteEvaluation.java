@@ -22,7 +22,7 @@ public class UtenteEvaluation extends UtenteService {
      * @return A list of users who are assigned to the given evaluator.
      * @throws SQLException If a database access error occurs.
      */
-    private List<UtenteBean> findValuedByEvaluator(int evatorId) throws SQLException {
+    private List<UtenteBean> findValuedByEvaluator(int evatorId) throws SQLException, ClassNotFoundException {
         List<UtenteBean> allUsers = utenteDao.findAll();
         return allUsers.stream()
                 .filter(user -> user.getValutatoreId() == evatorId)
@@ -88,8 +88,8 @@ public class UtenteEvaluation extends UtenteService {
         }
 
         HashMap<String, List<EvalCountDto>> usersToShow = new HashMap<>();
-        usersToShow.put("valutatori_occupati", valutatoriOccupatiDto);
-        usersToShow.put("valutatori_disponibili", valutatoriDisponibiliDto);
+        usersToShow.put("occupati", valutatoriOccupatiDto);
+        usersToShow.put("disponibili", valutatoriDisponibiliDto);
 
         return usersToShow;
     }
@@ -103,7 +103,7 @@ public class UtenteEvaluation extends UtenteService {
      * @param soglia      The threshold value for the number of users an evaluator can have.
      * @throws SQLException If a database access error occurs.
      */
-    public void rearrengeValutatori(HashMap<String, List<EvalCountDto>> usersToShow, int soglia) throws SQLException {
+    public void rearrengeValutatori(HashMap<String, List<EvalCountDto>> usersToShow, int soglia) throws SQLException, ClassNotFoundException {
 
         List<EvalCountDto> valutatoriOccupatiDto = usersToShow.get("valutatori_occupati");
         List<EvalCountDto> valutatoriDisponibiliDto = usersToShow.get("valutatori_disponibili");

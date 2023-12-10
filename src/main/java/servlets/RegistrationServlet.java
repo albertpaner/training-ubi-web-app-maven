@@ -23,6 +23,10 @@ import java.util.List;
 )
 public class RegistrationServlet extends HttpServlet {
 
+    public RegistrationServlet() {
+        super();
+    }
+
     /**
      *  Handles the HTTP POST method for user registration.
      *  This method is called when the user clicks on the "Register" button

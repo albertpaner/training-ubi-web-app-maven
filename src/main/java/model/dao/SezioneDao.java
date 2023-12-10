@@ -7,7 +7,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SezioneDao extends Dao{
+public class SezioneDao {
 
 	public SezioneDao() throws SQLException, ClassNotFoundException {
 		super();
