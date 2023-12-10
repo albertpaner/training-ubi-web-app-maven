@@ -1,15 +1,11 @@
 package model.dao;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
-
 import model.bean.ValutazioneBean;
 import utils.DBConnection;
+
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ValutazioneDao extends Dao{
 
@@ -56,7 +52,7 @@ public class ValutazioneDao extends Dao{
         ;
 
         if (rs.next()) {
-            valutazioneBean.setValut_id(rs.getInt("valut_id"));
+            valutazioneBean.setValutId(rs.getInt("valut_id"));
             valutazioneBean.setValoreVal(rs.getInt("valore_val"));
             valutazioneBean.setDescrVal(rs.getString("descr_val"));
             valutazioneBean.setDescrVal(rs.getString("descr_val"));

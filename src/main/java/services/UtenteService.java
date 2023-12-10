@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 
-public abstract class UtenteService implements UserEmailFinder{
+public abstract class UtenteService {
 
     // static Logger logUser = LogManager.getLogger("user");
     protected UtenteDao utenteDao;

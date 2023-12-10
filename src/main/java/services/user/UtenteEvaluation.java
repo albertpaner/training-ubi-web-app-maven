@@ -26,7 +26,7 @@ public class UtenteEvaluation extends UtenteService {
         List<UtenteBean> allUsers = utenteDao.findAll();
         return allUsers.stream()
                 .filter(user -> user.getValutatoreId() == evatorId)
-                .filter(user -> !user.isFlgDel())
+                .filter(user -> !user.getFlgDel())
                 .toList();
     }
 
@@ -46,7 +46,7 @@ public class UtenteEvaluation extends UtenteService {
 
         List<UtenteBean> allEvaluators = allUsers.stream()
                 .filter(user -> user.getRuoloId() == 1)
-                .filter(user -> !user.isFlgDel())
+                .filter(user -> !user.getFlgDel())
                 .toList();
 
         for (UtenteBean lord : allEvaluators) {

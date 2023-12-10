@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.util.Arrays;
+import java.util.List;
 
 @WebServlet(
         name = "RegistrationServlet",
@@ -36,7 +37,7 @@ public class RegistrationServlet extends HttpServlet {
      *                  (successMsg or errorMsg)
      *  @throws ServletException
      *  @throws IOException
-     *  @see services.user.UtenteRegister#registrazioneUtente(String, String, int, String, String, int, Date)
+     *  @see services.user.UtenteRegister#registrazioneUtente(List) 
      *
      */
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
