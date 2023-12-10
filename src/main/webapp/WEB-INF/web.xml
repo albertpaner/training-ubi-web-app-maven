@@ -2,6 +2,24 @@
     <display-name>UbiWebApp</display-name>
 
     <servlet>
+        <servlet-name>AdderServlet</servlet-name>
+        <servlet-class>servlets.AdderServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AdderServlet</servlet-name>
+        <url-pattern>/add2</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>Addition</servlet-name>
+        <jsp-file>/add.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Addition</servlet-name>
+        <url-pattern>/add</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
         <servlet-name>RegistrationServlet</servlet-name>
         <display-name>RegistrationServlet</display-name>
         <servlet-class>servlets.RegistrationServlet</servlet-class>
@@ -31,8 +49,9 @@
         <url-pattern>/distribute_evaluators</url-pattern>
     </servlet-mapping>
 
-
     <welcome-file-list>
+        <welcome-file>add2.jsp</welcome-file>
+        <welcome-file>add.jsp</welcome-file>
         <welcome-file>registration.jsp</welcome-file>
         <welcome-file>login.jsp</welcome-file>
         <welcome-file>distribute_evaluators.jsp</welcome-file>
