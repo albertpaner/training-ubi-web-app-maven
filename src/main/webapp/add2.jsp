@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Addition</title>
+    <title>Addition WITH SERVLET</title>
 </head>
 <body>
     <form method="post" action="add2">
