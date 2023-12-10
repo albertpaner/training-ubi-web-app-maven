@@ -11,4 +11,7 @@ public abstract class Dao {
         this.conn = DBConnection.createConnection();
     }
 
+    public Connection getConn() {
+        return conn;
+    }
 }

@@ -37,5 +37,7 @@ public abstract class UtenteService {
                 .findFirst();
     }
 
-
+    public UtenteDao getUtenteDao() {
+        return utenteDao;
+    }
 }
