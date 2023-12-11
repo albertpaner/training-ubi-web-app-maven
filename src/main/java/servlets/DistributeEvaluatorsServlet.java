@@ -57,10 +57,11 @@ public class DistributeEvaluatorsServlet extends HttpServlet {
         HttpSession session = request.getSession();
         session.setAttribute("occupati", evaluatorsOccupied);
         session.setAttribute("disponibili", evaluatorsFree);
-
+        /*
         request.setAttribute("occupati", evaluatorsOccupied);
         request.setAttribute("disponibili", evaluatorsFree);
-
+        */
+        request.getRequestDispatcher("distribute_evaluators.jsp").forward(request, response);
 
         /*
         response.setContentType("text/html");
@@ -81,8 +82,7 @@ public class DistributeEvaluatorsServlet extends HttpServlet {
             }
         }
         out.println("</body></html>");
-*/
-        request.getRequestDispatcher("distribute_evaluators.jsp").forward(request, response);
+        */
     }
 
 
