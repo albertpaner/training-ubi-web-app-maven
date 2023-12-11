@@ -5,7 +5,6 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import model.dao.UtenteDao;
 import model.dto.EvalCountDto;
 import services.user.UtenteEvaluation;
@@ -53,14 +52,14 @@ public class DistributeEvaluatorsServlet extends HttpServlet {
 
         List<EvalCountDto> evaluatorsOccupied = evaluators.get("occupati");
         List<EvalCountDto> evaluatorsFree = evaluators.get("disponibili");
-
+        /*
         HttpSession session = request.getSession();
         session.setAttribute("occupati", evaluatorsOccupied);
         session.setAttribute("disponibili", evaluatorsFree);
-        /*
+        */
         request.setAttribute("occupati", evaluatorsOccupied);
         request.setAttribute("disponibili", evaluatorsFree);
-        */
+
         request.getRequestDispatcher("distribute_evaluators.jsp").forward(request, response);
 
         /*
