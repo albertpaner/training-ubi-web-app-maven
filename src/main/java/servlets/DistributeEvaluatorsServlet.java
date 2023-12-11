@@ -37,9 +37,11 @@ public class DistributeEvaluatorsServlet extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws IOException, ServletException {
+
 
         HashMap<String, List<EvalCountDto>> evaluators = new HashMap<>();
+
         try {
             UtenteEvaluation utenteEvaluation = new UtenteEvaluation(new UtenteDao());
             evaluators = utenteEvaluation.getEvaluatorsOccupiedFree(3);
@@ -50,11 +52,11 @@ public class DistributeEvaluatorsServlet extends HttpServlet {
         List<EvalCountDto> evaluatorsOccupied = evaluators.get("occupati");
         List<EvalCountDto> evaluatorsFree = evaluators.get("disponibili");
 
-
-        request.setAttribute("occupati", evaluatorsOccupied);
-        request.setAttribute("disponibili", evaluatorsFree);
-
         request.setAttribute("flg", "I see you!");
+
+        request.setAttribute("valutatori_occupati", evaluatorsOccupied);
+        request.setAttribute("valutatori_disponibili", evaluatorsFree);
+
         request.getRequestDispatcher("distribute_evaluators.jsp").forward(request, response);
     }
 
@@ -91,7 +93,9 @@ public class DistributeEvaluatorsServlet extends HttpServlet {
         request.setAttribute("valutatori_occupati", evaluatorsOccupied);
         request.setAttribute("valutatori_disponibili", evaluatorsFree);
 
+        System.out.println("used a servlet");
         request.setAttribute("flg", "I see you!");
+
         request.getRequestDispatcher("distribute_evaluators.jsp").forward(request, response);
     }
 

@@ -17,7 +17,7 @@ public class DBConnection {
     private static String password;
 
     static {
-        try (InputStream input = new FileInputStream(new File("db.properties"))) {
+        try (InputStream input = new FileInputStream(new File("src/main/resources/db.properties"))) {
             Properties prop = new Properties();
             prop.load(input);
 

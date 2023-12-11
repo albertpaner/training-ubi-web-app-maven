@@ -9,8 +9,13 @@ import java.util.List;
 
 public class UtenteDao implements Crud<UtenteBean> {
 
+    private Connection conn;
+
+    public UtenteDao(Connection conn) {
+        this.conn = conn;
+    }
+
     public UtenteDao() throws SQLException, ClassNotFoundException {
-        super();
     }
 
     /**
@@ -22,7 +27,7 @@ public class UtenteDao implements Crud<UtenteBean> {
      */
     public List<UtenteBean> findAll() throws SQLException, ClassNotFoundException {
 
-        Connection conn = DBConnection.createConnection();
+        this.conn = DBConnection.createConnection();
         List<UtenteBean> listaUtenti = new ArrayList<>();
 
         Statement stmt = conn.createStatement();
@@ -60,7 +65,7 @@ public class UtenteDao implements Crud<UtenteBean> {
      */
     public UtenteBean findById(int utenteId) throws SQLException, ClassNotFoundException {
 
-        Connection conn = DBConnection.createConnection();
+        this.conn = DBConnection.createConnection();
         UtenteBean utenteBean = new UtenteBean();
 
         Statement stmt = conn.createStatement();
@@ -95,7 +100,7 @@ public class UtenteDao implements Crud<UtenteBean> {
      */
     public int create(List<Object> userParams) throws SQLException, ClassNotFoundException {
 
-        Connection conn = DBConnection.createConnection();
+        this.conn = DBConnection.createConnection();
         String email = (String) userParams.get(0);
         String password = (String) userParams.get(1);
         int ruoloId = (Integer) userParams.get(2);
@@ -124,7 +129,7 @@ public class UtenteDao implements Crud<UtenteBean> {
      */
     public int update(List<Object> userParams) throws SQLException, ClassNotFoundException {
 
-        Connection conn = DBConnection.createConnection();
+        this.conn = DBConnection.createConnection();
         String email = (String) userParams.get(0);
         String password = (String) userParams.get(1);
         int ruoloId = (Integer) userParams.get(2);
@@ -153,7 +158,7 @@ public class UtenteDao implements Crud<UtenteBean> {
      */
     public int logicalDelete(int utenteId) throws SQLException, ClassNotFoundException {
 
-        Connection conn = DBConnection.createConnection();
+        this.conn = DBConnection.createConnection();
         Statement stmt = conn.createStatement();
         int rs = stmt.executeUpdate("UPDATE utente SET flg_del = 1 WHERE utente_id = " + utenteId);
 
@@ -171,7 +176,7 @@ public class UtenteDao implements Crud<UtenteBean> {
      */
     public int delete(int utenteId) throws SQLException, ClassNotFoundException {
 
-        Connection conn = DBConnection.createConnection();
+        this.conn = DBConnection.createConnection();
         Statement stmt = conn.createStatement();
         int rs = stmt.executeUpdate("DELETE FROM utente WHERE utente_id = " + utenteId);
 
@@ -189,7 +194,7 @@ public class UtenteDao implements Crud<UtenteBean> {
      */
     public int updateLastAccess(int utenteId) throws SQLException, ClassNotFoundException {
 
-        Connection conn = DBConnection.createConnection();
+        this.conn = DBConnection.createConnection();
         Statement stmt = conn.createStatement();
         int rs = stmt.executeUpdate("UPDATE utente SET data_ult_acc = NOW() WHERE utente_id = " + utenteId);
 
