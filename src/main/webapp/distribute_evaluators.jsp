@@ -11,10 +11,10 @@
 <body>
     <h1>Evaluator Display</h1>
     <a href="distribute_evaluators">Click here to display evaluators</a>
-    <p>flag : ${flg}</p>
+
     <h2>Occupied Evaluators</h2>
     <%
-        List<EvalCountDto> occupati = (List<EvalCountDto>)request.getAttribute("occupati");
+        List<EvalCountDto> occupati = (List<EvalCountDto>)session.getAttribute("occupati");
         if (occupati != null) {
             for (EvalCountDto evaluator : occupati) {
     %>
@@ -26,7 +26,7 @@
     <h2>Free Evaluators</h2>
     <ul>
         <%
-            List<EvalCountDto> disponibili = (List<EvalCountDto>)request.getAttribute("disponibili");
+            List<EvalCountDto> disponibili = (List<EvalCountDto>)session.getAttribute("disponibili");
             if (disponibili != null) {
                 for (EvalCountDto evaluator : disponibili) {
         %>

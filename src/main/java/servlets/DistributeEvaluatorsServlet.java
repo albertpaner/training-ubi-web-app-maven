@@ -5,6 +5,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import model.dao.UtenteDao;
 import model.dto.EvalCountDto;
 import services.user.UtenteEvaluation;
@@ -30,6 +31,7 @@ public class DistributeEvaluatorsServlet extends HttpServlet {
      * This method is called when the servlet receives a GET request.
      * It fetches all evaluators and their corresponding users from the database.
      * It returns a HashMap where the keys are evaluators and the values are lists of users valued by the evaluator.
+     *
      * @param request  The request object that contains the request the client has made of the servlet.
      * @param response The response object that contains the response the servlet sends to the client.
      * @throws ServletException If the request for the GET could not be handled.
@@ -52,52 +54,75 @@ public class DistributeEvaluatorsServlet extends HttpServlet {
         List<EvalCountDto> evaluatorsOccupied = evaluators.get("occupati");
         List<EvalCountDto> evaluatorsFree = evaluators.get("disponibili");
 
-        request.setAttribute("flg", "I see you!");
+        HttpSession session = request.getSession();
+        session.setAttribute("occupati", evaluatorsOccupied);
+        session.setAttribute("disponibili", evaluatorsFree);
 
-        request.setAttribute("valutatori_occupati", evaluatorsOccupied);
-        request.setAttribute("valutatori_disponibili", evaluatorsFree);
+        request.setAttribute("occupati", evaluatorsOccupied);
+        request.setAttribute("disponibili", evaluatorsFree);
 
-        request.getRequestDispatcher("distribute_evaluators.jsp").forward(request, response);
-    }
 
-    /**
-     * Handles the HTTP POST method for rearranging evaluators.
-     * This method is called when the servlet receives a POST request.
-     * It fetches all evaluators and their corresponding users from the database.
-     * It then calls the `rearrengeValutatori` method to rearrange the evaluators.
-     * This method is triggered when a button is pressed on the front-end.
-     *
-     * @param request  The request object that contains the request the client has made of the servlet.
-     * @param response The response object that contains the response the servlet sends to the client.
-     * @throws ServletException If the request for the POST could not be handled.
-     * @throws IOException      If an input or output error is detected when the servlet handles the POST request.
-     *
-     */
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+        /*
+        response.setContentType("text/html");
+        PrintWriter out = response.getWriter();
 
-        HashMap<String, List<EvalCountDto>> evaluators = new HashMap<>();
-        try {
-            UtenteEvaluation utenteEvaluation = new UtenteEvaluation(new UtenteDao());
-            evaluators = utenteEvaluation.getEvaluatorsOccupiedFree(3);
-            utenteEvaluation.rearrengeValutatori(evaluators, 3);
-        } catch (ClassNotFoundException | SQLException e) {
-            e.printStackTrace();
+        out.println("<html><body>");
+        out.println("<h2>Occupied Evaluators</h2>");
+        if (evaluatorsOccupied != null) {
+            for (EvalCountDto evaluator : evaluatorsOccupied) {
+                out.println("<li>" + evaluator.getNome() + " " + evaluator.getCognome() + " " + evaluator.getEmail() + " - " + evaluator.getCount() + "</li>");
+            }
         }
 
-
-        List<EvalCountDto> evaluatorsOccupied = evaluators.get("valutatori_occupati");
-        List<EvalCountDto> evaluatorsFree = evaluators.get("valutatori_disponibili");
-
-        request.setAttribute("valutatori_occupati", evaluatorsOccupied);
-        request.setAttribute("valutatori_disponibili", evaluatorsFree);
-
-        System.out.println("used a servlet");
-        request.setAttribute("flg", "I see you!");
-
+        out.println("<h2>Free Evaluators</h2>");
+        if (evaluatorsFree != null) {
+            for (EvalCountDto evaluator : evaluatorsFree) {
+                out.println("<li>" + evaluator.getNome() + " " + evaluator.getCognome() + " " + evaluator.getEmail() + " - " + evaluator.getCount() + "</li>");
+            }
+        }
+        out.println("</body></html>");
+*/
         request.getRequestDispatcher("distribute_evaluators.jsp").forward(request, response);
     }
+
+
+/**
+ * Handles the HTTP POST method for rearranging evaluators.
+ * This method is called when the servlet receives a POST request.
+ * It fetches all evaluators and their corresponding users from the database.
+ * It then calls the `rearrengeValutatori` method to rearrange the evaluators.
+ * This method is triggered when a button is pressed on the front-end.
+ *
+ * @param request  The request object that contains the request the client has made of the servlet.
+ * @param response The response object that contains the response the servlet sends to the client.
+ * @throws ServletException If the request for the POST could not be handled.
+ * @throws IOException      If an input or output error is detected when the servlet handles the POST request.
+ */
+@Override
+protected void doPost(HttpServletRequest request, HttpServletResponse response)
+        throws ServletException, IOException {
+
+    HashMap<String, List<EvalCountDto>> evaluators = new HashMap<>();
+    try {
+        UtenteEvaluation utenteEvaluation = new UtenteEvaluation(new UtenteDao());
+        evaluators = utenteEvaluation.getEvaluatorsOccupiedFree(3);
+        utenteEvaluation.rearrengeValutatori(evaluators, 3);
+    } catch (ClassNotFoundException | SQLException e) {
+        e.printStackTrace();
+    }
+
+
+    List<EvalCountDto> evaluatorsOccupied = evaluators.get("valutatori_occupati");
+    List<EvalCountDto> evaluatorsFree = evaluators.get("valutatori_disponibili");
+
+    request.setAttribute("valutatori_occupati", evaluatorsOccupied);
+    request.setAttribute("valutatori_disponibili", evaluatorsFree);
+
+    System.out.println("used a servlet");
+    request.setAttribute("flg", "I see you!");
+
+    request.getRequestDispatcher("distribute_evaluators.jsp").forward(request, response);
+}
 
 
 }
