@@ -23,12 +23,13 @@ public class UtenteEvaluationService extends UtenteService {
      * @throws SQLException If a database access error occurs.
      */
     private List<UtenteBean> findValuedByEvaluator(int evatorId) throws SQLException, ClassNotFoundException {
-        List<UtenteBean> allUsers = utenteDao.findAll();
-        return allUsers.stream()
-                .filter(user -> user.getValutatoreId() == evatorId)
-                .filter(user -> !user.getFlgDel())
-                .toList();
-    }
+    List<UtenteBean> allUsers = utenteDao.findAll();
+    List<UtenteBean> filteredUsers = allUsers.stream()
+            .filter(user -> user.getValutatoreId() == evatorId)
+            .filter(user -> !user.getFlgDel())
+            .toList();
+    return new ArrayList<>(filteredUsers);
+}
 
     /**
      * This method fetches all evaluators and their corresponding users from the database.
@@ -39,7 +40,7 @@ public class UtenteEvaluationService extends UtenteService {
      * @throws ClassNotFoundException If the JDBC Driver class is not found.
      */
     private HashMap<UtenteBean, List<UtenteBean>> fetchEvaluatorsAndValued() throws SQLException, ClassNotFoundException {
-        // UtenteDao utenteDao = new UtenteDao();
+        //UtenteDao utenteDao = new UtenteDao();
         HashMap<UtenteBean, List<UtenteBean>> lordsAndPeasants = new HashMap<>();
 
         List<UtenteBean> allUsers = utenteDao.findAll();
@@ -99,6 +100,9 @@ public class UtenteEvaluationService extends UtenteService {
      * If an evaluator has more users than the threshold, the method reassigns the excess users to evaluators who have less than the threshold number of users.
      * The reassignment is done based on the user's date of birth, with the youngest users being reassigned first.
      *
+     * @param usersToShow A HashMap where the keys are "valutatori_occupati" and "valutatori_disponibili", and the values are lists of EvalCountDto objects.
+     * @param soglia      The threshold value for the number of users.
+     * @return The number of users who were reassigned.
      */
     public int rearrangeValutatori(HashMap<String, List<EvalCountDto>> usersToShow, int soglia) throws SQLException, ClassNotFoundException {
 
@@ -111,8 +115,7 @@ public class UtenteEvaluationService extends UtenteService {
 
         for (EvalCountDto valutatore : valutatoriOccupatiDto) {
 
-            List<UtenteBean> utentiValutatiDa = new ArrayList<UtenteBean>();
-            utentiValutatiDa = findValuedByEvaluator(valutatore.getUtenteId());
+            List<UtenteBean> utentiValutatiDa = findValuedByEvaluator(valutatore.getUtenteId());
             utentiValutatiDa.sort(Comparator.comparing(UtenteBean::getDataNascita));
 
             if (utentiValutatiDa.size() > soglia) {
