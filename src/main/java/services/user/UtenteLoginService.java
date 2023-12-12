@@ -11,9 +11,9 @@ import utils.Hasher;
 import java.sql.SQLException;
 import java.util.Optional;
 
-public class UtenteLogin extends UtenteService {
+public class UtenteLoginService extends UtenteService {
 
-    public UtenteLogin(UtenteDao utenteDao) {
+    public UtenteLoginService(UtenteDao utenteDao) {
         super(utenteDao);
     }
 

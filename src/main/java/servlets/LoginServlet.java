@@ -3,7 +3,7 @@ package servlets;
 import exceptions.LoginPasswordFailedException;
 import exceptions.LoginUserNotFoundException;
 import model.dao.UtenteDao;
-import services.user.UtenteLogin;
+import services.user.UtenteLoginService;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -37,7 +37,7 @@ public class LoginServlet extends HttpServlet {
      * @param response the HttpServletResponse object that contains the response the servlet sends to the client
      * @throws ServletException if the request for the POST could not be handled
      * @throws IOException      if an input or output error is detected when the servlet handles the POST request
-     * @see services.user.UtenteLogin#loginUtente(String, String)
+     * @see UtenteLoginService#loginUtente(String, String)
      */
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -46,7 +46,7 @@ public class LoginServlet extends HttpServlet {
         String password = request.getParameter("password");
 
         try {
-            UtenteLogin utenteLoginService = new UtenteLogin(new UtenteDao());
+            UtenteLoginService utenteLoginService = new UtenteLoginService(new UtenteDao());
             String jwt = utenteLoginService.loginUtente(email, password);
 
             HttpSession session = request.getSession();

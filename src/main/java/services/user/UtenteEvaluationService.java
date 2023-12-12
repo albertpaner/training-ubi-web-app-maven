@@ -9,9 +9,9 @@ import utils.converters.CountConverter;
 import java.sql.SQLException;
 import java.util.*;
 
-public class UtenteEvaluation extends UtenteService {
+public class UtenteEvaluationService extends UtenteService {
 
-    public UtenteEvaluation(UtenteDao utenteDao) {
+    public UtenteEvaluationService(UtenteDao utenteDao) {
         super(utenteDao);
     }
 
@@ -107,12 +107,10 @@ public class UtenteEvaluation extends UtenteService {
 
         List<EvalCountDto> valutatoriOccupatiDto = usersToShow.get("occupati");
         List<EvalCountDto> valutatoriDisponibiliDto = usersToShow.get("disponibili");
-        int evatorId = 0;
 
         for (EvalCountDto valutatore : valutatoriOccupatiDto) {
 
-            evatorId = valutatore.getValutatoreId();
-            List<UtenteBean> utentiValutatiDa = findValuedByEvaluator(evatorId);
+            List<UtenteBean> utentiValutatiDa = findValuedByEvaluator(valutatore.getValutatoreId());
             sortingUtentiEta(utentiValutatiDa);
 
             if (utentiValutatiDa.size() > soglia) {

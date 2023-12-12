@@ -9,9 +9,9 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.util.List;
 
-public class UtenteRegister extends UtenteService {
+public class UtenteRegisterService extends UtenteService {
 
-    public UtenteRegister(UtenteDao utenteDao) throws SQLException, ClassNotFoundException {
+    public UtenteRegisterService(UtenteDao utenteDao) throws SQLException, ClassNotFoundException {
         super();
     }
 

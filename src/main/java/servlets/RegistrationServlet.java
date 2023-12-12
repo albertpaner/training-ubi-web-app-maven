@@ -9,7 +9,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 import model.dao.UtenteDao;
-import services.user.UtenteRegister;
+import services.user.UtenteRegisterService;
 
 import java.io.IOException;
 import java.sql.Date;
@@ -42,7 +42,7 @@ public class RegistrationServlet extends HttpServlet {
      *                  (successMsg or errorMsg)
      *  @throws ServletException
      *  @throws IOException
-     *  @see services.user.UtenteRegister#registrazioneUtente(List) 
+     *  @see UtenteRegisterService#registrazioneUtente(List)
      *
      */
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -59,7 +59,7 @@ public class RegistrationServlet extends HttpServlet {
 
         HttpSession session = request.getSession();
         try {
-            UtenteRegister utenteRegisterService = new UtenteRegister(new UtenteDao());
+            UtenteRegisterService utenteRegisterService = new UtenteRegisterService(new UtenteDao());
 
             if (utenteRegisterService.registrazioneUtente(Arrays.asList(email, password, ruoloId, nome, cognome, valutatoreId, dataNascita))>0) {
                 session.setAttribute("successMsg", "Registered Successfully");

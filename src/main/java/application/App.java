@@ -2,7 +2,7 @@ package application;
 
 import model.dao.UtenteDao;
 import model.dto.EvalCountDto;
-import services.user.UtenteEvaluation;
+import services.user.UtenteEvaluationService;
 
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
@@ -15,9 +15,9 @@ public class App {
 
         HashMap<String, List<EvalCountDto>> evaluators = new HashMap<>();
         try {
-            UtenteEvaluation utenteEvaluation = new UtenteEvaluation(new UtenteDao());
-            evaluators = utenteEvaluation.getEvaluatorsOccupiedFree(3);
-            utenteEvaluation.rearrengeValutatori(evaluators, 3);
+            UtenteEvaluationService utenteEvaluationService = new UtenteEvaluationService(new UtenteDao());
+            evaluators = utenteEvaluationService.getEvaluatorsOccupiedFree(3);
+            utenteEvaluationService.rearrengeValutatori(evaluators, 3);
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }
