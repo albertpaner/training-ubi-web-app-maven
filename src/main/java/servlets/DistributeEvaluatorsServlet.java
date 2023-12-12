@@ -40,23 +40,19 @@ public class DistributeEvaluatorsServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
 
-
         HashMap<String, List<EvalCountDto>> evaluators = new HashMap<>();
+        int soglia = Integer.parseInt(request.getParameter("soglia"));
 
         try {
             UtenteEvaluationService utenteEvaluationService = new UtenteEvaluationService(new UtenteDao());
-            evaluators = utenteEvaluationService.getEvaluatorsOccupiedFree(3);
+            evaluators = utenteEvaluationService.getEvaluatorsOccupiedFree(soglia);
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }
 
         List<EvalCountDto> evaluatorsOccupied = evaluators.get("occupati");
         List<EvalCountDto> evaluatorsFree = evaluators.get("disponibili");
-        /*
-        HttpSession session = request.getSession();
-        session.setAttribute("occupati", evaluatorsOccupied);
-        session.setAttribute("disponibili", evaluatorsFree);
-        */
+
         request.setAttribute("occupati", evaluatorsOccupied);
         request.setAttribute("disponibili", evaluatorsFree);
 
@@ -65,42 +61,43 @@ public class DistributeEvaluatorsServlet extends HttpServlet {
     }
 
 
-/**
- * Handles the HTTP POST method for rearranging evaluators.
- * This method is called when the servlet receives a POST request.
- * It fetches all evaluators and their corresponding users from the database.
- * It then calls the `rearrengeValutatori` method to rearrange the evaluators.
- * This method is triggered when a button is pressed on the front-end.
- *
- * @param request  The request object that contains the request the client has made of the servlet.
- * @param response The response object that contains the response the servlet sends to the client.
- * @throws ServletException If the request for the POST could not be handled.
- * @throws IOException      If an input or output error is detected when the servlet handles the POST request.
- */
-@Override
-protected void doPost(HttpServletRequest request, HttpServletResponse response)
-        throws ServletException, IOException {
+    /**
+     * Handles the HTTP POST method for rearranging evaluators.
+     * This method is called when the servlet receives a POST request.
+     * It fetches all evaluators and their corresponding users from the database.
+     * It then calls the `rearrengeValutatori` method to rearrange the evaluators.
+     * This method is triggered when a button is pressed on the front-end.
+     *
+     * @param request  The request object that contains the request the client has made of the servlet.
+     * @param response The response object that contains the response the servlet sends to the client.
+     * @throws ServletException If the request for the POST could not be handled.
+     * @throws IOException      If an input or output error is detected when the servlet handles the POST request.
+     */
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
 
-    HashMap<String, List<EvalCountDto>> evaluators = new HashMap<>();
-    try {
-        UtenteEvaluationService utenteEvaluationService = new UtenteEvaluationService(new UtenteDao());
-        utenteEvaluationService.rearrengeValutatori(evaluators, 3);
-        evaluators = utenteEvaluationService.getEvaluatorsOccupiedFree(3);
+        HashMap<String, List<EvalCountDto>> evaluators = new HashMap<>();
 
-    } catch (ClassNotFoundException | SQLException e) {
-        e.printStackTrace();
+        int soglia = Integer.parseInt(request.getParameter("soglia"));
+
+        try {
+            UtenteEvaluationService utenteEvaluationService = new UtenteEvaluationService(new UtenteDao());
+            utenteEvaluationService.equilibrateValutatori(evaluators, soglia);
+            evaluators = utenteEvaluationService.getEvaluatorsOccupiedFree(soglia);
+
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }
+
+        List<EvalCountDto> evaluatorsOccupied = evaluators.get("valutatori_occupati");
+        List<EvalCountDto> evaluatorsFree = evaluators.get("valutatori_disponibili");
+
+        request.setAttribute("valutatori_occupati", evaluatorsOccupied);
+        request.setAttribute("valutatori_disponibili", evaluatorsFree);
+
+        request.getRequestDispatcher("distribute_evaluators.jsp").forward(request, response);
     }
-
-
-    List<EvalCountDto> evaluatorsOccupied = evaluators.get("valutatori_occupati");
-    List<EvalCountDto> evaluatorsFree = evaluators.get("valutatori_disponibili");
-
-    request.setAttribute("valutatori_occupati", evaluatorsOccupied);
-    request.setAttribute("valutatori_disponibili", evaluatorsFree);
-
-
-    request.getRequestDispatcher("distribute_evaluators.jsp").forward(request, response);
-}
 
 
 }

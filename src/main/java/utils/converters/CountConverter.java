@@ -17,7 +17,7 @@ public class CountConverter {
 
         EvalCountDto countDto = new EvalCountDto();
         
-        countDto.setValutatoreId(utenteBean.getValutatoreId());
+        countDto.setUtenteId(utenteBean.getUtenteId());
         countDto.setEmail(utenteBean.getEmail());
         countDto.setNome(utenteBean.getNome());
         countDto.setCognome(utenteBean.getCognome());
