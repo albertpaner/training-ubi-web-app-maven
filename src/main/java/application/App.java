@@ -17,7 +17,7 @@ public class App {
         try {
             UtenteEvaluationService utenteEvaluationService = new UtenteEvaluationService(new UtenteDao());
             evaluators = utenteEvaluationService.getEvaluatorsOccupiedFree(3);
-            utenteEvaluationService.rearrengeValutatori(evaluators, 3);
+            utenteEvaluationService.equilibrateValutatori(evaluators, 3);
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }

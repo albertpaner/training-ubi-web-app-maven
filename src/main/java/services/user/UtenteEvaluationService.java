@@ -80,7 +80,7 @@ public class UtenteEvaluationService extends UtenteService {
             int howManyPeasants = lordsAndPeasants.get(lord).size();
             evaluatorDto.setCount(howManyPeasants);
 
-            if (howManyPeasants > soglia) {
+            if (howManyPeasants >= soglia) {
                 valutatoriOccupatiDto.add(evaluatorDto);
             } else {
                 valutatoriDisponibiliDto.add(evaluatorDto);
@@ -99,25 +99,28 @@ public class UtenteEvaluationService extends UtenteService {
      * If an evaluator has more users than the threshold, the method reassigns the excess users to evaluators who have less than the threshold number of users.
      * The reassignment is done based on the user's date of birth, with the youngest users being reassigned first.
      *
-     * @param usersToShow A HashMap of evaluators and their corresponding users.
-     * @param soglia      The threshold value for the number of users an evaluator can have.
-     * @throws SQLException If a database access error occurs.
      */
-    public int rearrengeValutatori(HashMap<String, List<EvalCountDto>> usersToShow, int soglia) throws SQLException, ClassNotFoundException {
+    public int rearrangeValutatori(HashMap<String, List<EvalCountDto>> usersToShow, int soglia) throws SQLException, ClassNotFoundException {
 
         int shuffledUsers = 0;
         List<EvalCountDto> valutatoriOccupatiDto = usersToShow.get("occupati");
         List<EvalCountDto> valutatoriDisponibiliDto = usersToShow.get("disponibili");
 
+        valutatoriOccupatiDto.sort(Comparator.comparing(EvalCountDto::getCount).reversed());
+        valutatoriDisponibiliDto.sort(Comparator.comparing(EvalCountDto::getCount));
+
         for (EvalCountDto valutatore : valutatoriOccupatiDto) {
 
-            List<UtenteBean> utentiValutatiDa = findValuedByEvaluator(valutatore.getValutatoreId());
-            sortingUtentiEta(utentiValutatiDa);
+            List<UtenteBean> utentiValutatiDa = new ArrayList<UtenteBean>();
+            utentiValutatiDa = findValuedByEvaluator(valutatore.getUtenteId());
+            utentiValutatiDa.sort(Comparator.comparing(UtenteBean::getDataNascita));
 
             if (utentiValutatiDa.size() > soglia) {
 
-                for (int i = utentiValutatiDa.size() - 1; i >= soglia; i--) {
+                for (int i = utentiValutatiDa.size() - 1; (i >= soglia); i--) {
                     UtenteBean utenteChange = utentiValutatiDa.remove(i);
+
+                    EvalCountDto evalMinCountDto = valutatoriDisponibiliDto.get(0);
 
                     utenteDao.update(Arrays.asList(
                             utenteChange.getEmail(),
@@ -125,26 +128,33 @@ public class UtenteEvaluationService extends UtenteService {
                             utenteChange.getRuoloId(),
                             utenteChange.getNome(),
                             utenteChange.getCognome(),
-                            valutatoriDisponibiliDto.get().getValutatoreId(),
+                            evalMinCountDto.getUtenteId(),
                             utenteChange.getDataNascita(),
                             utenteChange.getUtenteId()
                     ));
+
+                    evalMinCountDto.setCount(evalMinCountDto.getCount() + 1);
+                    if(evalMinCountDto.getCount() == soglia){
+                        break;
+                    }
+
+                    shuffledUsers++;
                 }
             }
         }
         return shuffledUsers;
     }
 
+    public int equilibrateValutatori(HashMap<String, List<EvalCountDto>> usersToShow, int soglia) throws SQLException, ClassNotFoundException {
+        int totalShuffledUsers = 0;
+        int shuffledUsers;
 
-    /**
-     * This method sorts a list of UtenteBean objects based on their dataNascita (date of birth) attribute.
-     * The sorting is done in ascending order, meaning the oldest user will be first.
-     *
-     * @param utentiToSort The list of UtenteBean objects to be sorted.
-     */
-    public void sortingUtentiEta(List<UtenteBean> utentiToSort) {
-        //utentiToSort.sort((u1, u2) -> u1.getDataNascita().compareTo(u2.getDataNascita()));
-        utentiToSort.sort(Comparator.comparing(UtenteBean::getDataNascita));
+        do{
+            shuffledUsers = rearrangeValutatori(usersToShow, soglia);
+            totalShuffledUsers += shuffledUsers;
+        } while(shuffledUsers > 0);
+
+        return totalShuffledUsers;
     }
 
 }

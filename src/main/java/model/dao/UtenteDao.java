@@ -101,6 +101,7 @@ public class UtenteDao implements Crud<UtenteBean> {
     public int create(List<Object> userParams) throws SQLException, ClassNotFoundException {
 
         this.conn = DBConnection.createConnection();
+
         String email = (String) userParams.get(0);
         String password = (String) userParams.get(1);
         int ruoloId = (Integer) userParams.get(2);

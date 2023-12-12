@@ -6,7 +6,7 @@ package model.dto;
  * */
 public class EvalCountDto {
 
-    private int valutatoreId;
+    private int utenteId;
 	private String nome;
     private String cognome;
     private String email;
@@ -16,20 +16,20 @@ public class EvalCountDto {
 		this.count = 0;
 	}
 
-	public EvalCountDto(int valutatoreId, String nome, String cognome, String email, int count) {
-		this.valutatoreId = valutatoreId;
+	public EvalCountDto(int utenteId, String nome, String cognome, String email, int count) {
+		this.utenteId = utenteId;
 		this.nome = nome;
 		this.cognome = cognome;
 		this.email = email;
 		this.count = count;
 	}
 
-	public int getValutatoreId() {
-		return valutatoreId;
+	public int getUtenteId() {
+		return utenteId;
 	}
 
-	public void setValutatoreId(int valutatoreId) {
-		this.valutatoreId = valutatoreId;
+	public void setUtenteId(int utenteId) {
+		this.utenteId = utenteId;
 	}
 
 	public String getNome() {
