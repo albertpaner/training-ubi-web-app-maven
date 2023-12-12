@@ -17,6 +17,7 @@ public class App {
         try {
             UtenteEvaluation utenteEvaluation = new UtenteEvaluation(new UtenteDao());
             evaluators = utenteEvaluation.getEvaluatorsOccupiedFree(3);
+            utenteEvaluation.rearrengeValutatori(evaluators, 3);
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }
@@ -30,6 +31,7 @@ public class App {
         for (EvalCountDto evaluator : evaluatorsFree) {
             System.out.println(evaluator.getNome() + " " + evaluator.getCognome() + " " + evaluator.getCount());
         }
+
 
     }
 

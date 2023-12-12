@@ -117,8 +117,6 @@ protected void doPost(HttpServletRequest request, HttpServletResponse response)
     request.setAttribute("valutatori_occupati", evaluatorsOccupied);
     request.setAttribute("valutatori_disponibili", evaluatorsFree);
 
-    System.out.println("used a servlet");
-    request.setAttribute("flg", "I see you!");
 
     request.getRequestDispatcher("distribute_evaluators.jsp").forward(request, response);
 }

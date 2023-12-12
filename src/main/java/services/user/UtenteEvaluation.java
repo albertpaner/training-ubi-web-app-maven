@@ -105,8 +105,8 @@ public class UtenteEvaluation extends UtenteService {
      */
     public void rearrengeValutatori(HashMap<String, List<EvalCountDto>> usersToShow, int soglia) throws SQLException, ClassNotFoundException {
 
-        List<EvalCountDto> valutatoriOccupatiDto = usersToShow.get("valutatori_occupati");
-        List<EvalCountDto> valutatoriDisponibiliDto = usersToShow.get("valutatori_disponibili");
+        List<EvalCountDto> valutatoriOccupatiDto = usersToShow.get("occupati");
+        List<EvalCountDto> valutatoriDisponibiliDto = usersToShow.get("disponibili");
         int evatorId = 0;
 
         for (EvalCountDto valutatore : valutatoriOccupatiDto) {
