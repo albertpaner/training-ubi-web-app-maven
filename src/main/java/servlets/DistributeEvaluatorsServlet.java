@@ -62,26 +62,6 @@ public class DistributeEvaluatorsServlet extends HttpServlet {
 
         request.getRequestDispatcher("distribute_evaluators.jsp").forward(request, response);
 
-        /*
-        response.setContentType("text/html");
-        PrintWriter out = response.getWriter();
-
-        out.println("<html><body>");
-        out.println("<h2>Occupied Evaluators</h2>");
-        if (evaluatorsOccupied != null) {
-            for (EvalCountDto evaluator : evaluatorsOccupied) {
-                out.println("<li>" + evaluator.getNome() + " " + evaluator.getCognome() + " " + evaluator.getEmail() + " - " + evaluator.getCount() + "</li>");
-            }
-        }
-
-        out.println("<h2>Free Evaluators</h2>");
-        if (evaluatorsFree != null) {
-            for (EvalCountDto evaluator : evaluatorsFree) {
-                out.println("<li>" + evaluator.getNome() + " " + evaluator.getCognome() + " " + evaluator.getEmail() + " - " + evaluator.getCount() + "</li>");
-            }
-        }
-        out.println("</body></html>");
-        */
     }
 
 
@@ -104,8 +84,9 @@ protected void doPost(HttpServletRequest request, HttpServletResponse response)
     HashMap<String, List<EvalCountDto>> evaluators = new HashMap<>();
     try {
         UtenteEvaluationService utenteEvaluationService = new UtenteEvaluationService(new UtenteDao());
-        evaluators = utenteEvaluationService.getEvaluatorsOccupiedFree(3);
         utenteEvaluationService.rearrengeValutatori(evaluators, 3);
+        evaluators = utenteEvaluationService.getEvaluatorsOccupiedFree(3);
+
     } catch (ClassNotFoundException | SQLException e) {
         e.printStackTrace();
     }

@@ -103,8 +103,9 @@ public class UtenteEvaluationService extends UtenteService {
      * @param soglia      The threshold value for the number of users an evaluator can have.
      * @throws SQLException If a database access error occurs.
      */
-    public void rearrengeValutatori(HashMap<String, List<EvalCountDto>> usersToShow, int soglia) throws SQLException, ClassNotFoundException {
+    public int rearrengeValutatori(HashMap<String, List<EvalCountDto>> usersToShow, int soglia) throws SQLException, ClassNotFoundException {
 
+        int shuffledUsers = 0;
         List<EvalCountDto> valutatoriOccupatiDto = usersToShow.get("occupati");
         List<EvalCountDto> valutatoriDisponibiliDto = usersToShow.get("disponibili");
 
@@ -124,14 +125,14 @@ public class UtenteEvaluationService extends UtenteService {
                             utenteChange.getRuoloId(),
                             utenteChange.getNome(),
                             utenteChange.getCognome(),
-                            valutatoriDisponibiliDto.get(0).getValutatoreId(),
+                            valutatoriDisponibiliDto.get().getValutatoreId(),
                             utenteChange.getDataNascita(),
                             utenteChange.getUtenteId()
                     ));
                 }
             }
         }
-
+        return shuffledUsers;
     }
 
 
