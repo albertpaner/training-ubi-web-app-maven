@@ -28,6 +28,7 @@ public class UtenteEvaluationService extends UtenteService {
     private List<UtenteBean> findValuedByEvaluator(int evatorId) throws SQLException, ClassNotFoundException {
         List<UtenteBean> allUsers = utenteDao.findAll();
         List<UtenteBean> filteredUsers = allUsers.stream()
+                .filter(user -> user.getRuoloId() == 2)
                 .filter(user -> user.getValutatoreId() == evatorId)
                 .filter(user -> !user.getFlgDel())
                 .toList();
@@ -175,7 +176,7 @@ public class UtenteEvaluationService extends UtenteService {
             totalShuffledUsers += shuffledUsers;
         } while (shuffledUsers > 0);
 
-        setEmptyWaitingList();
+        //setEmptyWaitingList();
         HashMap<String, List<EvalCountDto>> newUsersToShow = getEvaluatorsOccupiedFree(soglia);
         setWaitingList(newUsersToShow, soglia);
 
