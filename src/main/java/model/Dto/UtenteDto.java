@@ -15,8 +15,15 @@ public class UtenteDto {
     private String userSubFamily;
     private String userStandardJob;
     private String userJobLevel;
+    private Boolean outstanding;
     
-    public int getUserId() {
+    public Boolean getOutstanding() {
+		return outstanding;
+	}
+	public void setOutstanding(Boolean outstanding) {
+		this.outstanding = outstanding;
+	}
+	public int getUserId() {
         return userId;
     }
     public void setUserId(int userId) {

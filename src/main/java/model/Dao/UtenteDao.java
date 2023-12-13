@@ -40,6 +40,7 @@ public class UtenteDao {
 	    utenteBean.setDataUltMod(rs.getDate("data_ult_mod"));
 	    utenteBean.setDataCreaz(rs.getDate("data_creaz"));
 	    utenteBean.setFlgDel(rs.getBoolean("flg_del"));
+	    utenteBean.setInSospeso(rs.getBoolean("in_sospeso"));
 
 	    // ci popoliamo tutto l'oggetto
 	    listaUtenti.add(utenteBean);
@@ -77,6 +78,7 @@ public class UtenteDao {
 	    utenteBean.setDataUltMod(rs.getDate("data_ult_mod"));
 	    utenteBean.setDataCreaz(rs.getDate("data_creaz"));
 	    utenteBean.setFlgDel(rs.getBoolean("flg_del"));
+	    utenteBean.setInSospeso(rs.getBoolean("in_sospeso"));
 	}
 
 	conn.close();
@@ -86,16 +88,16 @@ public class UtenteDao {
 
     public int create(String email, String password, int ruoloId, String nome, String cognome, int valutatoreId,
 	    String societaOp, String mansione, String ambito, String jobFam, String subFam, String stdJob,
-	    String jobLevel) throws ClassNotFoundException, SQLException {
+	    String jobLevel, Boolean inSospeso) throws ClassNotFoundException, SQLException {
 
 	Connection conn = DBConnection.createConnection();
 
 	Statement stmt = conn.createStatement();
 	int rs = stmt.executeUpdate(
-		"INSERT INTO utente (email, password, ruolo_id, nome, cognome, valutatore_id, societa_op, mansione, ambito, job_fam, sub_fam, std_job, job_level) VALUES ('"
+		"INSERT INTO utente (email, password, ruolo_id, nome, cognome, valutatore_id, societa_op, mansione, ambito, job_fam, sub_fam, std_job, job_level,  in_sospeso) VALUES ('"
 			+ email + "', '" + password + "', " + ruoloId + ", '" + nome + "', '" + cognome + "', "
 			+ valutatoreId + ", '" + societaOp + "', '" + mansione + "', '" + ambito + "', '" + jobFam
-			+ "', '" + subFam + "', '" + stdJob + "', '" + jobLevel + "')");
+			+ "', '" + subFam + "', '" + stdJob + "', '" + jobLevel + "', '" + inSospeso + "', '"  + "')");
 
 	conn.close();
 	return rs;
@@ -103,7 +105,7 @@ public class UtenteDao {
 
     public int update(String email, String password, int ruoloId, String nome, String cognome, int valutatoreId,
 	    String societaOp, String mansione, String ambito, String jobFam, String subFam, String stdJob,
-	    String jobLevel, int utenteId) throws ClassNotFoundException, SQLException {
+	    String jobLevel, int utenteId, Boolean inSospeso) throws ClassNotFoundException, SQLException {
 
 	Connection conn = DBConnection.createConnection();
 
@@ -112,7 +114,7 @@ public class UtenteDao {
 		+ "', ruolo_id = " + ruoloId + ", nome = '" + nome + "', cognome = '" + cognome
 		+ "', valutatore_id = " + valutatoreId + ", societa_op = '" + societaOp + "', mansione = '"
 		+ mansione + "', ambito = '" + ambito + "', job_fam = '" + jobFam + "', sub_fam = '" + subFam
-		+ "', std_job = '" + stdJob + "', job_level = '" + jobLevel + "' WHERE utente_id = " + utenteId);
+		+ "', std_job = '" + stdJob + "', job_level = '" + jobLevel + "' WHERE utente_id = " + utenteId+ "' WHERE in_sospeso = " + inSospeso);
 
 	conn.close();
 	return rs;
@@ -167,6 +169,7 @@ public class UtenteDao {
 	    utenteFound.setDataUltMod(rs.getDate("data_ult_mod"));
 	    utenteFound.setDataCreaz(rs.getDate("data_creaz"));
 	    utenteFound.setFlgDel(rs.getBoolean("flg_del"));
+	    utenteFound.setInSospeso(rs.getBoolean("in_sospeso"));
 	}
 
 	conn.close();

@@ -20,7 +20,14 @@ public class UtenteBean {
     private Date dataUltAcc;
     private Date dataUltMod;
     private Date dataCreaz;
-    private boolean flgDel;
+    private Boolean inSospeso;
+    public Boolean getInSospeso() {
+		return inSospeso;
+	}
+	public void setInSospeso(Boolean inSospeso) {
+		this.inSospeso = inSospeso;
+	}
+	private boolean flgDel;
 	public int getUtenteId() {
 		return utenteId;
 	}
