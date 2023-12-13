@@ -23,13 +23,13 @@ public class UtenteEvaluationService extends UtenteService {
      * @throws SQLException If a database access error occurs.
      */
     private List<UtenteBean> findValuedByEvaluator(int evatorId) throws SQLException, ClassNotFoundException {
-    List<UtenteBean> allUsers = utenteDao.findAll();
-    List<UtenteBean> filteredUsers = allUsers.stream()
-            .filter(user -> user.getValutatoreId() == evatorId)
-            .filter(user -> !user.getFlgDel())
-            .toList();
-    return new ArrayList<>(filteredUsers);
-}
+        List<UtenteBean> allUsers = utenteDao.findAll();
+        List<UtenteBean> filteredUsers = allUsers.stream()
+                .filter(user -> user.getValutatoreId() == evatorId)
+                .filter(user -> !user.getFlgDel())
+                .toList();
+        return new ArrayList<>(filteredUsers);
+    }
 
     /**
      * This method fetches all evaluators and their corresponding users from the database.
@@ -123,25 +123,30 @@ public class UtenteEvaluationService extends UtenteService {
                 for (int i = utentiValutatiDa.size() - 1; (i >= soglia); i--) {
                     UtenteBean utenteChange = utentiValutatiDa.remove(i);
 
-                    EvalCountDto evalMinCountDto = valutatoriDisponibiliDto.get(0);
+                    if (!valutatoriDisponibiliDto.isEmpty()) {
+                        EvalCountDto evalMinCountDto = valutatoriDisponibiliDto.get(0);
 
-                    utenteDao.update(Arrays.asList(
-                            utenteChange.getEmail(),
-                            utenteChange.getPassword(),
-                            utenteChange.getRuoloId(),
-                            utenteChange.getNome(),
-                            utenteChange.getCognome(),
-                            evalMinCountDto.getUtenteId(),
-                            utenteChange.getDataNascita(),
-                            utenteChange.getUtenteId()
-                    ));
+                        System.out.println("evalMinCountDto: " + evalMinCountDto);
 
-                    evalMinCountDto.setCount(evalMinCountDto.getCount() + 1);
-                    if(evalMinCountDto.getCount() == soglia){
-                        break;
+                        utenteDao.update(Arrays.asList(
+                                utenteChange.getEmail(),
+                                utenteChange.getPassword(),
+                                utenteChange.getRuoloId(),
+                                utenteChange.getNome(),
+                                utenteChange.getCognome(),
+                                evalMinCountDto.getUtenteId(),
+                                utenteChange.getDataNascita(),
+                                utenteChange.getUtenteId()
+                        ));
+
+                        evalMinCountDto.setCount(evalMinCountDto.getCount() + 1);
+                        if (evalMinCountDto.getCount() == soglia) {
+                            break;
+                        }
+
+                        shuffledUsers++;
                     }
 
-                    shuffledUsers++;
                 }
             }
         }
@@ -152,10 +157,10 @@ public class UtenteEvaluationService extends UtenteService {
         int totalShuffledUsers = 0;
         int shuffledUsers;
 
-        do{
+        do {
             shuffledUsers = rearrangeValutatori(usersToShow, soglia);
             totalShuffledUsers += shuffledUsers;
-        } while(shuffledUsers > 0);
+        } while (shuffledUsers > 0);
 
         return totalShuffledUsers;
     }
