@@ -46,7 +46,7 @@ public class UtenteDao implements Crud<UtenteBean> {
             utenteBean.setDataUltMod(rs.getDate("data_ult_mod"));
             utenteBean.setDataCreaz(rs.getDate("data_creaz"));
             utenteBean.setFlgDel(rs.getBoolean("flg_del"));
-
+            utenteBean.setInSospeso(rs.getBoolean("in_sospeso"));
 
             // ci popoliamo tutto l'oggetto
             listaUtenti.add(utenteBean);

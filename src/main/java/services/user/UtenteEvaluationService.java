@@ -177,13 +177,44 @@ public class UtenteEvaluationService extends UtenteService {
         return totalShuffledUsers;
     }
 
+    public int setWaitingList(HashMap<String, List<EvalCountDto>> usersToShow, int soglia) throws SQLException, ClassNotFoundException {
+        int totalUsersWaiting = 0;
+
+        List<EvalCountDto> valutatoriOccupatiDto = usersToShow.get("occupati");
+
+        for (EvalCountDto valutatore : valutatoriOccupatiDto) {
+            List<UtenteBean> utentiValutatiDa = findValuedByEvaluator(valutatore.getUtenteId());
+
+            if (utentiValutatiDa.size() > soglia) {
+                for (int i = utentiValutatiDa.size() - 1; (i >= soglia); i--) {
+                    UtenteBean utenteChange = utentiValutatiDa.remove(i);
+
+                    utenteDao.update(Arrays.asList(
+                            utenteChange.getEmail(),
+                            utenteChange.getPassword(),
+                            utenteChange.getRuoloId(),
+                            utenteChange.getNome(),
+                            utenteChange.getCognome(),
+                            0,
+                            utenteChange.getDataNascita(),
+                            utenteChange.getUtenteId(),
+                            true
+                    ));
+                    totalUsersWaiting++;
+                }
+            }
+        }
+
+
+        return totalUsersWaiting;
+    }
+
     private void setEmptyWaitingList() throws SQLException, ClassNotFoundException {
         List<UtenteBean> allUsers = utenteDao.findAll();
         allUsers.stream()
                 .filter(user -> user.getRuoloId() == 2)
                 .filter(user -> !user.getFlgDel())
                 .forEach(user -> {
-                    user.setInSospeso(false);
                     try {
                         utenteDao.update(Arrays.asList(
                                 user.getEmail(),
@@ -194,7 +225,7 @@ public class UtenteEvaluationService extends UtenteService {
                                 user.getValutatoreId(),
                                 user.getDataNascita(),
                                 user.getUtenteId(),
-                                user.getInSospeso()
+                                false
                         ));
                     } catch (SQLException | ClassNotFoundException e) {
                         throw new RuntimeException(e);
