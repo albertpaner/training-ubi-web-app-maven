@@ -3,11 +3,14 @@ package services.user;
 import model.bean.UtenteBean;
 import model.dao.UtenteDao;
 import model.dto.EvalCountDto;
+import model.dto.UtenteDto;
 import services.UtenteService;
 import utils.converters.CountConverter;
+import utils.converters.UtenteConverter;
 
 import java.sql.SQLException;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class UtenteEvaluationService extends UtenteService {
 
@@ -167,14 +170,60 @@ public class UtenteEvaluationService extends UtenteService {
         int totalShuffledUsers = 0;
         int shuffledUsers;
 
-        setEmptyWaitingList();
-
         do {
             shuffledUsers = rearrangeValutatori(usersToShow, soglia);
             totalShuffledUsers += shuffledUsers;
         } while (shuffledUsers > 0);
 
+        setEmptyWaitingList();
+        HashMap<String, List<EvalCountDto>> newUsersToShow = getEvaluatorsOccupiedFree(soglia);
+        setWaitingList(newUsersToShow, soglia);
+
         return totalShuffledUsers;
+    }
+
+
+    public List<UtenteDto> getValuedInWaitingList() throws SQLException, ClassNotFoundException {
+        List<UtenteBean> allUsers = utenteDao.findAll();
+        List<UtenteDto> filteredUsersDto = allUsers.stream()
+                .filter(user -> user.getInSospeso())
+                .filter(user -> !user.getFlgDel())
+                .map(user -> UtenteConverter.toDto(user))
+                .collect(Collectors.toList());
+
+        return new ArrayList<>(filteredUsersDto);
+    }
+
+    public int setWaitingList(HashMap<String, List<EvalCountDto>> usersToShow, int soglia) throws SQLException, ClassNotFoundException {
+        int totalUsersWaiting = 0;
+
+        List<EvalCountDto> valutatoriOccupatiDto = usersToShow.get("occupati");
+
+        for (EvalCountDto valutatore : valutatoriOccupatiDto) {
+            List<UtenteBean> utentiValutatiDa = findValuedByEvaluator(valutatore.getUtenteId());
+
+            if (utentiValutatiDa.size() > soglia) {
+                for (int i = utentiValutatiDa.size() - 1; (i >= soglia); i--) {
+                    UtenteBean utenteChange = utentiValutatiDa.remove(i);
+
+                    utenteDao.update(Arrays.asList(
+                            utenteChange.getEmail(),
+                            utenteChange.getPassword(),
+                            utenteChange.getRuoloId(),
+                            utenteChange.getNome(),
+                            utenteChange.getCognome(),
+                            0,
+                            utenteChange.getDataNascita(),
+                            utenteChange.getUtenteId(),
+                            true
+                    ));
+                    totalUsersWaiting++;
+                }
+            }
+        }
+
+
+        return totalUsersWaiting;
     }
 
     private void setEmptyWaitingList() throws SQLException, ClassNotFoundException {
@@ -183,7 +232,6 @@ public class UtenteEvaluationService extends UtenteService {
                 .filter(user -> user.getRuoloId() == 2)
                 .filter(user -> !user.getFlgDel())
                 .forEach(user -> {
-                    user.setInSospeso(false);
                     try {
                         utenteDao.update(Arrays.asList(
                                 user.getEmail(),
@@ -194,7 +242,7 @@ public class UtenteEvaluationService extends UtenteService {
                                 user.getValutatoreId(),
                                 user.getDataNascita(),
                                 user.getUtenteId(),
-                                user.getInSospeso()
+                                false
                         ));
                     } catch (SQLException | ClassNotFoundException e) {
                         throw new RuntimeException(e);
