@@ -119,43 +119,68 @@ public class UtenteEvaluationService extends UtenteService {
         valutatoriOccupatiDto.sort(Comparator.comparing(EvalCountDto::getCount).reversed());
         valutatoriDisponibiliDto.sort(Comparator.comparing(EvalCountDto::getCount));
 
-        for (EvalCountDto valutatore : valutatoriOccupatiDto) {
+        EvalCountDto evalMaxCount = valutatoriOccupatiDto.get(0);
+        EvalCountDto evalMinCount = valutatoriDisponibiliDto.get(0);
 
-            List<UtenteBean> utentiValutatiDa = findValuedByEvaluator(valutatore.getUtenteId());
-            utentiValutatiDa.sort(Comparator.comparing(UtenteBean::getDataNascita));
+        System.out.println("evalMaxCount: " + evalMaxCount);
+        System.out.println("evalMinCount: " + evalMinCount);
 
-            if (utentiValutatiDa.size() > soglia) {
+        List<UtenteBean> utentiValutatiDa = findValuedByEvaluator(evalMaxCount.getUtenteId());
+        utentiValutatiDa.sort(Comparator.comparing(UtenteBean::getDataNascita));
 
-                for (int i = utentiValutatiDa.size() - 1; (i >= soglia) && !valutatoriDisponibiliDto.isEmpty(); i--) {
-                    UtenteBean utenteChange = utentiValutatiDa.remove(i);
+        if (utentiValutatiDa.size() <= soglia) {
+            return 0;
+        }
 
-                    EvalCountDto evalMinCountDto = valutatoriDisponibiliDto.get(0);
+        for (int i = utentiValutatiDa.size() - 1; (i >= soglia) && !valutatoriDisponibiliDto.isEmpty(); i--) {
+            UtenteBean utenteChange = utentiValutatiDa.remove(i);
 
-                    System.out.println("evalMinCountDto: " + evalMinCountDto);
+            utenteDao.update(Arrays.asList(
+                    utenteChange.getEmail(),
+                    utenteChange.getPassword(),
+                    utenteChange.getRuoloId(),
+                    utenteChange.getNome(),
+                    utenteChange.getCognome(),
+                    evalMinCount.getUtenteId(),
+                    utenteChange.getDataNascita(),
+                    utenteChange.getUtenteId(),
+                    utenteChange.getInSospeso()
+            ));
 
-                    utenteDao.update(Arrays.asList(
-                            utenteChange.getEmail(),
-                            utenteChange.getPassword(),
-                            utenteChange.getRuoloId(),
-                            utenteChange.getNome(),
-                            utenteChange.getCognome(),
-                            evalMinCountDto.getUtenteId(),
-                            utenteChange.getDataNascita(),
-                            utenteChange.getUtenteId(),
-                            utenteChange.getInSospeso()
-                    ));
+            evalMinCount.setCount(evalMinCount.getCount() + 1);
 
-                    evalMinCountDto.setCount(evalMinCountDto.getCount() + 1);
-                    if (evalMinCountDto.getCount() == soglia) {
-                        break;
-                    }
+            shuffledUsers++;
 
-                    shuffledUsers++;
-
-
-                }
+            if (evalMinCount.getCount() == soglia) {
+                break;
             }
         }
+
+        for (int i = utentiValutatiDa.size() - 1; (i >= soglia) && !valutatoriDisponibiliDto.isEmpty(); i--) {
+            UtenteBean utenteChange = utentiValutatiDa.remove(i);
+
+            utenteDao.update(Arrays.asList(
+                    utenteChange.getEmail(),
+                    utenteChange.getPassword(),
+                    utenteChange.getRuoloId(),
+                    utenteChange.getNome(),
+                    utenteChange.getCognome(),
+                    evalMinCount.getUtenteId(),
+                    utenteChange.getDataNascita(),
+                    utenteChange.getUtenteId(),
+                    utenteChange.getInSospeso()
+            ));
+
+            evalMinCount.setCount(evalMinCount.getCount() + 1);
+
+            shuffledUsers++;
+
+            if (evalMinCount.getCount() == soglia) {
+                break;
+            }
+
+        }
+
         return shuffledUsers;
     }
 
@@ -178,7 +203,7 @@ public class UtenteEvaluationService extends UtenteService {
             totalShuffledUsers += shuffledUsers;
         } while (shuffledUsers > 0);
 
-        //setEmptyWaitingList();
+        setNewWaitingList();
         HashMap<String, List<EvalCountDto>> newUsersToShow = getEvaluatorsOccupiedFree(soglia);
         setWaitingList(newUsersToShow, soglia);
 
@@ -186,6 +211,13 @@ public class UtenteEvaluationService extends UtenteService {
     }
 
 
+    /**
+     * This method returns a list of users who are in the waiting list.
+     *
+     * @return A list of users who are in the waiting list.
+     * @throws SQLException           If a database access error occurs.
+     * @throws ClassNotFoundException If the JDBC Driver class is not found.
+     */
     public List<UtenteDto> getWaitingList() throws SQLException, ClassNotFoundException {
         List<UtenteBean> allUsers = utenteDao.findAll();
         List<UtenteDto> filteredUsersDto = allUsers.stream()
@@ -197,9 +229,7 @@ public class UtenteEvaluationService extends UtenteService {
         return new ArrayList<>(filteredUsersDto);
     }
 
-    /*
-     *
-     * */
+
     public int setWaitingList(HashMap<String, List<EvalCountDto>> usersToShow, int soglia) throws SQLException, ClassNotFoundException {
         int totalUsersWaiting = 0;
 
@@ -232,10 +262,11 @@ public class UtenteEvaluationService extends UtenteService {
         return totalUsersWaiting;
     }
 
-    private void setEmptyWaitingList() throws SQLException, ClassNotFoundException {
+    private void setNewWaitingList() throws SQLException, ClassNotFoundException {
         List<UtenteBean> allUsers = utenteDao.findAll();
         allUsers.stream()
                 .filter(user -> user.getRuoloId() == 2)
+                .filter(user -> user.getInSospeso())
                 .filter(user -> !user.getFlgDel())
                 .forEach(user -> {
                     try {
