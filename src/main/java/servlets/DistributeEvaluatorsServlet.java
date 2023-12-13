@@ -44,11 +44,14 @@ public class DistributeEvaluatorsServlet extends HttpServlet {
             throws IOException, ServletException {
 
         HashMap<String, List<EvalCountDto>> evaluators = new HashMap<>();
+        List<UtenteDto> waitingList = new ArrayList<>();
+
         int soglia = Integer.parseInt(request.getParameter("soglia1"));
 
         try {
             UtenteEvaluationService utenteEvaluationService = new UtenteEvaluationService(new UtenteDao());
             evaluators = utenteEvaluationService.getEvaluatorsOccupiedFree(soglia);
+            waitingList = utenteEvaluationService.getWaitingList();
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }
@@ -56,6 +59,7 @@ public class DistributeEvaluatorsServlet extends HttpServlet {
         List<EvalCountDto> evaluatorsOccupied = evaluators.get("occupati");
         List<EvalCountDto> evaluatorsFree = evaluators.get("disponibili");
 
+        request.setAttribute("waiting", waitingList);
         request.setAttribute("occupati", evaluatorsOccupied);
         request.setAttribute("disponibili", evaluatorsFree);
 
@@ -103,7 +107,7 @@ public class DistributeEvaluatorsServlet extends HttpServlet {
         request.setAttribute("res", res);
         request.setAttribute("occupati", evaluatorsOccupied);
         request.setAttribute("disponibili", evaluatorsFree);
-        request.setAttribute("waitingList", waitingList);
+        request.setAttribute("waiting", waitingList);
 
         request.getRequestDispatcher("distribute_evaluators.jsp").forward(request, response);
     }

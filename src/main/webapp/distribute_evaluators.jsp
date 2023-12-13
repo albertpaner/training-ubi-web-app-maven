@@ -1,6 +1,7 @@
 <%@ page import="model.dto.EvalCountDto" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.ArrayList" %>
+<%@ page import="model.dto.UtenteDto" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
          pageEncoding="ISO-8859-1" %>
 
@@ -165,6 +166,34 @@
     <%
         }
     %>
+
+    <%
+    List<UtenteDto> waiting = (List<UtenteDto>) request.getAttribute("waiting");
+
+    if (waiting != null) {
+%>
+<table>
+    <tr style="background-color: #c0f9ff">
+        <th>Nome</th>
+        <th>Cognome</th>
+        <th>Email</th>
+    </tr>
+
+    <%
+        for (UtenteDto user : waiting) {
+    %>
+    <tr>
+        <td><%= user.getFirstName() %></td>
+        <td><%= user.getLastName() %></td>
+        <td><%= user.getUserEmail() %></td>
+    </tr>
+    <%
+        }
+    %>
+</table>
+<%
+    }
+%>
 </div>
 
 <div class="containerButtons">
