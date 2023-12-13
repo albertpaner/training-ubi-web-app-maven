@@ -103,14 +103,13 @@ public class UtenteEvaluationService extends UtenteService {
 
     /**
      * This method reassigns users to evaluators based on a threshold value.
-     * If an evaluator has more users than the threshold, the method reassigns the excess users to evaluators who have less than the threshold number of users.
-     * The reassignment is done based on the user's date of birth, with the youngest users being reassigned first.
+     * The occupied evaluator who has the most users is selected, and the users are reassigned to the free evaluator who has the least users.
      *
      * @param usersToShow A HashMap where the keys are "valutatori_occupati" and "valutatori_disponibili", and the values are lists of EvalCountDto objects.
      * @param soglia      The threshold value for the number of users.
      * @return The number of users who were reassigned.
      */
-    public int rearrangeValutatori(HashMap<String, List<EvalCountDto>> usersToShow, int soglia) throws SQLException, ClassNotFoundException {
+    private int rearrangeValutatori(HashMap<String, List<EvalCountDto>> usersToShow, int soglia) throws SQLException, ClassNotFoundException {
 
         int shuffledUsers = 0;
         List<EvalCountDto> valutatoriOccupatiDto = usersToShow.get("occupati");
@@ -192,11 +191,11 @@ public class UtenteEvaluationService extends UtenteService {
      * This method reassigns users to evaluators based on a threshold value.
      * If an evaluator has more users than the threshold, the method reassigns the excess users to evaluators who have less than the threshold number of users.
      * The reassignment is done based on the user's date of birth, with the youngest users being reassigned first.
-     * The method repeats the reassignment process until all evaluators have the same number of users.
+     * The waiting list is also updated.
      *
      * @param usersToShow A HashMap where the keys are "valutatori_occupati" and "valutatori_disponibili", and the values are lists of EvalCountDto objects.
      * @param soglia      The threshold value for the number of users.
-     * @return The total number of users who were reassigned.
+     * @return The number of users who were reassigned.
      */
     public int equilibrateValutatori(HashMap<String, List<EvalCountDto>> usersToShow, int soglia) throws SQLException, ClassNotFoundException {
         int totalShuffledUsers = 0;
@@ -215,6 +214,13 @@ public class UtenteEvaluationService extends UtenteService {
         return totalShuffledUsers;
     }
 
+    /**
+     * This method reassigns users from the waiting list to free evaluators based on a threshold value.
+     *
+     * @param usersToShow A HashMap where the keys are "valutatori_occupati" and "valutatori_disponibili", and the values are lists of EvalCountDto objects.
+     * @param soglia      The threshold value for the number of users.
+     * @return The number of users who were reassigned.
+     */
     private int oldWaitingList(HashMap<String, List<EvalCountDto>> usersToShow, int soglia) throws SQLException, ClassNotFoundException {
 
         int waitingNoMore = 0;
@@ -278,7 +284,13 @@ public class UtenteEvaluationService extends UtenteService {
                 .map(UtenteConverter::toDto).collect(Collectors.toList());
     }
 
-
+    /**
+     *   This method creates a new waiting list of users who need to be valued by an evaluator.
+     *
+     * @param usersToShow A HashMap where the keys are "valutatori_occupati" and "valutatori_disponibili", and the values are lists of EvalCountDto objects.
+     * @param soglia      The threshold value for the number of users.
+     * @return The number of users who were reassigned.
+     * */
     private int newWaitingList(HashMap<String, List<EvalCountDto>> usersToShow, int soglia) throws SQLException, ClassNotFoundException {
         int totalUsersWaiting = 0;
 
@@ -308,7 +320,6 @@ public class UtenteEvaluationService extends UtenteService {
                 totalUsersWaiting++;
             }
         }
-
 
         return totalUsersWaiting;
     }
