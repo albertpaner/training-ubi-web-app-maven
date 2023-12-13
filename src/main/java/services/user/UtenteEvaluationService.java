@@ -3,11 +3,14 @@ package services.user;
 import model.bean.UtenteBean;
 import model.dao.UtenteDao;
 import model.dto.EvalCountDto;
+import model.dto.UtenteDto;
 import services.UtenteService;
 import utils.converters.CountConverter;
+import utils.converters.UtenteConverter;
 
 import java.sql.SQLException;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class UtenteEvaluationService extends UtenteService {
 
@@ -167,14 +170,28 @@ public class UtenteEvaluationService extends UtenteService {
         int totalShuffledUsers = 0;
         int shuffledUsers;
 
-        setEmptyWaitingList();
-
         do {
             shuffledUsers = rearrangeValutatori(usersToShow, soglia);
             totalShuffledUsers += shuffledUsers;
         } while (shuffledUsers > 0);
 
+        setEmptyWaitingList();
+        HashMap<String, List<EvalCountDto>> newUsersToShow = getEvaluatorsOccupiedFree(soglia);
+        setWaitingList(newUsersToShow, soglia);
+
         return totalShuffledUsers;
+    }
+
+
+    public List<UtenteDto> getValuedInWaitingList() throws SQLException, ClassNotFoundException {
+        List<UtenteBean> allUsers = utenteDao.findAll();
+        List<UtenteDto> filteredUsersDto = allUsers.stream()
+                .filter(user -> user.getInSospeso())
+                .filter(user -> !user.getFlgDel())
+                .map(user -> UtenteConverter.toDto(user))
+                .collect(Collectors.toList());
+
+        return new ArrayList<>(filteredUsersDto);
     }
 
     public int setWaitingList(HashMap<String, List<EvalCountDto>> usersToShow, int soglia) throws SQLException, ClassNotFoundException {
