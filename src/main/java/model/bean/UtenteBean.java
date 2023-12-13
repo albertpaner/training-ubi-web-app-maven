@@ -20,7 +20,7 @@ public class UtenteBean extends Bean{
 		super();
 	}
 
-	public boolean isInSospeso() {
+	public boolean getInSospeso() {
 		return inSospeso;
 	}
 
