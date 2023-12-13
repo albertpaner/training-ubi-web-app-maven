@@ -139,6 +139,7 @@ public class UtenteBean extends Bean{
 			", data_ultima_modifica='" + getDataUltMod() + "'" +
 			", data_creazione='" + getDataCreaz() + "'" +
 			", flg_delete='" + getFlgDel() + "'" +
+			", in_sospeso='" + getInSospeso() + "'" +
 			"}";
 	}
 
