@@ -16,7 +16,7 @@ public class App {
         UtenteDao utenteDao = new UtenteDao();
         UtenteEvaluationService utenteEvaluationService = new UtenteEvaluationService(utenteDao);
 
-        int soglia = 5;
+        int soglia = 2;
         HashMap<String, List<EvalCountDto>> evaluators = utenteEvaluationService.getEvaluatorsOccupiedFree(soglia);
         List<EvalCountDto> freeEvaluators = evaluators.get("disponibili");
         List<EvalCountDto> occupiedEvaluators = evaluators.get("occupati");
@@ -29,8 +29,7 @@ public class App {
         System.out.println("waiting list: " + utenteEvaluationService.getWaitingList());
 
         System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++");
-        int res = utenteEvaluationService.equilibrateValutatori(evaluators, soglia);
-        System.out.println("res: " + res);
+        utenteEvaluationService.equilibrateValutatori(evaluators, soglia);
         System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++");
 
         evaluators = utenteEvaluationService.getEvaluatorsOccupiedFree(soglia);

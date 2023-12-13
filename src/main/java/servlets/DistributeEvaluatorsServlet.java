@@ -30,7 +30,8 @@ public class DistributeEvaluatorsServlet extends HttpServlet {
     /**
      * Handles the HTTP GET method for displaying evaluators.
      * This method is called when the servlet receives a GET request.
-     * It fetches all evaluators and their corresponding users from the database.
+     * It fetches all evaluators and their corresponding users from the database
+     * using {@link services.user.UtenteEvaluationService#getEvaluatorsOccupiedFree(int)}.
      * It returns a HashMap where the keys are evaluators and the values are lists of users valued by the evaluator.
      *
      * @param request  The request object that contains the request the client has made of the servlet.
@@ -43,7 +44,7 @@ public class DistributeEvaluatorsServlet extends HttpServlet {
             throws IOException, ServletException {
 
         HashMap<String, List<EvalCountDto>> evaluators = new HashMap<>();
-        int soglia = Integer.parseInt(request.getParameter("soglia"));
+        int soglia = Integer.parseInt(request.getParameter("soglia1"));
 
         try {
             UtenteEvaluationService utenteEvaluationService = new UtenteEvaluationService(new UtenteDao());
@@ -67,7 +68,8 @@ public class DistributeEvaluatorsServlet extends HttpServlet {
      * Handles the HTTP POST method for rearranging evaluators.
      * This method is called when the servlet receives a POST request.
      * It fetches all evaluators and their corresponding users from the database.
-     * It then calls the `rearrengeValutatori` method to rearrange the evaluators.
+     * It then calls the {@link services.user.UtenteEvaluationService#equilibrateValutatori(HashMap, int)}.
+     * It fetches the evaluators and their corresponding users from the database again and the waiting list.
      * This method is triggered when a button is pressed on the front-end.
      *
      * @param request  The request object that contains the request the client has made of the servlet.
@@ -82,7 +84,7 @@ public class DistributeEvaluatorsServlet extends HttpServlet {
         HashMap<String, List<EvalCountDto>> evaluators = new HashMap<>();
         List<UtenteDto> waitingList = new ArrayList<>();
 
-        int soglia = Integer.parseInt(request.getParameter("soglia"));
+        int soglia = Integer.parseInt(request.getParameter("soglia2"));
 
         int res = 0;
         try {
