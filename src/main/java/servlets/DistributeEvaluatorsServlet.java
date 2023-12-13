@@ -90,11 +90,11 @@ public class DistributeEvaluatorsServlet extends HttpServlet {
             e.printStackTrace();
         }
 
-        List<EvalCountDto> evaluatorsOccupied = evaluators.get("valutatori_occupati");
-        List<EvalCountDto> evaluatorsFree = evaluators.get("valutatori_disponibili");
+        List<EvalCountDto> evaluatorsOccupied = evaluators.get("occupati");
+        List<EvalCountDto> evaluatorsFree = evaluators.get("disponibili");
 
-        request.setAttribute("valutatori_occupati", evaluatorsOccupied);
-        request.setAttribute("valutatori_disponibili", evaluatorsFree);
+        request.setAttribute("occupati", evaluatorsOccupied);
+        request.setAttribute("disponibili", evaluatorsFree);
 
         request.getRequestDispatcher("distribute_evaluators.jsp").forward(request, response);
     }
