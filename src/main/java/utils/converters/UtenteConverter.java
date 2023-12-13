@@ -9,8 +9,6 @@ public class UtenteConverter {
 		UtenteDto utenteDto = new UtenteDto();
 		utenteDto.setUserId(utenteBean.getUtenteId());
 		utenteDto.setUserEmail(utenteBean.getEmail());
-		utenteDto.setUserPassword(utenteBean.getPassword());
-		utenteDto.setRoleId(utenteBean.getRuoloId());
 		utenteDto.setFirstName(utenteBean.getNome());
 		utenteDto.setLastName(utenteBean.getCognome());
 		utenteDto.setUserEvaluatorId(utenteBean.getValutatoreId());
@@ -22,8 +20,6 @@ public class UtenteConverter {
 		UtenteBean utenteBean = new UtenteBean();
 		utenteBean.setUtenteId(utenteDto.getUserId());
 		utenteBean.setEmail(utenteDto.getUserEmail());
-		utenteBean.setPassword(utenteDto.getUserPassword());
-		utenteBean.setRuoloId(utenteDto.getRoleId());
 		utenteBean.setNome(utenteDto.getFirstName());
 		utenteBean.setCognome(utenteDto.getLastName());
 		utenteBean.setValutatoreId(utenteDto.getUserEvaluatorId());
