@@ -44,7 +44,7 @@ public class UtenteEvaluationService extends UtenteService {
      * @throws ClassNotFoundException If the JDBC Driver class is not found.
      */
     private HashMap<UtenteBean, List<UtenteBean>> fetchEvaluatorsAndValued() throws SQLException, ClassNotFoundException {
-        //UtenteDao utenteDao = new UtenteDao();
+
         HashMap<UtenteBean, List<UtenteBean>> lordsAndPeasants = new HashMap<>();
 
         List<UtenteBean> allUsers = utenteDao.findAll();
@@ -82,7 +82,9 @@ public class UtenteEvaluationService extends UtenteService {
 
         for (UtenteBean lord : lordsAndPeasants.keySet()) {
             EvalCountDto evaluatorDto = CountConverter.beanToDto(lord);
-            int howManyPeasants = lordsAndPeasants.get(lord).size();
+            int howManyPeasants = (int) lordsAndPeasants.get(lord).stream()
+                    .filter(user -> !user.getInSospeso())
+                    .count();
             evaluatorDto.setCount(howManyPeasants);
 
             if (howManyPeasants >= soglia) {
@@ -195,6 +197,9 @@ public class UtenteEvaluationService extends UtenteService {
         return new ArrayList<>(filteredUsersDto);
     }
 
+    /*
+     *
+     * */
     public int setWaitingList(HashMap<String, List<EvalCountDto>> usersToShow, int soglia) throws SQLException, ClassNotFoundException {
         int totalUsersWaiting = 0;
 
@@ -213,7 +218,7 @@ public class UtenteEvaluationService extends UtenteService {
                             utenteChange.getRuoloId(),
                             utenteChange.getNome(),
                             utenteChange.getCognome(),
-                            0,
+                            utenteChange.getValutatoreId(),
                             utenteChange.getDataNascita(),
                             utenteChange.getUtenteId(),
                             true
