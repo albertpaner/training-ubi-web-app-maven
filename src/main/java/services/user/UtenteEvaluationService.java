@@ -120,32 +120,31 @@ public class UtenteEvaluationService extends UtenteService {
 
             if (utentiValutatiDa.size() > soglia) {
 
-                for (int i = utentiValutatiDa.size() - 1; (i >= soglia); i--) {
+                for (int i = utentiValutatiDa.size() - 1; (i >= soglia) && !valutatoriDisponibiliDto.isEmpty(); i--) {
                     UtenteBean utenteChange = utentiValutatiDa.remove(i);
 
-                    if (!valutatoriDisponibiliDto.isEmpty()) {
-                        EvalCountDto evalMinCountDto = valutatoriDisponibiliDto.get(0);
+                    EvalCountDto evalMinCountDto = valutatoriDisponibiliDto.get(0);
 
-                        System.out.println("evalMinCountDto: " + evalMinCountDto);
+                    System.out.println("evalMinCountDto: " + evalMinCountDto);
 
-                        utenteDao.update(Arrays.asList(
-                                utenteChange.getEmail(),
-                                utenteChange.getPassword(),
-                                utenteChange.getRuoloId(),
-                                utenteChange.getNome(),
-                                utenteChange.getCognome(),
-                                evalMinCountDto.getUtenteId(),
-                                utenteChange.getDataNascita(),
-                                utenteChange.getUtenteId()
-                        ));
+                    utenteDao.update(Arrays.asList(
+                            utenteChange.getEmail(),
+                            utenteChange.getPassword(),
+                            utenteChange.getRuoloId(),
+                            utenteChange.getNome(),
+                            utenteChange.getCognome(),
+                            evalMinCountDto.getUtenteId(),
+                            utenteChange.getDataNascita(),
+                            utenteChange.getUtenteId()
+                    ));
 
-                        evalMinCountDto.setCount(evalMinCountDto.getCount() + 1);
-                        if (evalMinCountDto.getCount() == soglia) {
-                            break;
-                        }
-
-                        shuffledUsers++;
+                    evalMinCountDto.setCount(evalMinCountDto.getCount() + 1);
+                    if (evalMinCountDto.getCount() == soglia) {
+                        break;
                     }
+
+                    shuffledUsers++;
+
 
                 }
             }
