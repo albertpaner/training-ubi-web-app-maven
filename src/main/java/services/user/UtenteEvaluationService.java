@@ -153,9 +153,21 @@ public class UtenteEvaluationService extends UtenteService {
         return shuffledUsers;
     }
 
+    /**
+     * This method reassigns users to evaluators based on a threshold value.
+     * If an evaluator has more users than the threshold, the method reassigns the excess users to evaluators who have less than the threshold number of users.
+     * The reassignment is done based on the user's date of birth, with the youngest users being reassigned first.
+     * The method repeats the reassignment process until all evaluators have the same number of users.
+     *
+     * @param usersToShow A HashMap where the keys are "valutatori_occupati" and "valutatori_disponibili", and the values are lists of EvalCountDto objects.
+     * @param soglia      The threshold value for the number of users.
+     * @return The total number of users who were reassigned.
+     */
     public int equilibrateValutatori(HashMap<String, List<EvalCountDto>> usersToShow, int soglia) throws SQLException, ClassNotFoundException {
         int totalShuffledUsers = 0;
         int shuffledUsers;
+
+        setEmptyWaitingList();
 
         do {
             shuffledUsers = rearrangeValutatori(usersToShow, soglia);
@@ -163,6 +175,32 @@ public class UtenteEvaluationService extends UtenteService {
         } while (shuffledUsers > 0);
 
         return totalShuffledUsers;
+    }
+
+    private void setEmptyWaitingList() throws SQLException, ClassNotFoundException {
+        List<UtenteBean> allUsers = utenteDao.findAll();
+        allUsers.stream()
+                .filter(user -> user.getRuoloId() == 2)
+                .filter(user -> !user.getFlgDel())
+                .forEach(user -> {
+                    user.setInSospeso(false);
+                    try {
+                        utenteDao.update(Arrays.asList(
+                                user.getEmail(),
+                                user.getPassword(),
+                                user.getRuoloId(),
+                                user.getNome(),
+                                user.getCognome(),
+                                user.getValutatoreId(),
+                                user.getDataNascita(),
+                                user.getUtenteId(),
+                                user.getInSospeso()
+                        ));
+                    } catch (SQLException | ClassNotFoundException e) {
+                        throw new RuntimeException(e);
+                    }
+
+                });
     }
 
 }

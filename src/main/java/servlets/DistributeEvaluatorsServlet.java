@@ -81,11 +81,12 @@ public class DistributeEvaluatorsServlet extends HttpServlet {
 
         int soglia = Integer.parseInt(request.getParameter("soglia"));
 
+        int res = 0;
         try {
             UtenteEvaluationService utenteEvaluationService = new UtenteEvaluationService(new UtenteDao());
-            utenteEvaluationService.equilibrateValutatori(evaluators, soglia);
             evaluators = utenteEvaluationService.getEvaluatorsOccupiedFree(soglia);
-
+            res = utenteEvaluationService.equilibrateValutatori(evaluators, soglia);
+            evaluators = utenteEvaluationService.getEvaluatorsOccupiedFree(soglia);
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }
@@ -93,6 +94,7 @@ public class DistributeEvaluatorsServlet extends HttpServlet {
         List<EvalCountDto> evaluatorsOccupied = evaluators.get("occupati");
         List<EvalCountDto> evaluatorsFree = evaluators.get("disponibili");
 
+        request.setAttribute("res", res);
         request.setAttribute("occupati", evaluatorsOccupied);
         request.setAttribute("disponibili", evaluatorsFree);
 
