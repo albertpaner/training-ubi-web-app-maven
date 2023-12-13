@@ -1,7 +1,11 @@
 package utils.converters;
 
 import model.bean.UtenteBean;
+import model.dao.UtenteDao;
 import model.dto.EvalCountDto;
+import utils.DBConnection;
+
+import java.sql.SQLException;
 
 public class CountConverter {
 
@@ -24,25 +28,13 @@ public class CountConverter {
         
         return countDto;
         }
-    
-        /*public static UtenteBean toBean(CountDto CountDto) {
-        UtenteBean utenteBean = new UtenteBean();
-        utenteBean.setUtenteId(CountDto.getUserId());
-        utenteBean.setEmail(CountDto.getUserEmail());
-        utenteBean.setPassword(CountDto.getUserPassword());
-        utenteBean.setRuoloId(CountDto.getRoleId());
-        utenteBean.setNome(CountDto.getFirstName());
-        utenteBean.setCognome(CountDto.getLastName());
-        utenteBean.setResposabileId(CountDto.getUserManagerId());
-        utenteBean.setSocietaOp(CountDto.getCompanyOp());
-        utenteBean.setMansione(CountDto.getUserJob());
-        utenteBean.setAmbito(CountDto.getUserScope());
-        utenteBean.setJobFam(CountDto.getUserJobFamily());
-        utenteBean.setSubFam(CountDto.getUserSubFamily());
-        utenteBean.setStdJob(CountDto.getUserStandardJob());
-        utenteBean.setJobLevel(CountDto.getUserJobLevel());
-        return utenteBean;
-        }*/
 
+    public static UtenteBean dtoToBean(EvalCountDto countDto) throws SQLException, ClassNotFoundException {
+
+        UtenteDao utenteDao = new UtenteDao(DBConnection.createConnection());
+        UtenteBean utenteBean = utenteDao.findById(countDto.getUtenteId());
+
+        return utenteBean;
+    }
 
 }
