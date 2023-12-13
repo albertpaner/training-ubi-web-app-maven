@@ -136,7 +136,7 @@ public class UtenteEvaluationService extends UtenteService {
                             evalMinCountDto.getUtenteId(),
                             utenteChange.getDataNascita(),
                             utenteChange.getUtenteId(),
-                            utenteChange
+                            !utenteChange.getInSospeso()
                     ));
 
                     evalMinCountDto.setCount(evalMinCountDto.getCount() + 1);

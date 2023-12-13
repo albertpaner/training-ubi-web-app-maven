@@ -14,8 +14,19 @@ public class UtenteBean extends Bean{
     private Date dataUltAcc;
     private Date dataUltMod;
     private Date dataCreaz;
+	private boolean inSospeso;
 
+	public UtenteBean() {
+		super();
+	}
 
+	public boolean isInSospeso() {
+		return inSospeso;
+	}
+
+	public void setInSospeso(boolean inSospeso) {
+		this.inSospeso = inSospeso;
+	}
 
 	public int getUtenteId() {
 		return this.utenteId;
@@ -130,6 +141,7 @@ public class UtenteBean extends Bean{
 			", flg_delete='" + getFlgDel() + "'" +
 			"}";
 	}
+
 
 
 }

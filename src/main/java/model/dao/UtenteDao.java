@@ -47,6 +47,7 @@ public class UtenteDao implements Crud<UtenteBean> {
             utenteBean.setDataCreaz(rs.getDate("data_creaz"));
             utenteBean.setFlgDel(rs.getBoolean("flg_del"));
 
+
             // ci popoliamo tutto l'oggetto
             listaUtenti.add(utenteBean);
         }
