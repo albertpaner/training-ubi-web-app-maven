@@ -16,7 +16,7 @@ public class App {
         UtenteDao utenteDao = new UtenteDao();
         UtenteEvaluationService utenteEvaluationService = new UtenteEvaluationService(utenteDao);
 
-        int soglia = 3;
+        int soglia = 2;
         HashMap<String, List<EvalCountDto>> evaluators = utenteEvaluationService.getEvaluatorsOccupiedFree(soglia);
         List<EvalCountDto> freeEvaluators = evaluators.get("disponibili");
         List<EvalCountDto> occupiedEvaluators = evaluators.get("occupati");

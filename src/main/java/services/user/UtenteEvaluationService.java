@@ -135,7 +135,8 @@ public class UtenteEvaluationService extends UtenteService {
                             utenteChange.getCognome(),
                             evalMinCountDto.getUtenteId(),
                             utenteChange.getDataNascita(),
-                            utenteChange.getUtenteId()
+                            utenteChange.getUtenteId(),
+                            utenteChange
                     ));
 
                     evalMinCountDto.setCount(evalMinCountDto.getCount() + 1);
