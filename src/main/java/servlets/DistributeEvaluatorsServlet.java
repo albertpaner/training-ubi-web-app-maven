@@ -7,10 +7,12 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import model.dao.UtenteDao;
 import model.dto.EvalCountDto;
+import model.dto.UtenteDto;
 import services.user.UtenteEvaluationService;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -78,6 +80,7 @@ public class DistributeEvaluatorsServlet extends HttpServlet {
             throws ServletException, IOException {
 
         HashMap<String, List<EvalCountDto>> evaluators = new HashMap<>();
+        List<UtenteDto> waitingList = new ArrayList<>();
 
         int soglia = Integer.parseInt(request.getParameter("soglia"));
 
@@ -87,6 +90,7 @@ public class DistributeEvaluatorsServlet extends HttpServlet {
             evaluators = utenteEvaluationService.getEvaluatorsOccupiedFree(soglia);
             res = utenteEvaluationService.equilibrateValutatori(evaluators, soglia);
             evaluators = utenteEvaluationService.getEvaluatorsOccupiedFree(soglia);
+            waitingList = utenteEvaluationService.getWaitingList();
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }
@@ -97,6 +101,7 @@ public class DistributeEvaluatorsServlet extends HttpServlet {
         request.setAttribute("res", res);
         request.setAttribute("occupati", evaluatorsOccupied);
         request.setAttribute("disponibili", evaluatorsFree);
+        request.setAttribute("waitingList", waitingList);
 
         request.getRequestDispatcher("distribute_evaluators.jsp").forward(request, response);
     }

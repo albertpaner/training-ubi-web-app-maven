@@ -183,7 +183,7 @@ public class UtenteEvaluationService extends UtenteService {
     }
 
 
-    public List<UtenteDto> getValuedInWaitingList() throws SQLException, ClassNotFoundException {
+    public List<UtenteDto> getWaitingList() throws SQLException, ClassNotFoundException {
         List<UtenteBean> allUsers = utenteDao.findAll();
         List<UtenteDto> filteredUsersDto = allUsers.stream()
                 .filter(user -> user.getInSospeso())
