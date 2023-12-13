@@ -84,7 +84,7 @@ public class UtenteDao implements Crud<UtenteBean> {
             utenteBean.setDataUltMod(rs.getDate("data_ult_mod"));
             utenteBean.setDataCreaz(rs.getDate("data_creaz"));
             utenteBean.setFlgDel(rs.getBoolean("flg_del"));
-            
+            utenteBean.setInSospeso(rs.getBoolean("in_sospeso"));
         }
 
         conn.close();
@@ -111,12 +111,13 @@ public class UtenteDao implements Crud<UtenteBean> {
         String cognome = (String) userParams.get(4);
         int valutatoreId = (Integer) userParams.get(5);
         Date dataNascita = (Date) userParams.get(6);
+        Boolean inSospeso = (Boolean) userParams.get(7);
 
         Statement stmt = conn.createStatement();
         int rs = stmt.executeUpdate(
                 "INSERT INTO utente (email, password, ruolo_id, nome, cognome, valutatore_id, data_nascita) VALUES ('"
                         + email + "', '" + password + "', " + ruoloId + ", '" + nome + "', '" + cognome + "', "
-                        + valutatoreId + ", '" + dataNascita + "')");
+                        + valutatoreId + ", '" + dataNascita + "' inSospeso)");
 
         conn.close();
         return rs;
@@ -141,11 +142,13 @@ public class UtenteDao implements Crud<UtenteBean> {
         int valutatoreId = (Integer) userParams.get(5);
         Date dataNascita = (Date) userParams.get(6);
         int utenteId = (Integer) userParams.get(7);
+        Boolean inSospeso = (Boolean) userParams.get(8);
 
         Statement stmt = conn.createStatement();
         int rs = stmt.executeUpdate("UPDATE utente SET email = '" + email + "', password = '" + password
                 + "', ruolo_id = " + ruoloId + ", nome = '" + nome + "', cognome = '" + cognome
-                + "', valutatore_id = " + valutatoreId + ", data_nascita = '" + dataNascita + "' WHERE utente_id = " + utenteId);
+                + "', valutatore_id = " + valutatoreId + ", data_nascita = '" + dataNascita + "', in_sospeso = " + (inSospeso ? 1 : 0) +
+                " WHERE utente_id = " + utenteId);
 
         conn.close();
         return rs;
