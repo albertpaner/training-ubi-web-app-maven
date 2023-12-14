@@ -47,10 +47,12 @@ public class DistributeEvaluatorsServlet extends HttpServlet {
         List<UtenteDto> waitingList = new ArrayList<>();
 
         int soglia = Integer.parseInt(request.getParameter("soglia1"));
+        int sogliaAvg;
 
         try {
             UtenteEvaluationService utenteEvaluationService = new UtenteEvaluationService(new UtenteDao());
             evaluators = utenteEvaluationService.getEvaluatorsOccupiedFree(soglia);
+            sogliaAvg = utenteEvaluationService.getAverageValued();
             waitingList = utenteEvaluationService.getWaitingList();
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
