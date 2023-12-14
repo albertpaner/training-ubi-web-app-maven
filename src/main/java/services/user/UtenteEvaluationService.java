@@ -243,12 +243,12 @@ public class UtenteEvaluationService extends UtenteService {
     }
 
     /**
-     *   This method creates a new waiting list of users who need to be valued by an evaluator.
+     * This method creates a new waiting list of users who need to be valued by an evaluator.
      *
      * @param usersToShow A HashMap where the keys are "valutatori_occupati" and "valutatori_disponibili", and the values are lists of EvalCountDto objects.
      * @param soglia      The threshold value for the number of users.
      * @return The number of users who were reassigned.
-     * */
+     */
     private int newWaitingList(HashMap<String, List<EvalCountDto>> usersToShow, int soglia) throws SQLException, ClassNotFoundException {
         int totalUsersWaiting = 0;
 
@@ -299,20 +299,16 @@ public class UtenteEvaluationService extends UtenteService {
     }
 
     public int getAverageValued() throws SQLException, ClassNotFoundException {
-        int numberOfPeasants = 0;
-        int numberOfLords = 0;
 
         HashMap<UtenteBean, List<UtenteBean>> lordsAndPeasants = fetchEvaluatorsAndValued();
 
-        for (UtenteBean lord : lordsAndPeasants.keySet()) {
-            List<UtenteBean> peasantsUnderLord = lordsAndPeasants.get(lord);
-            peasantsUnderLord = peasantsUnderLord.stream()
-                    .toList();
-            numberOfPeasants += peasantsUnderLord.size();
-            numberOfLords++;
-        }
+        long numberOfPeasants = lordsAndPeasants.values().stream()
+                .flatMap(Collection::stream)
+                .count();
 
-        return numberOfPeasants / numberOfLords;
+        long numberOfLords = lordsAndPeasants.keySet().stream().count();
+
+        return Math.round(numberOfPeasants / numberOfLords);
     }
 
 
