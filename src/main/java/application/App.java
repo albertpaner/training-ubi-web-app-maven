@@ -2,6 +2,7 @@ package application;
 
 import model.dao.UtenteDao;
 import model.dto.EvalCountDto;
+import services.user.UserLawrenceService;
 import services.user.UtenteEvaluationService;
 
 import java.security.NoSuchAlgorithmException;
@@ -12,7 +13,7 @@ import java.util.List;
 public class App {
 
     public static void main(String args[]) throws NoSuchAlgorithmException, ClassNotFoundException, SQLException {
-
+    /*
         UtenteDao utenteDao = new UtenteDao();
         UtenteEvaluationService utenteEvaluationService = new UtenteEvaluationService(utenteDao);
 
@@ -42,6 +43,11 @@ public class App {
         System.out.println("freeEvaluators: " + freeEvaluators);
         System.out.println("--------------------------------------------");
         System.out.println("waiting list: " + utenteEvaluationService.getWaitingList());
+
+     */
+
+
+
 
     }
 

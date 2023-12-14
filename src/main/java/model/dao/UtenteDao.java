@@ -1,3 +1,5 @@
+// TODO: colonna società operativa implementatta solo per findAll e findBiId
+
 package model.dao;
 
 import model.bean.UtenteBean;
@@ -41,12 +43,13 @@ public class UtenteDao implements Crud<UtenteBean> {
             utenteBean.setNome(rs.getString("nome"));
             utenteBean.setCognome(rs.getString("cognome"));
             utenteBean.setValutatoreId(rs.getInt("valutatore_id"));
-            utenteBean.setDataNascita(rs.getDate("data_nascita"));
+            //utenteBean.setDataNascita(rs.getDate("data_nascita"));
             utenteBean.setDataUltAcc(rs.getDate("data_ult_acc"));
             utenteBean.setDataUltMod(rs.getDate("data_ult_mod"));
             utenteBean.setDataCreaz(rs.getDate("data_creaz"));
             utenteBean.setFlgDel(rs.getBoolean("flg_del"));
             utenteBean.setInSospeso(rs.getBoolean("in_sospeso"));
+            utenteBean.setSocietàOperativa(rs.getString("società_operativa"));
 
             // ci popoliamo tutto l'oggetto
             listaUtenti.add(utenteBean);
@@ -85,6 +88,7 @@ public class UtenteDao implements Crud<UtenteBean> {
             utenteBean.setDataCreaz(rs.getDate("data_creaz"));
             utenteBean.setFlgDel(rs.getBoolean("flg_del"));
             utenteBean.setInSospeso(rs.getBoolean("in_sospeso"));
+            utenteBean.setSocietàOperativa(rs.getString("società_operativa"));
         }
 
         conn.close();
@@ -143,6 +147,7 @@ public class UtenteDao implements Crud<UtenteBean> {
         Date dataNascita = (Date) userParams.get(6);
         int utenteId = (Integer) userParams.get(7);
         Boolean inSospeso = (Boolean) userParams.get(8);
+        String societàOperativa = (String) userParams.get(9);
 
         Statement stmt = conn.createStatement();
         int rs = stmt.executeUpdate("UPDATE utente SET email = '" + email + "', password = '" + password
@@ -206,6 +211,22 @@ public class UtenteDao implements Crud<UtenteBean> {
 
         conn.close();
         return rs;
+    }
+
+    public int updateInSopseso(boolean inSospeso, int id) throws ClassNotFoundException, SQLException {
+
+        Connection conn = DBConnection.createConnection();
+        PreparedStatement ps = conn.prepareStatement(
+                "UPDATE utente SET in_sospeso = ?  WHERE utente_id = ?");
+
+        ps.setBoolean(1, inSospeso);
+        ps.setInt(2, id);
+
+
+        int execute_success = ps.executeUpdate();
+        conn.close();
+
+        return execute_success;
     }
 
 

@@ -2,7 +2,7 @@ package model.bean;
 
 import java.sql.Date;
 
-public class UtenteBean extends Bean{
+public class UtenteBean extends Bean {
     private int utenteId;
     private String email;
     private String password;
@@ -10,139 +10,145 @@ public class UtenteBean extends Bean{
     private String nome;
     private String cognome;
     private int valutatoreId;
-	private Date dataNascita; 
+    private Date dataNascita;
     private Date dataUltAcc;
     private Date dataUltMod;
     private Date dataCreaz;
-	private boolean inSospeso;
 
-	public UtenteBean() {
-		super();
-	}
+    public String getSocietàOperativa() {
+        return societàOperativa;
+    }
 
-	public boolean getInSospeso() {
-		return inSospeso;
-	}
+    public void setSocietàOperativa(String societàOperativa) {
+        this.societàOperativa = societàOperativa;
+    }
 
-	public void setInSospeso(boolean inSospeso) {
-		this.inSospeso = inSospeso;
-	}
+    private boolean inSospeso;
+    private String societàOperativa;
 
-	public int getUtenteId() {
-		return this.utenteId;
-	}
+    public UtenteBean() {
+        super();
+    }
 
-	public void setUtenteId(int utenteId) {
-		this.utenteId = utenteId;
-	}
+    public boolean getInSospeso() {
+        return inSospeso;
+    }
 
-	public String getEmail() {
-		return this.email;
-	}
+    public void setInSospeso(boolean inSospeso) {
+        this.inSospeso = inSospeso;
+    }
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    public int getUtenteId() {
+        return this.utenteId;
+    }
 
-	public String getPassword() {
-		return this.password;
-	}
+    public void setUtenteId(int utenteId) {
+        this.utenteId = utenteId;
+    }
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
+    public String getEmail() {
+        return this.email;
+    }
 
-	public int getRuoloId() {
-		return this.ruoloId;
-	}
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
-	public void setRuoloId(int ruoloId) {
-		this.ruoloId = ruoloId;
-	}
+    public String getPassword() {
+        return this.password;
+    }
 
-	public String getNome() {
-		return this.nome;
-	}
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
+    public int getRuoloId() {
+        return this.ruoloId;
+    }
 
-	public String getCognome() {
-		return this.cognome;
-	}
+    public void setRuoloId(int ruoloId) {
+        this.ruoloId = ruoloId;
+    }
 
-	public void setCognome(String cognome) {
-		this.cognome = cognome;
-	}
+    public String getNome() {
+        return this.nome;
+    }
 
-	public int getValutatoreId() {
-		return this.valutatoreId;
-	}
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
 
-	public void setValutatoreId(int valutatoreId) {
-		this.valutatoreId = valutatoreId;
-	}
+    public String getCognome() {
+        return this.cognome;
+    }
 
-	public Date getDataNascita() {
-		return this.dataNascita;
-	}
+    public void setCognome(String cognome) {
+        this.cognome = cognome;
+    }
 
-	public void setDataNascita(Date dataNascita) {
-		this.dataNascita = dataNascita;
-	}
+    public int getValutatoreId() {
+        return this.valutatoreId;
+    }
 
-	public Date getDataUltAcc() {
-		return this.dataUltAcc;
-	}
+    public void setValutatoreId(int valutatoreId) {
+        this.valutatoreId = valutatoreId;
+    }
 
-	public void setDataUltAcc(Date dataUltAcc) {
-		this.dataUltAcc = dataUltAcc;
-	}
+    public Date getDataNascita() {
+        return this.dataNascita;
+    }
 
-	public Date getDataUltMod() {
-		return this.dataUltMod;
-	}
+    public void setDataNascita(Date dataNascita) {
+        this.dataNascita = dataNascita;
+    }
 
-	public void setDataUltMod(Date dataUltMod) {
-		this.dataUltMod = dataUltMod;
-	}
+    public Date getDataUltAcc() {
+        return this.dataUltAcc;
+    }
 
-	public Date getDataCreaz() {
-		return this.dataCreaz;
-	}
+    public void setDataUltAcc(Date dataUltAcc) {
+        this.dataUltAcc = dataUltAcc;
+    }
 
-	public void setDataCreaz(Date dataCreaz) {
-		this.dataCreaz = dataCreaz;
-	}
+    public Date getDataUltMod() {
+        return this.dataUltMod;
+    }
 
+    public void setDataUltMod(Date dataUltMod) {
+        this.dataUltMod = dataUltMod;
+    }
 
+    public Date getDataCreaz() {
+        return this.dataCreaz;
+    }
 
-	/**
-	 * This method is used to print the utente BEAN in a readable way
-	 *
-	 * @return the string representation of the utente BEAN
-	 * @see java.lang.Object#toString()
-	 * */
-	@Override
-	public String toString() {
-		return "{" +
-			" utente_id='" + getUtenteId() + "'" +
-			", email='" + getEmail() + "'" +
-			", password='" + getPassword() + "'" +
-			", ruolo_id='" + getRuoloId() + "'" +
-			", nome='" + getNome() + "'" +
-			", cognome='" + getCognome() + "'" +
-			", valutatore_id='" + getValutatoreId() + "'" +
-			", data_nascita='" + getDataNascita() + "'" +
-			", data_ultimo_accesso='" + getDataUltAcc() + "'" +
-			", data_ultima_modifica='" + getDataUltMod() + "'" +
-			", data_creazione='" + getDataCreaz() + "'" +
-			", flg_delete='" + getFlgDel() + "'" +
-			", in_sospeso='" + getInSospeso() + "'" +
-			"}";
-	}
+    public void setDataCreaz(Date dataCreaz) {
+        this.dataCreaz = dataCreaz;
+    }
 
 
-
+    /**
+     * This method is used to print the utente BEAN in a readable way
+     *
+     * @return the string representation of the utente BEAN
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString() {
+        return "UtenteBean{" +
+                "utenteId=" + utenteId +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", ruoloId=" + ruoloId +
+                ", nome='" + nome + '\'' +
+                ", cognome='" + cognome + '\'' +
+                ", valutatoreId=" + valutatoreId +
+                ", dataNascita=" + dataNascita +
+                ", dataUltAcc=" + dataUltAcc +
+                ", dataUltMod=" + dataUltMod +
+                ", dataCreaz=" + dataCreaz +
+                ", inSospeso=" + inSospeso +
+                ", societàOperativa='" + societàOperativa + '\'' +
+                '}';
+    }
 }
