@@ -1,4 +1,4 @@
-package servlets;
+package utils.servlets;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;

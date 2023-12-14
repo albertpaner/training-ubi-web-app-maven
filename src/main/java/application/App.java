@@ -2,7 +2,8 @@ package application;
 
 import model.dao.UtenteDao;
 import model.dto.EvalCountDto;
-import services.user.UtenteEvaluationService;
+import services.user.ListService;
+
 
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
@@ -14,10 +15,11 @@ public class App {
     public static void main(String args[]) throws NoSuchAlgorithmException, ClassNotFoundException, SQLException {
 
         UtenteDao utenteDao = new UtenteDao();
-        UtenteEvaluationService utenteEvaluationService = new UtenteEvaluationService(utenteDao);
+        ListService listService = new ListService(utenteDao);
+        //UtenteService utenteService = new UtenteService(utenteDao);
 
         int soglia = 2;
-        HashMap<String, List<EvalCountDto>> evaluators = utenteEvaluationService.getEvaluatorsOccupiedFree(soglia);
+        HashMap<String, List<EvalCountDto>> evaluators = listService.getEvaluatorsOccupiedFree(soglia);
         List<EvalCountDto> freeEvaluators = evaluators.get("disponibili");
         List<EvalCountDto> occupiedEvaluators = evaluators.get("occupati");
 
@@ -26,13 +28,13 @@ public class App {
         System.out.println("--------------------------------------------");
         System.out.println("freeEvaluators: " + freeEvaluators);
         System.out.println("--------------------------------------------");
-        System.out.println("waiting list: " + utenteEvaluationService.getWaitingList());
+        System.out.println("waiting list: " + listService.getWaitingList());
 
         System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++");
-        utenteEvaluationService.distributeValutatori(evaluators, soglia);
+        listService.distributeValutatori(evaluators, soglia);
         System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++");
 
-        evaluators = utenteEvaluationService.getEvaluatorsOccupiedFree(soglia);
+        evaluators = listService.getEvaluatorsOccupiedFree(soglia);
         freeEvaluators = evaluators.get("disponibili");
         occupiedEvaluators = evaluators.get("occupati");
 
@@ -41,7 +43,7 @@ public class App {
         System.out.println("--------------------------------------------");
         System.out.println("freeEvaluators: " + freeEvaluators);
         System.out.println("--------------------------------------------");
-        System.out.println("waiting list: " + utenteEvaluationService.getWaitingList());
+        System.out.println("waiting list: " + listService.getWaitingList());
 
     }
 

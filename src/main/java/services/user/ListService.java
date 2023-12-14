@@ -8,24 +8,21 @@ import services.UtenteService;
 import utils.converters.CountConverter;
 import utils.converters.UtenteConverter;
 
-
 import java.sql.SQLException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
 import java.util.stream.Collectors;
 
-public class UtenteEvaluationService extends UtenteService {
+public class ListService extends UtenteService {
 
-    public UtenteEvaluationService(UtenteDao utenteDao) {
+    public ListService(UtenteDao utenteDao) {
         super(utenteDao);
     }
 
-    /**
-     * This method returns a list of users who are assigned to a given evaluator.
-     *
-     * @param evatorId The ID of the evaluator.
-     * @return A list of users who are assigned to the given evaluator.
-     * @throws SQLException If a database access error occurs.
-     */
     private List<UtenteBean> findValuedByEvaluator(int evatorId) throws SQLException, ClassNotFoundException {
         List<UtenteBean> allUsers = utenteDao.findAll();
         List<UtenteBean> filteredUsers = allUsers.stream()
@@ -36,14 +33,7 @@ public class UtenteEvaluationService extends UtenteService {
         return new ArrayList<>(filteredUsers);
     }
 
-    /**
-     * This method fetches all evaluators and their corresponding users from the database.
-     * It returns a HashMap where the keys are evaluators and the values are lists of users valued by the evaluator.
-     *
-     * @return A HashMap where the keys are evaluators and the values are lists of users.
-     * @throws SQLException           If a database access error occurs.
-     * @throws ClassNotFoundException If the JDBC Driver class is not found.
-     */
+   
     private HashMap<UtenteBean, List<UtenteBean>> fetchEvaluatorsAndValued() throws SQLException, ClassNotFoundException {
 
         HashMap<UtenteBean, List<UtenteBean>> lordsAndPeasants = new HashMap<>();
@@ -59,25 +49,17 @@ public class UtenteEvaluationService extends UtenteService {
             List<UtenteBean> peasantsUnderLord = findValuedByEvaluator(lord.getUtenteId());
             lordsAndPeasants.put(lord, peasantsUnderLord);
 
-        return
 
-                lordsAndPeasants;
+        }       
+        
+        return lordsAndPeasants; 
+        		
     }
-        public List<UtenteDto> getWaitingList() throws SQLException, ClassNotFoundException {
-            List<UtenteBean> allUsers = utenteDao.findAll();
+        
 
 
-        }
-            /**
-             * This method categorizes evaluators into two groups: those who have more users than a given threshold (occupied) and those who have less (available).
-             * It returns a HashMap where the keys are "valutatori_occupati" and "valutatori_disponibili", and the values are lists of EvalCountDto objects.
-             * Each EvalCountDto object represents an evaluator and contains the evaluator's ID, name, surname, and the count of users assigned to them.
-             *
-             * @param soglia The threshold value for the number of users.
-             * @return A HashMap where the keys are "valutatori_occupati" and "valutatori_disponibili", and the values are lists of EvalCountDto objects.
-             * @throws SQLException           If a database access error occurs.
-             * @throws ClassNotFoundException If the JDBC Driver class is not found.
-             */
+        
+            
     public HashMap<String, List<EvalCountDto>> getEvaluatorsOccupiedFree(int soglia)
             throws SQLException, ClassNotFoundException {
 
@@ -107,15 +89,7 @@ public class UtenteEvaluationService extends UtenteService {
         return usersToShow;
     }
 
-    /**
-     * This method reassigns users to evaluators based on a threshold value.
-     * The occupied evaluator who has the most users is selected, and the users are reassigned to the free evaluator who has the least users.
-     *
-     * @param usersToShow A HashMap where the keys are "valutatori_occupati" and "valutatori_disponibili", and the values are lists of EvalCountDto objects.
-     * @param soglia      The threshold value for the number of users.
-     * @return The number of users who were reassigned.
-     */
-    private int rearrangeValutatori(HashMap<String, List<EvalCountDto>> usersToShow, int soglia) throws SQLException, ClassNotFoundException {
+    public int rearrangeValutatori(HashMap<String, List<EvalCountDto>> usersToShow, int soglia) throws SQLException, ClassNotFoundException {
 
         int shuffledUsers = 0;
         List<EvalCountDto> valutatoriOccupatiDto = usersToShow.get("occupati");
@@ -316,8 +290,5 @@ public class UtenteEvaluationService extends UtenteService {
 
         return Math.round(numberOfPeasants / numberOfLords);
     }
-
-
-
 
 }
