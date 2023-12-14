@@ -93,9 +93,7 @@
     </style>
 </head>
 <body>
-<form action="display_evaluators" method="get">
-    <input type="submit" value="preview"/>
-</form>
+<a href="/display_evaluators">Display Evaluators</a>
 <div class="containerTabelle">
 
         <%
