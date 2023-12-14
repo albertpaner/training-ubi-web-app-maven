@@ -278,17 +278,5 @@ public class ListService extends UtenteService {
                 .map(UtenteConverter::toDto).collect(Collectors.toList());
     }
 
-    public int getAverageValued() throws SQLException, ClassNotFoundException {
-
-        HashMap<UtenteBean, List<UtenteBean>> lordsAndPeasants = fetchEvaluatorsAndValued();
-
-        long numberOfPeasants = lordsAndPeasants.values().stream()
-                .flatMap(Collection::stream)
-                .count();
-
-        long numberOfLords = lordsAndPeasants.keySet().stream().count();
-
-        return Math.round(numberOfPeasants / numberOfLords);
-    }
 
 }
