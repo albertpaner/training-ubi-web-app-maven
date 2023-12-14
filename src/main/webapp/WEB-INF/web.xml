@@ -39,7 +39,7 @@
 
     <servlet>
         <servlet-name>EvaluatorDisplayServlet</servlet-name>
-        <servlet-class>servlets.DistributeEvaluatorsServlet</servlet-class>
+        <servlet-class>servlets.EvaluatorDisplayServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>EvaluatorDisplayServlet</servlet-name>

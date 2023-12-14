@@ -31,7 +31,7 @@ public class DistributeEvaluatorsServlet extends HttpServlet {
      * Handles the HTTP GET method for displaying evaluators.
      * This method is called when the servlet receives a GET request.
      * It fetches all evaluators and their corresponding users from the database
-     * using {@link services.user.UtenteEvaluationService#getEvaluatorsOccupiedFree(int)}.
+     * using {@link UtenteEvaluationService#getEvaluatorsOccupiedFree(int)}.
      * It returns a HashMap where the keys are evaluators and the values are lists of users valued by the evaluator.
      *
      * @param request  The request object that contains the request the client has made of the servlet.
@@ -47,7 +47,7 @@ public class DistributeEvaluatorsServlet extends HttpServlet {
         List<UtenteDto> waitingList = new ArrayList<>();
 
         int soglia = Integer.parseInt(request.getParameter("soglia1"));
-        int sogliaAvg;
+        int sogliaAvg = 0;
 
         try {
             UtenteEvaluationService utenteEvaluationService = new UtenteEvaluationService(new UtenteDao());
@@ -61,6 +61,7 @@ public class DistributeEvaluatorsServlet extends HttpServlet {
         List<EvalCountDto> evaluatorsOccupied = evaluators.get("occupati");
         List<EvalCountDto> evaluatorsFree = evaluators.get("disponibili");
 
+        request.setAttribute("sogliaAvg", sogliaAvg);
         request.setAttribute("waiting", waitingList);
         request.setAttribute("occupati", evaluatorsOccupied);
         request.setAttribute("disponibili", evaluatorsFree);
@@ -74,7 +75,7 @@ public class DistributeEvaluatorsServlet extends HttpServlet {
      * Handles the HTTP POST method for rearranging evaluators.
      * This method is called when the servlet receives a POST request.
      * It fetches all evaluators and their corresponding users from the database.
-     * It then calls the {@link services.user.UtenteEvaluationService#distributeValutatori(HashMap, int)}.
+     * It then calls the {@link UtenteEvaluationService#distributeValutatori(HashMap, int)}.
      * It fetches the evaluators and their corresponding users from the database again and the waiting list.
      * This method is triggered when a button is pressed on the front-end.
      *

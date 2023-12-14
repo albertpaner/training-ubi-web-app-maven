@@ -36,7 +36,7 @@ public class EvaluatorDisplayServlet extends HttpServlet {
             throw new RuntimeException(e);
         }
 
-        request.getRequestDispatcher("evaluators_display.jsp").forward(request, response);
+        request.getRequestDispatcher("display_evaluators.jsp").forward(request, response);
 
     }
 
@@ -56,7 +56,7 @@ public class EvaluatorDisplayServlet extends HttpServlet {
             throw new RuntimeException(e);
         }
 
-        request.getRequestDispatcher("evaluators_display.jsp").forward(request, response);
+        request.getRequestDispatcher("display_evaluators.jsp").forward(request, response);
     }
 
 

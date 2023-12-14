@@ -93,7 +93,7 @@
     </style>
 </head>
 <body>
-<a href="/display_evaluators">Display Evaluators</a>
+<a href="${pageContext.request.contextPath}/display_evaluators">Display Evaluators</a>
 <div class="containerTabelle">
 
         <%
