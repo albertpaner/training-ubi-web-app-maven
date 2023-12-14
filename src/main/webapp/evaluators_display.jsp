@@ -1,6 +1,5 @@
-<%@ page import="model.dto.EvalCountDto" %>
+
 <%@ page import="java.util.List" %>
-<%@ page import="java.util.ArrayList" %>
 <%@ page import="model.dto.UtenteDto" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
          pageEncoding="ISO-8859-1" %>
@@ -94,7 +93,7 @@
     </style>
 </head>
 <body>
-<form action="distribute_evaluators" method="get">
+<form action="display_evaluators" method="get">
     <input type="submit" value="preview"/>
 </form>
 <div class="containerTabelle">
