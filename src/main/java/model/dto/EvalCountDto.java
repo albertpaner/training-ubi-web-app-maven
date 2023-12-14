@@ -1,78 +1,77 @@
 package model.dto;
 
 /**
- * This class represents a Data Transfer Object for the evaluator identity
- * and the number of users valued by the evaluator.
- * */
+ * This class represents a Data Transfer Object for the evaluator identity and
+ * the number of users valued by the evaluator.
+ */
 public class EvalCountDto {
 
     private int utenteId;
-	private String nome;
+    private String nome;
     private String cognome;
     private String email;
     private int count;
 
-	public EvalCountDto() {
-		this.count = 0;
-	}
+    public EvalCountDto() {
+	this.count = 0;
+    }
 
-	public EvalCountDto(int utenteId, String nome, String cognome, String email, int count) {
-		this.utenteId = utenteId;
-		this.nome = nome;
-		this.cognome = cognome;
-		this.email = email;
-		this.count = count;
-	}
+    public EvalCountDto(int utenteId, String nome, String cognome, String email, int count) {
+	this.utenteId = utenteId;
+	this.nome = nome;
+	this.cognome = cognome;
+	this.email = email;
+	this.count = count;
+    }
 
-	public int getUtenteId() {
-		return utenteId;
-	}
+    public int getUtenteId() {
+	return utenteId;
+    }
 
-	public void setUtenteId(int utenteId) {
-		this.utenteId = utenteId;
-	}
+    public void setUtenteId(int utenteId) {
+	this.utenteId = utenteId;
+    }
 
-	public String getNome() {
-		return nome;
-	}
+    public String getNome() {
+	return nome;
+    }
 
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
+    public void setNome(String nome) {
+	this.nome = nome;
+    }
 
-	public String getCognome() {
-		return cognome;
-	}
+    public String getCognome() {
+	return cognome;
+    }
 
-	public void setCognome(String cognome) {
-		this.cognome = cognome;
-	}
+    public void setCognome(String cognome) {
+	this.cognome = cognome;
+    }
 
-	public String getEmail() {
-		return email;
-	}
+    public String getEmail() {
+	return email;
+    }
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    public void setEmail(String email) {
+	this.email = email;
+    }
 
-	public int getCount() {
-		return count;
-	}
+    public int getCount() {
+	return count;
+    }
 
-	public void setCount(int count) {
-		this.count = count;
-	}
+    public void setCount(int count) {
+	this.count = count;
+    }
 
-	/**
-	 * This method gives a string representation of the EvalCountDTO object
-	 *
-	 * @return a string representation of the DTO object
-	 * */
-	@Override
-	public String toString() {
-		return " [ evaluator=" + nome + cognome + ", email=" + email
-				+ ", number_users_valued=" + count + "]";
-	}
-    
+    /**
+     * This method gives a string representation of the EvalCountDTO object
+     *
+     * @return a string representation of the DTO object
+     */
+    @Override
+    public String toString() {
+	return " [ evaluator=" + nome + cognome + ", email=" + email + ", number_users_valued=" + count + "]";
+    }
+
 }
