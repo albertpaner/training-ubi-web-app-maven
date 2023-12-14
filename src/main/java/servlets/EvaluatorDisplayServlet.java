@@ -36,7 +36,7 @@ public class EvaluatorDisplayServlet extends HttpServlet {
             throw new RuntimeException(e);
         }
 
-        request.getRequestDispatcher("display_evaluators.jsp").forward(request, response);
+        request.getRequestDispatcher("evaluators_display.jsp").forward(request, response);
 
     }
 
@@ -51,11 +51,12 @@ public class EvaluatorDisplayServlet extends HttpServlet {
             evaluatorDisplayService = new EvaluatorDisplayService(new UtenteDao());
             evaluatorDisplayService.removeFromEvaluator(Integer.parseInt(request.getParameter("evaluatorID")), request.getParameter("mansione"));
             request.setAttribute("evaluatorsNew", evaluatorDisplayService.getValutatori());
+            request.setAttribute("waitingUsers", evaluatorDisplayService.getWaitingUsers());
         } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
 
-        request.getRequestDispatcher("display_evaluators.jsp").forward(request, response);
+        request.getRequestDispatcher("evaluators_display.jsp").forward(request, response);
     }
 
 

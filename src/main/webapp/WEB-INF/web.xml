@@ -43,7 +43,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>EvaluatorDisplayServlet</servlet-name>
-        <url-pattern>/evaluator_display</url-pattern>
+        <url-pattern>/display_evaluators</url-pattern>
     </servlet-mapping>
 
     <welcome-file-list>

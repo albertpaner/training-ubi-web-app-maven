@@ -5,7 +5,6 @@ import model.dto.UtenteDto;
 import services.UtenteService;
 
 import java.sql.SQLException;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -30,23 +29,27 @@ public class EvaluatorDisplayService extends UtenteService {
                 .filter(user -> user.getMansione().equals(mansione))
                 .forEach(user -> {
                     try {
-                        utenteDao.update(
-                                Arrays.asList(
-                                        user.getEmail(),
-                                        user.getPassword(),
-                                        user.getRuoloId(),
-                                        user.getNome(),
-                                        user.getCognome(),
-                                        999,
-                                        user.getDataNascita(),
-                                        user.getUtenteId(),
-                                        true,
-                                        user.getMansione()
-                                )
+                        utenteDao.updateMod(
+                                user.getEmail(),
+                                user.getPassword(),
+                                user.getRuoloId(),
+                                user.getNome(),
+                                user.getCognome(),
+                                999,
+                                true,
+                                user.getMansione(),
+                                user.getUtenteId()
                         );
                     } catch (SQLException | ClassNotFoundException e) {
                         e.printStackTrace();
                     }
                 });
+    }
+
+    public List<UtenteDto> getWaitingUsers() throws SQLException, ClassNotFoundException {
+        return utenteDao.findAll().stream()
+                .filter(user -> user.getInSospeso())
+                .map(user -> new UtenteDto(user.getUtenteId(), user.getEmail(), user.getNome(), user.getCognome()))
+                .collect(Collectors.toList());
     }
 }
