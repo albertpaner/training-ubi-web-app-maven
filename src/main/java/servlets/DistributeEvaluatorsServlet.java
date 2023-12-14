@@ -72,7 +72,7 @@ public class DistributeEvaluatorsServlet extends HttpServlet {
      * Handles the HTTP POST method for rearranging evaluators.
      * This method is called when the servlet receives a POST request.
      * It fetches all evaluators and their corresponding users from the database.
-     * It then calls the {@link services.user.UtenteEvaluationService#equilibrateValutatori(HashMap, int)}.
+     * It then calls the {@link services.user.UtenteEvaluationService#distributeValutatori(HashMap, int)}.
      * It fetches the evaluators and their corresponding users from the database again and the waiting list.
      * This method is triggered when a button is pressed on the front-end.
      *
@@ -94,7 +94,7 @@ public class DistributeEvaluatorsServlet extends HttpServlet {
         try {
             UtenteEvaluationService utenteEvaluationService = new UtenteEvaluationService(new UtenteDao());
             evaluators = utenteEvaluationService.getEvaluatorsOccupiedFree(soglia);
-            res = utenteEvaluationService.equilibrateValutatori(evaluators, soglia);
+            res = utenteEvaluationService.distributeValutatori(evaluators, soglia);
             evaluators = utenteEvaluationService.getEvaluatorsOccupiedFree(soglia);
             waitingList = utenteEvaluationService.getWaitingList();
         } catch (ClassNotFoundException | SQLException e) {

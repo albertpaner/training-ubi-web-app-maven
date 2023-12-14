@@ -29,7 +29,7 @@ public class App {
         System.out.println("waiting list: " + utenteEvaluationService.getWaitingList());
 
         System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++");
-        utenteEvaluationService.equilibrateValutatori(evaluators, soglia);
+        utenteEvaluationService.distributeValutatori(evaluators, soglia);
         System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++");
 
         evaluators = utenteEvaluationService.getEvaluatorsOccupiedFree(soglia);
