@@ -1,4 +1,3 @@
-
 <%@ page import="java.util.List" %>
 <%@ page import="model.dto.UtenteDto" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
@@ -145,6 +144,37 @@
         </form>
     </div>
 
+        <%
+    List<UtenteDto> suspendedUsers = (List<UtenteDto>) request.getAttribute("suspendedUsers");
+
+    if (suspendedUsers != null) {
+%>
+    <table>
+        <tr style="background-color: #c0f9ff">
+            <th>Nome</th>
+            <th>Cognome</th>
+            <th>Email</th>
+        </tr>
+
+        <%
+            for (UtenteDto user : suspendedUsers) {
+        %>
+        <tr style="" class="rigaTabellaOccupati">
+
+            <td><%= user.getFirstName() %>
+            </td>
+            <td><%= user.getLastName() %>
+            </td>
+            <td><%= user.getUserEmail() %>
+            </td>
+        </tr>
+        <%
+            }
+        %>
+    </table>
+        <%
+    }
+%>
 
 </body>
 </html>

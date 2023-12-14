@@ -48,10 +48,12 @@ public class EvaluatorDisplayServlet extends HttpServlet {
         EvaluatorDisplayService evaluatorDisplayService;
 
         try {
+
             evaluatorDisplayService = new EvaluatorDisplayService(new UtenteDao());
             evaluatorDisplayService.removeFromEvaluator(Integer.parseInt(request.getParameter("evaluatorID")), request.getParameter("mansione"));
             request.setAttribute("evaluatorsNew", evaluatorDisplayService.getValutatori());
-            request.setAttribute("waitingUsers", evaluatorDisplayService.getWaitingUsers());
+            request.setAttribute("suspendedUsers", evaluatorDisplayService.getSuspendedUsers());
+
         } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }

@@ -46,9 +46,9 @@ public class EvaluatorDisplayService extends UtenteService {
                 });
     }
 
-    public List<UtenteDto> getWaitingUsers() throws SQLException, ClassNotFoundException {
+    public List<UtenteDto> getSuspendedUsers() throws SQLException, ClassNotFoundException {
         return utenteDao.findAll().stream()
-                .filter(user -> user.getInSospeso())
+                .filter(user -> user.getValutatoreId()==999)
                 .map(user -> new UtenteDto(user.getUtenteId(), user.getEmail(), user.getNome(), user.getCognome()))
                 .collect(Collectors.toList());
     }
