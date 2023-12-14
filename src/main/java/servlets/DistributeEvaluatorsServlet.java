@@ -52,7 +52,7 @@ public class DistributeEvaluatorsServlet extends HttpServlet {
         try {
             ListService listService = new ListService(new UtenteDao());
             evaluators = listService.getEvaluatorsOccupiedFree(soglia);
-            sogliaAvg = listService.getAverageValued();
+            //sogliaAvg = listService.getAverageValued();
             waitingList = listService.getWaitingList();
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
@@ -96,7 +96,7 @@ public class DistributeEvaluatorsServlet extends HttpServlet {
         try {
             ListService listService = new ListService(new UtenteDao());
             evaluators = listService.getEvaluatorsOccupiedFree(soglia);
-            res = listService.distributeValutatori(evaluators, soglia);
+            res = listService.equilibrateValutatori(evaluators, soglia);
             evaluators = listService.getEvaluatorsOccupiedFree(soglia);
             waitingList = listService.getWaitingList();
         } catch (ClassNotFoundException | SQLException e) {

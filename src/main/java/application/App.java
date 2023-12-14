@@ -31,7 +31,7 @@ public class App {
         System.out.println("waiting list: " + listService.getWaitingList());
 
         System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++");
-        listService.distributeValutatori(evaluators, soglia);
+        listService.equilibrateValutatori(evaluators, soglia);
         System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++");
 
         evaluators = listService.getEvaluatorsOccupiedFree(soglia);
