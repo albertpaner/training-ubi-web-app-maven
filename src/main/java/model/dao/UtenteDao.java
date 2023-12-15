@@ -41,10 +41,10 @@ public class UtenteDao implements Crud<UtenteBean> {
             utenteBean.setNome(rs.getString("nome"));
             utenteBean.setCognome(rs.getString("cognome"));
             utenteBean.setValutatoreId(rs.getInt("valutatore_id"));
-            utenteBean.setDataNascita(rs.getDate("data_nascita"));
+            /*utenteBean.setDataNascita(rs.getDate("data_nascita"));
             utenteBean.setDataUltAcc(rs.getDate("data_ult_acc"));
             utenteBean.setDataUltMod(rs.getDate("data_ult_mod"));
-            utenteBean.setDataCreaz(rs.getDate("data_creaz"));
+            utenteBean.setDataCreaz(rs.getDate("data_creaz"));*/
             utenteBean.setFlgDel(rs.getBoolean("flg_del"));
             utenteBean.setInSospeso(rs.getBoolean("in_sospeso"));
 
