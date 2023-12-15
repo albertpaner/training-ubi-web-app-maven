@@ -44,7 +44,6 @@ public class UtenteDao {
             utenteBean.setDataCreaz(rs.getDate("data_creaz"));
             utenteBean.setFlgDel(rs.getBoolean("flg_del"));
 
-            // ci popoliamo tutto l'oggetto
             listaUtenti.add(utenteBean);
         }
 
@@ -158,16 +157,6 @@ public class UtenteDao {
         return rs;
     }
 
-
-    public int updateLastAccess(int utenteId) throws SQLException, ClassNotFoundException {
-
-        this.conn = DBConnection.createConnection();
-        Statement stmt = conn.createStatement();
-        int rs = stmt.executeUpdate("UPDATE utente SET data_ult_acc = NOW() WHERE utente_id = " + utenteId);
-
-        conn.close();
-        return rs;
-    }
 
 
 }

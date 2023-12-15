@@ -29,7 +29,6 @@ public class UtenteLoginService extends UtenteService {
     public String loginUtente(String email, String password)
             throws ClassNotFoundException, SQLException, LoginUserNotFoundException, LoginPasswordFailedException {
 
-        // UtenteDao utenteDao = new UtenteDao();
         Optional<UtenteBean> maybeUtente = findByEmail(email);
 
         if (!maybeUtente.isPresent()) {
@@ -43,7 +42,6 @@ public class UtenteLoginService extends UtenteService {
         if (utenteFound.getPassword().equals(hashedPassword)) {
             String jwt = EncryptJwt.issueToken(utenteFound.getUtenteId());
             // logUser.debug("Issued token: " + jwt + " for user: " + email);
-            int lastAccessDate = utenteDao.updateLastAccess(utenteFound.getUtenteId());
             // logUser.debug("Logged in user: " + nome + " " + cognome + " with email: " )
             return jwt;
         } else {
