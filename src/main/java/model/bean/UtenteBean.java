@@ -10,18 +10,77 @@ public class UtenteBean extends Bean{
     private String nome;
     private String cognome;
     private int valutatoreId;
-	private Date dataNascita; 
+	private String mansione;
+	private String jobLevel;
+	private String societàOperativa;
+	private Date dataNascita;
+
+	private boolean inSospeso;
     private Date dataUltAcc;
     private Date dataUltMod;
     private Date dataCreaz;
-	private boolean inSospeso;
 
-	private String mansione;
+	private boolean flgDel;
 
 	public UtenteBean() {
 		super();
 	}
 
+	public int getUtenteId() {
+		return utenteId;
+	}
+
+	public void setUtenteId(int utenteId) {
+		this.utenteId = utenteId;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public int getRuoloId() {
+		return ruoloId;
+	}
+
+	public void setRuoloId(int ruoloId) {
+		this.ruoloId = ruoloId;
+	}
+
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	public String getCognome() {
+		return cognome;
+	}
+
+	public void setCognome(String cognome) {
+		this.cognome = cognome;
+	}
+
+	public int getValutatoreId() {
+		return valutatoreId;
+	}
+
+	public void setValutatoreId(int valutatoreId) {
+		this.valutatoreId = valutatoreId;
+	}
 
 	public String getMansione() {
 		return mansione;
@@ -31,7 +90,31 @@ public class UtenteBean extends Bean{
 		this.mansione = mansione;
 	}
 
-	public boolean getInSospeso() {
+	public String getJobLevel() {
+		return jobLevel;
+	}
+
+	public void setJobLevel(String jobLevel) {
+		this.jobLevel = jobLevel;
+	}
+
+	public String getSocietàOperativa() {
+		return societàOperativa;
+	}
+
+	public void setSocietàOperativa(String societàOperativa) {
+		this.societàOperativa = societàOperativa;
+	}
+
+	public Date getDataNascita() {
+		return dataNascita;
+	}
+
+	public void setDataNascita(Date dataNascita) {
+		this.dataNascita = dataNascita;
+	}
+
+	public boolean isInSospeso() {
 		return inSospeso;
 	}
 
@@ -39,72 +122,8 @@ public class UtenteBean extends Bean{
 		this.inSospeso = inSospeso;
 	}
 
-	public int getUtenteId() {
-		return this.utenteId;
-	}
-
-	public void setUtenteId(int utenteId) {
-		this.utenteId = utenteId;
-	}
-
-	public String getEmail() {
-		return this.email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public String getPassword() {
-		return this.password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	public int getRuoloId() {
-		return this.ruoloId;
-	}
-
-	public void setRuoloId(int ruoloId) {
-		this.ruoloId = ruoloId;
-	}
-
-	public String getNome() {
-		return this.nome;
-	}
-
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
-
-	public String getCognome() {
-		return this.cognome;
-	}
-
-	public void setCognome(String cognome) {
-		this.cognome = cognome;
-	}
-
-	public int getValutatoreId() {
-		return this.valutatoreId;
-	}
-
-	public void setValutatoreId(int valutatoreId) {
-		this.valutatoreId = valutatoreId;
-	}
-
-	public Date getDataNascita() {
-		return this.dataNascita;
-	}
-
-	public void setDataNascita(Date dataNascita) {
-		this.dataNascita = dataNascita;
-	}
-
 	public Date getDataUltAcc() {
-		return this.dataUltAcc;
+		return dataUltAcc;
 	}
 
 	public void setDataUltAcc(Date dataUltAcc) {
@@ -112,7 +131,7 @@ public class UtenteBean extends Bean{
 	}
 
 	public Date getDataUltMod() {
-		return this.dataUltMod;
+		return dataUltMod;
 	}
 
 	public void setDataUltMod(Date dataUltMod) {
@@ -120,14 +139,21 @@ public class UtenteBean extends Bean{
 	}
 
 	public Date getDataCreaz() {
-		return this.dataCreaz;
+		return dataCreaz;
 	}
 
 	public void setDataCreaz(Date dataCreaz) {
 		this.dataCreaz = dataCreaz;
 	}
 
+	public boolean isFlgDel() {
+		return flgDel;
+	}
 
+	@Override
+	public void setFlgDel(boolean flgDel) {
+		this.flgDel = flgDel;
+	}
 
 	/**
 	 * This method is used to print the utente BEAN in a readable way
@@ -137,25 +163,25 @@ public class UtenteBean extends Bean{
 	 * */
 	@Override
 	public String toString() {
-		return "{" +
-			" utente_id='" + getUtenteId() + "'" +
-			", email='" + getEmail() + "'" +
-			", password='" + getPassword() + "'" +
-			", ruolo_id='" + getRuoloId() + "'" +
-			", nome='" + getNome() + "'" +
-			", cognome='" + getCognome() + "'" +
-			", valutatore_id='" + getValutatoreId() + "'" +
-			", data_nascita='" + getDataNascita() + "'" +
-			", data_ultimo_accesso='" + getDataUltAcc() + "'" +
-			", data_ultima_modifica='" + getDataUltMod() + "'" +
-			", data_creazione='" + getDataCreaz() + "'" +
-			", flg_delete='" + getFlgDel() + "'" +
-			", in_sospeso='" + getInSospeso() + "'" +
-			", mansione='" + getMansione() + "'" +
-			"}";
+		return "UtenteBean{" +
+				"utente Id=" + utenteId +
+				", email='" + email + '\'' +
+				", password='" + password + '\'' +
+				", ruolo Id=" + ruoloId +
+				", nome='" + nome + '\'' +
+				", cognome='" + cognome + '\'' +
+				", valutatore Id=" + valutatoreId +
+				", mansione='" + mansione + '\'' +
+				", job Level='" + jobLevel + '\'' +
+				", società Operativa='" + societàOperativa + '\'' +
+				", data Nascita=" + dataNascita +
+				", in Sospeso=" + inSospeso +
+				", data Ult Acc=" + dataUltAcc +
+				", data Ult Mod=" + dataUltMod +
+				", data Creaz=" + dataCreaz +
+				", flg Del=" + flgDel +
+				'}';
 	}
-
-
 
 	/*
 	public static int compareByNameThenSurname(UtenteBean lhs, UtenteBean rhs) {
