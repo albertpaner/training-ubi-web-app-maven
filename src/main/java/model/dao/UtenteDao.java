@@ -7,7 +7,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UtenteDao implements Crud<UtenteBean> {
+public class UtenteDao {
 
     private Connection conn;
 
@@ -18,13 +18,6 @@ public class UtenteDao implements Crud<UtenteBean> {
     public UtenteDao() throws SQLException, ClassNotFoundException {
     }
 
-    /**
-     * This method corresponds to READ operation on the database.
-     * It returns a list of all the users in the database.
-     *
-     * @return A list of all the users in the database.
-     * @throws SQLException If a database access error occurs or this method is called on a closed connection.
-     */
     public List<UtenteBean> findAll() throws SQLException, ClassNotFoundException {
 
         this.conn = DBConnection.createConnection();
@@ -41,13 +34,15 @@ public class UtenteDao implements Crud<UtenteBean> {
             utenteBean.setNome(rs.getString("nome"));
             utenteBean.setCognome(rs.getString("cognome"));
             utenteBean.setValutatoreId(rs.getInt("valutatore_id"));
-            //utenteBean.setDataNascita(rs.getDate("data_nascita"));
+            utenteBean.setMansione(rs.getString("mansione"));
+            utenteBean.setJobLevel(rs.getString("job_level"));
+            utenteBean.setSocietàOperativa(rs.getString("società_operativa"));
+            utenteBean.setDataNascita(rs.getDate("data_nascita"));
+            utenteBean.setInSospeso(rs.getBoolean("in_sospeso"));
             utenteBean.setDataUltAcc(rs.getDate("data_ult_acc"));
             utenteBean.setDataUltMod(rs.getDate("data_ult_mod"));
             utenteBean.setDataCreaz(rs.getDate("data_creaz"));
             utenteBean.setFlgDel(rs.getBoolean("flg_del"));
-            utenteBean.setInSospeso(rs.getBoolean("in_sospeso"));
-            utenteBean.setMansione(rs.getString("mansione"));
 
             // ci popoliamo tutto l'oggetto
             listaUtenti.add(utenteBean);
@@ -58,13 +53,7 @@ public class UtenteDao implements Crud<UtenteBean> {
 
     }
 
-    /**
-     * This method finds a user in the database by its ID.
-     *
-     * @param utenteId The ID of the user to be found.
-     * @return The user with the specified ID.
-     * @throws SQLException If a database access error occurs or this method is called on a closed connection.
-     */
+
     public UtenteBean findById(int utenteId) throws SQLException, ClassNotFoundException {
 
         this.conn = DBConnection.createConnection();
@@ -80,12 +69,15 @@ public class UtenteDao implements Crud<UtenteBean> {
             utenteBean.setNome(rs.getString("nome"));
             utenteBean.setCognome(rs.getString("cognome"));
             utenteBean.setValutatoreId(rs.getInt("valutatore_id"));
+            utenteBean.setMansione(rs.getString("mansione"));
+            utenteBean.setJobLevel(rs.getString("job_level"));
+            utenteBean.setSocietàOperativa(rs.getString("società_operativa"));
             utenteBean.setDataNascita(rs.getDate("data_nascita"));
+            utenteBean.setInSospeso(rs.getBoolean("in_sospeso"));
             utenteBean.setDataUltAcc(rs.getDate("data_ult_acc"));
             utenteBean.setDataUltMod(rs.getDate("data_ult_mod"));
             utenteBean.setDataCreaz(rs.getDate("data_creaz"));
             utenteBean.setFlgDel(rs.getBoolean("flg_del"));
-            utenteBean.setInSospeso(rs.getBoolean("in_sospeso"));
         }
 
         conn.close();
@@ -93,77 +85,58 @@ public class UtenteDao implements Crud<UtenteBean> {
 
     }
 
-    /**
-     * this method corresponds to CREATE operation on the database.
-     * It creates a new user in the database.
-     *
-     * @param userParams A list of parameters to be inserted in the database.
-     * @return The number of rows affected by the insert operation.
-     * @throws SQLException If a database access error occurs or this method is called on a closed connection.
-     */
-    public int create(List<Object> userParams) throws SQLException, ClassNotFoundException {
+    public int create(String email, String password, int ruoloId, String nome, String cognome, int valutatoreId, String mansione, String jobLevel, String societàOperativa, Date dataNascita) throws SQLException, ClassNotFoundException {
 
         this.conn = DBConnection.createConnection();
+        String sql = "INSERT INTO utente (email, password, ruolo_id, nome, cognome, valutatore_id, mansione, job_level, società_operativa, data_nascita) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        PreparedStatement pstmt = conn.prepareStatement(sql);
+        pstmt.setString(1, email);
+        pstmt.setString(2, password);
+        pstmt.setInt(3, ruoloId);
+        pstmt.setString(4, nome);
+        pstmt.setString(5, cognome);
+        pstmt.setInt(6, valutatoreId);
+        pstmt.setString(7, mansione);
+        pstmt.setString(8, jobLevel);
+        pstmt.setString(9, societàOperativa);
+        pstmt.setDate(10, dataNascita);
 
-        String email = (String) userParams.get(0);
-        String password = (String) userParams.get(1);
-        int ruoloId = (Integer) userParams.get(2);
-        String nome = (String) userParams.get(3);
-        String cognome = (String) userParams.get(4);
-        int valutatoreId = (Integer) userParams.get(5);
-        Date dataNascita = (Date) userParams.get(6);
-        Boolean inSospeso = (Boolean) userParams.get(7);
-
-        Statement stmt = conn.createStatement();
-        int rs = stmt.executeUpdate(
-                "INSERT INTO utente (email, password, ruolo_id, nome, cognome, valutatore_id, data_nascita) VALUES ('"
-                        + email + "', '" + password + "', " + ruoloId + ", '" + nome + "', '" + cognome + "', "
-                        + valutatoreId + ", '" + dataNascita + "' inSospeso)");
+        int rowsAffected = pstmt.executeUpdate();
 
         conn.close();
-        return rs;
+        return rowsAffected;
     }
 
-    /**
-     * this method corresponds to UPDATE operation on the database.
-     * It updates an existing user in the database.
-     *
-     * @param userParams A list of user parameters to be updated in the database.
-     * @return The number of rows affected by the update operation.
-     * @throws SQLException If a database access error occurs or this method is called on a closed connection.
-     */
-    public int update(List<Object> userParams) throws SQLException, ClassNotFoundException {
+    public int update(int utenteId, String email, String password, int ruoloId, String nome, String cognome, int valutatoreId, String mansione, String jobLevel, String societàOperativa, Date dataNascita, boolean inSospeso, Date dataUltAcc, Date dataUltMod, Date dataCreaz, boolean flgDel) throws SQLException, ClassNotFoundException {
 
         this.conn = DBConnection.createConnection();
-        String email = (String) userParams.get(0);
-        String password = (String) userParams.get(1);
-        int ruoloId = (Integer) userParams.get(2);
-        String nome = (String) userParams.get(3);
-        String cognome = (String) userParams.get(4);
-        int valutatoreId = (Integer) userParams.get(5);
-        Date dataNascita = (Date) userParams.get(6);
-        Boolean inSospeso = (Boolean) userParams.get(7);
-        String mansione = (String) userParams.get(8);
-        int utenteId = (Integer) userParams.get(9);
+        String sql = "UPDATE utente SET email = ?, password = ?, ruolo_id = ?, nome = ?, cognome = ?, valutatore_id = ?, mansione = ?, job_level = ?, società_operativa = ?, data_nascita = ?, in_sospeso = ?, data_ult_acc = ?, data_ult_mod = ?, data_creaz = ?, flg_del = ? WHERE utente_id = ?";
+        PreparedStatement pstmt = conn.prepareStatement(sql);
 
-        Statement stmt = conn.createStatement();
-        int rs = stmt.executeUpdate("UPDATE utente SET email = '" + email + "', password = '" + password
-                + "', ruolo_id = " + ruoloId + ", nome = '" + nome + "', cognome = '" + cognome
-                + "', valutatore_id = " + valutatoreId + ", data_nascita = '" + dataNascita + "', in_sospeso = " + (inSospeso ? 1 : 0)
-                + ", mansione = '" + mansione + "' WHERE utente_id = " + utenteId);
+        pstmt.setString(1, email);
+        pstmt.setString(2, password);
+        pstmt.setInt(3, ruoloId);
+        pstmt.setString(4, nome);
+        pstmt.setString(5, cognome);
+        pstmt.setInt(6, valutatoreId);
+        pstmt.setString(7, mansione);
+        pstmt.setString(8, jobLevel);
+        pstmt.setString(9, societàOperativa);
+        pstmt.setDate(10, dataNascita);
+        pstmt.setBoolean(11, inSospeso);
+        pstmt.setDate(12, dataUltAcc);
+        pstmt.setDate(13, dataUltMod);
+        pstmt.setDate(14, dataCreaz);
+        pstmt.setBoolean(15, flgDel);
+        pstmt.setInt(16, utenteId);
+
+        int rowsAffected = pstmt.executeUpdate();
 
         conn.close();
-        return rs;
+        return rowsAffected;
     }
 
-    /**
-     * this method corresponds to DELETE operation on the database.
-     * It logically deletes an existing user in the database.
-     *
-     * @param utenteId The ID of the user to be deleted.
-     * @return The number of rows affected by the update operation.
-     * @throws SQLException If a database access error occurs or this method is called on a closed connection.
-     */
+
     public int logicalDelete(int utenteId) throws SQLException, ClassNotFoundException {
 
         this.conn = DBConnection.createConnection();
@@ -174,14 +147,7 @@ public class UtenteDao implements Crud<UtenteBean> {
         return rs;
     }
 
-    /**
-     * this method corresponds to DELETE operation on the database.
-     * It physically deletes an existing user in the database.
-     *
-     * @param utenteId The ID of the user to be deleted.
-     * @return The number of rows affected by the delete operation.
-     * @throws SQLException If a database access error occurs or this method is called on a closed connection.
-     */
+
     public int delete(int utenteId) throws SQLException, ClassNotFoundException {
 
         this.conn = DBConnection.createConnection();
@@ -192,14 +158,7 @@ public class UtenteDao implements Crud<UtenteBean> {
         return rs;
     }
 
-    /**
-     * This method updates the last access time of a user in the database.
-     * The last access time is set to the current time.
-     *
-     * @param utenteId The ID of the user whose last access time is to be updated.
-     * @return The number of rows affected by the update operation.
-     * @throws SQLException If a database access error occurs or this method is called on a closed connection.
-     */
+
     public int updateLastAccess(int utenteId) throws SQLException, ClassNotFoundException {
 
         this.conn = DBConnection.createConnection();
@@ -210,17 +169,5 @@ public class UtenteDao implements Crud<UtenteBean> {
         return rs;
     }
 
-    public int updateMod(String email, String password, int ruoloId, String nome, String cognome, int valutatoreId, Boolean inSospeso, String mansione, int utenteId) throws SQLException, ClassNotFoundException {
-
-        this.conn = DBConnection.createConnection();
-        Statement stmt = conn.createStatement();
-        int rs = stmt.executeUpdate("UPDATE utente SET email = '" + email + "', password = '" + password
-                + "', ruolo_id = " + ruoloId + ", nome = '" + nome + "', cognome = '" + cognome
-                + "', valutatore_id = " + valutatoreId + ", in_sospeso = " + (inSospeso ? 1 : 0)
-                + ", mansione = '" + mansione + "' WHERE utente_id = " + utenteId);
-
-        conn.close();
-        return rs;
-    }
 
 }

@@ -83,7 +83,7 @@ public class UtenteEvaluationService extends UtenteService {
         for (UtenteBean lord : lordsAndPeasants.keySet()) {
             EvalCountDto evaluatorDto = CountConverter.beanToDto(lord);
             int howManyPeasants = (int) lordsAndPeasants.get(lord).stream()
-                    .filter(user -> !user.getInSospeso())
+                    .filter(user -> !user.isInSospeso())
                     .count();
             evaluatorDto.setCount(howManyPeasants);
 
@@ -138,17 +138,24 @@ public class UtenteEvaluationService extends UtenteService {
         for (int i = utentiValutatiDa.size() - 1; (i >= soglia); i--) {
             UtenteBean utenteChange = utentiValutatiDa.remove(i);
 
-            utenteDao.update(Arrays.asList(
+            utenteDao.update(
+                    utenteChange.getUtenteId(),
                     utenteChange.getEmail(),
                     utenteChange.getPassword(),
                     utenteChange.getRuoloId(),
                     utenteChange.getNome(),
                     utenteChange.getCognome(),
                     evalMinCount.getUtenteId(),
+                    utenteChange.getMansione(),
+                    utenteChange.getJobLevel(),
+                    utenteChange.getSocietàOperativa(),
                     utenteChange.getDataNascita(),
-                    utenteChange.getUtenteId(),
-                    utenteChange.isInSospeso()
-            ));
+                    utenteChange.isInSospeso(),
+                    utenteChange.getDataUltAcc(),
+                    utenteChange.getDataUltMod(),
+                    utenteChange.getDataCreaz(),
+                    utenteChange.isFlgDel()
+            );
 
             evalMinCount.setCount(evalMinCount.getCount() + 1);
 
@@ -220,17 +227,24 @@ public class UtenteEvaluationService extends UtenteService {
         for (int i = allUsersWaiting.size() - 1; (i >= 0); i--) {
             UtenteBean utenteChange = allUsersWaiting.remove(i);
 
-            utenteDao.update(Arrays.asList(
+            utenteDao.update(
+                    utenteChange.getUtenteId(),
                     utenteChange.getEmail(),
                     utenteChange.getPassword(),
                     utenteChange.getRuoloId(),
                     utenteChange.getNome(),
                     utenteChange.getCognome(),
                     evalMinCount.getUtenteId(),
+                    utenteChange.getMansione(),
+                    utenteChange.getJobLevel(),
+                    utenteChange.getSocietàOperativa(),
                     utenteChange.getDataNascita(),
-                    utenteChange.getUtenteId(),
-                    false
-            ));
+                    false,
+                    utenteChange.getDataUltAcc(),
+                    utenteChange.getDataUltMod(),
+                    utenteChange.getDataCreaz(),
+                    utenteChange.isFlgDel()
+            );
             evalMinCount.setCount(evalMinCount.getCount() + 1);
             waitingNoMore++;
 
@@ -264,17 +278,24 @@ public class UtenteEvaluationService extends UtenteService {
             for (int i = utentiValutatiDa.size() - 1; (i >= soglia); i--) {
                 UtenteBean utenteChange = utentiValutatiDa.remove(i);
 
-                utenteDao.update(Arrays.asList(
+                utenteDao.update(
+                        utenteChange.getUtenteId(),
                         utenteChange.getEmail(),
                         utenteChange.getPassword(),
                         utenteChange.getRuoloId(),
                         utenteChange.getNome(),
                         utenteChange.getCognome(),
                         utenteChange.getValutatoreId(),
+                        utenteChange.getMansione(),
+                        utenteChange.getJobLevel(),
+                        utenteChange.getSocietàOperativa(),
                         utenteChange.getDataNascita(),
-                        utenteChange.getUtenteId(),
-                        true
-                ));
+                        true,
+                        utenteChange.getDataUltAcc(),
+                        utenteChange.getDataUltMod(),
+                        utenteChange.getDataCreaz(),
+                        utenteChange.isFlgDel()
+                );
                 totalUsersWaiting++;
             }
         }

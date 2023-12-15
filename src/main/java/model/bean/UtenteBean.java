@@ -14,12 +14,10 @@ public class UtenteBean extends Bean{
 	private String jobLevel;
 	private String societàOperativa;
 	private Date dataNascita;
-
 	private boolean inSospeso;
     private Date dataUltAcc;
     private Date dataUltMod;
     private Date dataCreaz;
-
 	private boolean flgDel;
 
 	public UtenteBean() {
