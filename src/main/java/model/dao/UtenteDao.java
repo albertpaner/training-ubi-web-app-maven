@@ -41,12 +41,13 @@ public class UtenteDao implements Crud<UtenteBean> {
             utenteBean.setNome(rs.getString("nome"));
             utenteBean.setCognome(rs.getString("cognome"));
             utenteBean.setValutatoreId(rs.getInt("valutatore_id"));
-            utenteBean.setDataNascita(rs.getDate("data_nascita"));
+            //utenteBean.setDataNascita(rs.getDate("data_nascita"));
             utenteBean.setDataUltAcc(rs.getDate("data_ult_acc"));
             utenteBean.setDataUltMod(rs.getDate("data_ult_mod"));
             utenteBean.setDataCreaz(rs.getDate("data_creaz"));
             utenteBean.setFlgDel(rs.getBoolean("flg_del"));
             utenteBean.setInSospeso(rs.getBoolean("in_sospeso"));
+            utenteBean.setMansione(rs.getString("mansione"));
 
             // ci popoliamo tutto l'oggetto
             listaUtenti.add(utenteBean);
@@ -141,14 +142,15 @@ public class UtenteDao implements Crud<UtenteBean> {
         String cognome = (String) userParams.get(4);
         int valutatoreId = (Integer) userParams.get(5);
         Date dataNascita = (Date) userParams.get(6);
-        int utenteId = (Integer) userParams.get(7);
-        Boolean inSospeso = (Boolean) userParams.get(8);
+        Boolean inSospeso = (Boolean) userParams.get(7);
+        String mansione = (String) userParams.get(8);
+        int utenteId = (Integer) userParams.get(9);
 
         Statement stmt = conn.createStatement();
         int rs = stmt.executeUpdate("UPDATE utente SET email = '" + email + "', password = '" + password
                 + "', ruolo_id = " + ruoloId + ", nome = '" + nome + "', cognome = '" + cognome
-                + "', valutatore_id = " + valutatoreId + ", data_nascita = '" + dataNascita + "', in_sospeso = " + (inSospeso ? 1 : 0) +
-                " WHERE utente_id = " + utenteId);
+                + "', valutatore_id = " + valutatoreId + ", data_nascita = '" + dataNascita + "', in_sospeso = " + (inSospeso ? 1 : 0)
+                + ", mansione = '" + mansione + "' WHERE utente_id = " + utenteId);
 
         conn.close();
         return rs;
@@ -208,5 +210,17 @@ public class UtenteDao implements Crud<UtenteBean> {
         return rs;
     }
 
+    public int updateMod(String email, String password, int ruoloId, String nome, String cognome, int valutatoreId, Boolean inSospeso, String mansione, int utenteId) throws SQLException, ClassNotFoundException {
+
+        this.conn = DBConnection.createConnection();
+        Statement stmt = conn.createStatement();
+        int rs = stmt.executeUpdate("UPDATE utente SET email = '" + email + "', password = '" + password
+                + "', ruolo_id = " + ruoloId + ", nome = '" + nome + "', cognome = '" + cognome
+                + "', valutatore_id = " + valutatoreId + ", in_sospeso = " + (inSospeso ? 1 : 0)
+                + ", mansione = '" + mansione + "' WHERE utente_id = " + utenteId);
+
+        conn.close();
+        return rs;
+    }
 
 }

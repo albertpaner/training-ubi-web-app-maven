@@ -11,6 +11,14 @@ public class UtenteDto {
     private String lastName;
     private int userEvaluatorId;
 
+
+    public UtenteDto(int utenteId, String email, String nome, String cognome) {
+        this.userId = utenteId;
+        this.userEmail = email;
+        this.firstName = nome;
+        this.lastName = cognome;
+    }
+
     public int getUserId() {
         return userId;
     }

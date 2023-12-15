@@ -159,30 +159,6 @@ public class UtenteEvaluationService extends UtenteService {
             }
         }
 
-        for (int i = utentiValutatiDa.size() - 1; (i >= soglia) && !valutatoriDisponibiliDto.isEmpty(); i--) {
-            UtenteBean utenteChange = utentiValutatiDa.remove(i);
-
-            utenteDao.update(Arrays.asList(
-                    utenteChange.getEmail(),
-                    utenteChange.getPassword(),
-                    utenteChange.getRuoloId(),
-                    utenteChange.getNome(),
-                    utenteChange.getCognome(),
-                    evalMinCount.getUtenteId(),
-                    utenteChange.getDataNascita(),
-                    utenteChange.getUtenteId(),
-                    utenteChange.getInSospeso()
-            ));
-
-            evalMinCount.setCount(evalMinCount.getCount() + 1);
-
-            shuffledUsers++;
-
-            if (evalMinCount.getCount() == soglia) {
-                break;
-            }
-
-        }
 
         return shuffledUsers;
     }
@@ -197,16 +173,20 @@ public class UtenteEvaluationService extends UtenteService {
      * @param soglia      The threshold value for the number of users.
      * @return The number of users who were reassigned.
      */
-    public int equilibrateValutatori(HashMap<String, List<EvalCountDto>> usersToShow, int soglia) throws SQLException, ClassNotFoundException {
-        int totalShuffledUsers = 0;
-        int shuffledUsers;
+    public int distributeValutatori(HashMap<String, List<EvalCountDto>> usersToShow, int soglia) throws SQLException, ClassNotFoundException {
 
-        oldWaitingList(usersToShow, soglia);
+        int totalShuffledUsers;
+
+        List<UtenteBean> allUsersWaiting = new ArrayList<>(utenteDao.findAll()
+                .stream()
+                .filter(user -> user.getRuoloId() == 2)
+                .filter(UtenteBean::getInSospeso)
+                .filter(user -> !user.getFlgDel())
+                .collect(Collectors.toList()));
 
         do {
-            shuffledUsers = rearrangeValutatori(usersToShow, soglia);
-            totalShuffledUsers += shuffledUsers;
-        } while (shuffledUsers > 0);
+            totalShuffledUsers = oldWaitingList(allUsersWaiting, usersToShow, soglia) + rearrangeValutatori(usersToShow, soglia);
+        } while (totalShuffledUsers > 0);
 
         HashMap<String, List<EvalCountDto>> newUsersToShow = getEvaluatorsOccupiedFree(soglia);
         newWaitingList(newUsersToShow, soglia);
@@ -217,11 +197,12 @@ public class UtenteEvaluationService extends UtenteService {
     /**
      * This method reassigns users from the waiting list to free evaluators based on a threshold value.
      *
-     * @param usersToShow A HashMap where the keys are "valutatori_occupati" and "valutatori_disponibili", and the values are lists of EvalCountDto objects.
-     * @param soglia      The threshold value for the number of users.
+     * @param allUsersWaiting
+     * @param usersToShow     A HashMap where the keys are "valutatori_occupati" and "valutatori_disponibili", and the values are lists of EvalCountDto objects.
+     * @param soglia          The threshold value for the number of users.
      * @return The number of users who were reassigned.
      */
-    private int oldWaitingList(HashMap<String, List<EvalCountDto>> usersToShow, int soglia) throws SQLException, ClassNotFoundException {
+    private int oldWaitingList(List<UtenteBean> allUsersWaiting, HashMap<String, List<EvalCountDto>> usersToShow, int soglia) throws SQLException, ClassNotFoundException {
 
         int waitingNoMore = 0;
 
@@ -233,12 +214,6 @@ public class UtenteEvaluationService extends UtenteService {
         valutatoriDisponibiliDto.sort(Comparator.comparing(EvalCountDto::getCount));
         EvalCountDto evalMinCount = valutatoriDisponibiliDto.get(0);
 
-        List<UtenteBean> allUsersWaiting = new ArrayList<>(utenteDao.findAll()
-                .stream()
-                .filter(user -> user.getRuoloId() == 2)
-                .filter(UtenteBean::getInSospeso)
-                .filter(user -> !user.getFlgDel())
-                .collect(Collectors.toList()));
 
         allUsersWaiting.sort(Comparator.comparing(UtenteBean::getDataNascita));
 
@@ -267,30 +242,13 @@ public class UtenteEvaluationService extends UtenteService {
         return waitingNoMore;
     }
 
-
     /**
-     * This method returns a list of users who are in the waiting list.
-     *
-     * @return A list of users who are in the waiting list.
-     * @throws SQLException           If a database access error occurs.
-     * @throws ClassNotFoundException If the JDBC Driver class is not found.
-     */
-    public List<UtenteDto> getWaitingList() throws SQLException, ClassNotFoundException {
-        List<UtenteBean> allUsers = utenteDao.findAll();
-
-        return allUsers.stream()
-                .filter(UtenteBean::getInSospeso)
-                .filter(user -> !user.getFlgDel())
-                .map(UtenteConverter::toDto).collect(Collectors.toList());
-    }
-
-    /**
-     *   This method creates a new waiting list of users who need to be valued by an evaluator.
+     * This method creates a new waiting list of users who need to be valued by an evaluator.
      *
      * @param usersToShow A HashMap where the keys are "valutatori_occupati" and "valutatori_disponibili", and the values are lists of EvalCountDto objects.
      * @param soglia      The threshold value for the number of users.
      * @return The number of users who were reassigned.
-     * */
+     */
     private int newWaitingList(HashMap<String, List<EvalCountDto>> usersToShow, int soglia) throws SQLException, ClassNotFoundException {
         int totalUsersWaiting = 0;
 
@@ -322,6 +280,35 @@ public class UtenteEvaluationService extends UtenteService {
         }
 
         return totalUsersWaiting;
+    }
+
+    /**
+     * This method returns a list of users who are in the waiting list.
+     *
+     * @return A list of users who are in the waiting list.
+     * @throws SQLException           If a database access error occurs.
+     * @throws ClassNotFoundException If the JDBC Driver class is not found.
+     */
+    public List<UtenteDto> getWaitingList() throws SQLException, ClassNotFoundException {
+        List<UtenteBean> allUsers = utenteDao.findAll();
+
+        return allUsers.stream()
+                .filter(UtenteBean::getInSospeso)
+                .filter(user -> !user.getFlgDel())
+                .map(UtenteConverter::toDto).collect(Collectors.toList());
+    }
+
+    public int getAverageValued() throws SQLException, ClassNotFoundException {
+
+        HashMap<UtenteBean, List<UtenteBean>> lordsAndPeasants = fetchEvaluatorsAndValued();
+
+        long numberOfPeasants = lordsAndPeasants.values().stream()
+                .flatMap(Collection::stream)
+                .count();
+
+        long numberOfLords = lordsAndPeasants.keySet().stream().count();
+
+        return Math.round(numberOfPeasants / numberOfLords);
     }
 
 

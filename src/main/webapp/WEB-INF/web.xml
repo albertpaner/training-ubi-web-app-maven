@@ -37,6 +37,15 @@
         <url-pattern>/distribute_evaluators</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>EvaluatorDisplayServlet</servlet-name>
+        <servlet-class>servlets.EvaluatorDisplayServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>EvaluatorDisplayServlet</servlet-name>
+        <url-pattern>/display_evaluators</url-pattern>
+    </servlet-mapping>
+
     <welcome-file-list>
         <welcome-file>index.html</welcome-file>
     </welcome-file-list>

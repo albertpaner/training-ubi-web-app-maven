@@ -12,7 +12,7 @@ import java.util.List;
 public class UtenteRegisterService extends UtenteService {
 
     public UtenteRegisterService(UtenteDao utenteDao) throws SQLException, ClassNotFoundException {
-        super();
+        super(utenteDao);
     }
 
     /**

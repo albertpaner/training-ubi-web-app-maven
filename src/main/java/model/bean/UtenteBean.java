@@ -16,8 +16,19 @@ public class UtenteBean extends Bean{
     private Date dataCreaz;
 	private boolean inSospeso;
 
+	private String mansione;
+
 	public UtenteBean() {
 		super();
+	}
+
+
+	public String getMansione() {
+		return mansione;
+	}
+
+	public void setMansione(String mansione) {
+		this.mansione = mansione;
 	}
 
 	public boolean getInSospeso() {
@@ -140,9 +151,19 @@ public class UtenteBean extends Bean{
 			", data_creazione='" + getDataCreaz() + "'" +
 			", flg_delete='" + getFlgDel() + "'" +
 			", in_sospeso='" + getInSospeso() + "'" +
+			", mansione='" + getMansione() + "'" +
 			"}";
 	}
 
 
+
+	/*
+	public static int compareByNameThenSurname(UtenteBean lhs, UtenteBean rhs) {
+		if (lhs.getNome().equals(rhs.getNome())) {
+			return (lhs.getCognome().compareTo(rhs.getCognome()));
+		} else {
+			return (lhs.getNome().compareTo(rhs.getNome()));
+		}
+	}*/
 
 }
