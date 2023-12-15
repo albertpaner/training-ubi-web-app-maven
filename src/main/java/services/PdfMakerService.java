@@ -36,11 +36,14 @@ public class PdfMakerService extends UtenteService{
 	static final int SEZ_LENGTH = 500;
 	static final int SEZ_TITLE_SIZE = 20;
 	static final int TEXT_SIZE = 12;
+	
+	static final double MOLT_SPACE_TITLE = 2.5;
+	static final double MOLT_SPACE_STAND = 0.8;
 	int height = 750;
 	
 	
-	public int textLine() {
-		return height-=50;
+	public int textLine(double molt) {
+		return height-=20*molt;
 	}
 	
 	public void CreatePdf (String email) throws IOException, ClassNotFoundException, SQLException {
@@ -72,7 +75,7 @@ public class PdfMakerService extends UtenteService{
 		contentStream.showText(year+" - Valutazione Professionale (a) per "+utenteFound.getNome()+" "+utenteFound.getCognome());
 		contentStream.endText();
 		//riquadro verde di sezione
-        contentStream.addRect(NEW_LINE, textLine(), SEZ_LENGTH, SEZ_HEIGTH);
+        contentStream.addRect(NEW_LINE, (textLine(MOLT_SPACE_TITLE)), SEZ_LENGTH, SEZ_HEIGTH);
 		contentStream.setNonStrokingColor(DARK_GREEN);
         contentStream.fill();
 		contentStream.setFont(PDType1Font.TIMES_ROMAN, SEZ_TITLE_SIZE);
@@ -85,10 +88,17 @@ public class PdfMakerService extends UtenteService{
 		contentStream.setFont(PDType1Font.TIMES_ROMAN, 12);
 		contentStream.beginText();
 		contentStream.setNonStrokingColor(Color.BLACK);
-		contentStream.newLineAtOffset(NEW_LINE, textLine());  
+		contentStream.newLineAtOffset(NEW_LINE, textLine(MOLT_SPACE_STAND));  
 		contentStream.showText("Nome: "+utenteFound.getNome().toUpperCase());
-		contentStream.newLineAtOffset(NEW_LINE, textLine());  
-		contentStream.showText("Nome: "+utenteFound.getNome().toUpperCase());
+		contentStream.endText();
+		contentStream.beginText();
+		contentStream.newLineAtOffset(NEW_LINE, textLine(MOLT_SPACE_STAND));  
+		contentStream.showText("Cognome: "+utenteFound.getCognome().toUpperCase());
+		contentStream.endText();
+		contentStream.beginText();
+		contentStream.newLineAtOffset(NEW_LINE, textLine(MOLT_SPACE_STAND));
+		contentStream.showText("Responsabile: "+utenteDao.findById(utenteFound.getValutatoreId()).getNome().toUpperCase()+" "
+								+ ""+utenteDao.findById(utenteFound.getValutatoreId()).getCognome().toUpperCase());
 		contentStream.endText();
         
 		contentStream.close();
