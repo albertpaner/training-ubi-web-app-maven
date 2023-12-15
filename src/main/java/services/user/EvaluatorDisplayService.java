@@ -29,16 +29,23 @@ public class EvaluatorDisplayService extends UtenteService {
                 .filter(user -> user.getMansione().equals(mansione))
                 .forEach(user -> {
                     try {
-                        utenteDao.updateMod(
+                        utenteDao.update(
+                                user.getUtenteId(),
                                 user.getEmail(),
                                 user.getPassword(),
                                 user.getRuoloId(),
                                 user.getNome(),
                                 user.getCognome(),
                                 999,
-                                true,
                                 user.getMansione(),
-                                user.getUtenteId()
+                                user.getJobLevel(),
+                                user.getSocietàOperativa(),
+                                user.getDataNascita(),
+                                true,
+                                user.getDataUltAcc(),
+                                user.getDataUltMod(),
+                                user.getDataCreaz(),
+                                user.getFlgDel()
                         );
                     } catch (SQLException | ClassNotFoundException e) {
                         e.printStackTrace();
