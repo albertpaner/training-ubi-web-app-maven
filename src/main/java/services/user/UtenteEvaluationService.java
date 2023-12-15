@@ -147,7 +147,7 @@ public class UtenteEvaluationService extends UtenteService {
                     evalMinCount.getUtenteId(),
                     utenteChange.getDataNascita(),
                     utenteChange.getUtenteId(),
-                    utenteChange.getInSospeso()
+                    utenteChange.isInSospeso()
             ));
 
             evalMinCount.setCount(evalMinCount.getCount() + 1);
@@ -180,7 +180,7 @@ public class UtenteEvaluationService extends UtenteService {
         List<UtenteBean> allUsersWaiting = new ArrayList<>(utenteDao.findAll()
                 .stream()
                 .filter(user -> user.getRuoloId() == 2)
-                .filter(UtenteBean::getInSospeso)
+                .filter(UtenteBean::isInSospeso)
                 .filter(user -> !user.getFlgDel())
                 .collect(Collectors.toList()));
 
@@ -293,7 +293,7 @@ public class UtenteEvaluationService extends UtenteService {
         List<UtenteBean> allUsers = utenteDao.findAll();
 
         return allUsers.stream()
-                .filter(UtenteBean::getInSospeso)
+                .filter(UtenteBean::isInSospeso)
                 .filter(user -> !user.getFlgDel())
                 .map(UtenteConverter::toDto).collect(Collectors.toList());
     }
