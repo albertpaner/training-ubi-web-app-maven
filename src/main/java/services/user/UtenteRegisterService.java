@@ -21,6 +21,8 @@ public class UtenteRegisterService extends UtenteService {
             throw new RegistrationFailedException("User already exists with the email: " + email);
         }
 
+
+
         String hashedPassword = Hasher.hashPassword(password);
 
         int createdUser = utenteDao.create(email, hashedPassword, ruoloId, nome, cognome, valutatoreId, mansione, jobLevel, societàOperativa, dataNascita);
