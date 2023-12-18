@@ -221,7 +221,6 @@ public class UtenteEvaluationService extends UtenteService {
         valutatoriDisponibiliDto.sort(Comparator.comparing(EvalCountDto::getCount));
         EvalCountDto evalMinCount = valutatoriDisponibiliDto.get(0);
 
-
         allUsersWaiting.sort(Comparator.comparing(UtenteBean::getDataNascita));
 
         for (int i = allUsersWaiting.size() - 1; (i >= 0); i--) {
@@ -324,12 +323,12 @@ public class UtenteEvaluationService extends UtenteService {
         HashMap<UtenteBean, List<UtenteBean>> lordsAndPeasants = fetchEvaluatorsAndValued();
 
         long numberOfPeasants = lordsAndPeasants.values().stream()
-                .flatMap(Collection::stream)
-                .count();
+                .mapToLong(Collection::size)
+                .sum();
 
-        long numberOfLords = lordsAndPeasants.keySet().stream().count();
+        long numberOfLords = lordsAndPeasants.keySet().size();
 
-        return Math.round(numberOfPeasants / numberOfLords);
+        return Math.round((float) numberOfPeasants / numberOfLords);
     }
 
 

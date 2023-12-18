@@ -2,6 +2,7 @@ package services;
 
 import model.bean.UtenteBean;
 import model.dao.UtenteDao;
+import org.apache.log4j.Logger;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -12,6 +13,7 @@ public abstract class UtenteService {
 
     // static Logger logUser = LogManager.getLogger("user");
     protected UtenteDao utenteDao;
+    protected static final Logger logger = Logger.getLogger(UtenteService.class);
 
     public UtenteService() {
     }

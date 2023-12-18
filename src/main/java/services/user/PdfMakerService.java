@@ -56,7 +56,7 @@ public class PdfMakerService extends UtenteService {
         SezioneBean sezBean = listSezBean.get(0);
 
         Document document = new Document();
-        PdfWriter.getInstance(document, new FileOutputStream("SchedaValutazione.pdf"));
+        PdfWriter.getInstance(document, new FileOutputStream("SchedaValutazione"+utenteFound.getUtenteId()+".pdf"));
         document.open();
 
         //intestazione
