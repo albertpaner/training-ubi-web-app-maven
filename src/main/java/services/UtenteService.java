@@ -12,13 +12,13 @@ import java.util.Optional;
 public abstract class UtenteService {
 
     // static Logger logUser = LogManager.getLogger("user");
-    protected UtenteDao utenteDao;
+    protected UtenteDao utenteDao = UtenteDao.getInstance();
     protected static final Logger logger = Logger.getLogger(UtenteService.class);
 
-    public UtenteService() {
+    public UtenteService() throws SQLException, ClassNotFoundException {
     }
 
-    public UtenteService(UtenteDao utenteDao) {
+    public UtenteService(UtenteDao utenteDao) throws SQLException, ClassNotFoundException {
         this.utenteDao = utenteDao;
     }
 
