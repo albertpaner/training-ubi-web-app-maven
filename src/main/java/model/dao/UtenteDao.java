@@ -9,11 +9,20 @@ import java.util.List;
 
 public class UtenteDao {
 
+    private static UtenteDao instance;
     private Connection conn;
-
-    public UtenteDao(Connection conn) {
+    
+    private UtenteDao(Connection conn) {
         this.conn = conn;
     }
+
+    public static UtenteDao getInstance() throws SQLException, ClassNotFoundException {
+        if (instance == null) {
+            instance = new UtenteDao();
+        }
+        return instance;
+    }
+
 
     public UtenteDao() throws SQLException, ClassNotFoundException {
     }
