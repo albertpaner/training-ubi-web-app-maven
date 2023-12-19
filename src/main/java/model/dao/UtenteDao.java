@@ -10,7 +10,7 @@ import java.util.List;
 public class UtenteDao {
 
     private static UtenteDao instance;
-    private Connection conn;
+    private static Connection conn;
 
 
     public static UtenteDao getInstance() throws SQLException, ClassNotFoundException {
@@ -26,7 +26,7 @@ public class UtenteDao {
 
     public List<UtenteBean> findAll() throws SQLException, ClassNotFoundException {
 
-        this.conn = DBConnection.createConnection();
+        conn = DBConnection.createConnection();
         List<UtenteBean> listaUtenti = new ArrayList<>();
 
         Statement stmt = conn.createStatement();
@@ -61,7 +61,7 @@ public class UtenteDao {
 
     public UtenteBean findById(int utenteId) throws SQLException, ClassNotFoundException {
 
-        this.conn = DBConnection.createConnection();
+        conn = DBConnection.createConnection();
         UtenteBean utenteBean = new UtenteBean();
 
         Statement stmt = conn.createStatement();
@@ -92,7 +92,7 @@ public class UtenteDao {
 
     public int create(String email, String password, int ruoloId, String nome, String cognome, int valutatoreId, String mansione, String jobLevel, String societàOperativa, Date dataNascita) throws SQLException, ClassNotFoundException {
 
-        this.conn = DBConnection.createConnection();
+        conn = DBConnection.createConnection();
         String sql = "INSERT INTO utente (email, password, ruolo_id, nome, cognome, valutatore_id, mansione, job_level, società_operativa, data_nascita) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         PreparedStatement pstmt = conn.prepareStatement(sql);
         pstmt.setString(1, email);
@@ -114,7 +114,7 @@ public class UtenteDao {
 
     public int update(int utenteId, String email, String password, int ruoloId, String nome, String cognome, int valutatoreId, String mansione, String jobLevel, String societàOperativa, Date dataNascita, boolean inSospeso, Date dataUltAcc, Date dataUltMod, Date dataCreaz, boolean flgDel) throws SQLException, ClassNotFoundException {
 
-        this.conn = DBConnection.createConnection();
+        conn = DBConnection.createConnection();
         String sql = "UPDATE utente SET email = ?, password = ?, ruolo_id = ?, nome = ?, cognome = ?, valutatore_id = ?, mansione = ?, job_level = ?, società_operativa = ?, data_nascita = ?, in_sospeso = ?, data_ult_acc = ?, data_ult_mod = ?, data_creaz = ?, flg_del = ? WHERE utente_id = ?";
         PreparedStatement pstmt = conn.prepareStatement(sql);
 
@@ -144,7 +144,7 @@ public class UtenteDao {
 
     public int logicalDelete(int utenteId) throws SQLException, ClassNotFoundException {
 
-        this.conn = DBConnection.createConnection();
+        conn = DBConnection.createConnection();
         Statement stmt = conn.createStatement();
         int rs = stmt.executeUpdate("UPDATE utente SET flg_del = 1 WHERE utente_id = " + utenteId);
 
@@ -155,7 +155,7 @@ public class UtenteDao {
 
     public int delete(int utenteId) throws SQLException, ClassNotFoundException {
 
-        this.conn = DBConnection.createConnection();
+        conn = DBConnection.createConnection();
         Statement stmt = conn.createStatement();
         int rs = stmt.executeUpdate("DELETE FROM utente WHERE utente_id = " + utenteId);
 
