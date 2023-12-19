@@ -20,7 +20,7 @@ import java.util.Optional;
 
 public class PdfMakerService extends UtenteService {
 
-    public PdfMakerService(UtenteDao uDao) {
+    public PdfMakerService(UtenteDao uDao) throws SQLException, ClassNotFoundException {
         super(uDao);
     }
 

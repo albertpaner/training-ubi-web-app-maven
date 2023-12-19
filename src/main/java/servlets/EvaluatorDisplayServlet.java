@@ -28,8 +28,7 @@ public class EvaluatorDisplayServlet extends HttpServlet {
 
         EvaluatorDisplayService evaluatorDisplayService;
         try {
-
-            evaluatorDisplayService = new EvaluatorDisplayService(new UtenteDao());
+            evaluatorDisplayService = new EvaluatorDisplayService(UtenteDao.getInstance());
             request.setAttribute("evaluatorsOld", evaluatorDisplayService.getValutatori());
 
         } catch (SQLException | ClassNotFoundException e) {
@@ -48,8 +47,7 @@ public class EvaluatorDisplayServlet extends HttpServlet {
         EvaluatorDisplayService evaluatorDisplayService;
 
         try {
-
-            evaluatorDisplayService = new EvaluatorDisplayService(new UtenteDao());
+            evaluatorDisplayService = new EvaluatorDisplayService(UtenteDao.getInstance());
             evaluatorDisplayService.removeFromEvaluator(Integer.parseInt(request.getParameter("evaluatorID")), request.getParameter("mansione"));
             request.setAttribute("evaluatorsNew", evaluatorDisplayService.getValutatori());
             request.setAttribute("suspendedUsers", evaluatorDisplayService.getSuspendedUsers());

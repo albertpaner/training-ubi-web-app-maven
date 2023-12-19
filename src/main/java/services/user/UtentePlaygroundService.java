@@ -11,7 +11,7 @@ import java.util.List;
 
 public class UtentePlaygroundService extends UtenteService {
 
-    public UtentePlaygroundService(UtenteDao utenteDao) {
+    public UtentePlaygroundService(UtenteDao utenteDao) throws SQLException, ClassNotFoundException {
         super(utenteDao);
     }
 

@@ -46,7 +46,7 @@ public class LoginServlet extends HttpServlet {
         String password = request.getParameter("password");
 
         try {
-            UtenteLoginService utenteLoginService = new UtenteLoginService(new UtenteDao());
+            UtenteLoginService utenteLoginService = new UtenteLoginService(UtenteDao.getInstance());
             String jwt = utenteLoginService.loginUtente(email, password);
 
             HttpSession session = request.getSession();

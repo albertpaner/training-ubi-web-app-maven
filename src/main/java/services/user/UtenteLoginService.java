@@ -13,7 +13,7 @@ import java.util.Optional;
 
 public class UtenteLoginService extends UtenteService {
 
-    public UtenteLoginService(UtenteDao utenteDao) {
+    public UtenteLoginService(UtenteDao utenteDao) throws SQLException, ClassNotFoundException {
         super(utenteDao);
     }
 

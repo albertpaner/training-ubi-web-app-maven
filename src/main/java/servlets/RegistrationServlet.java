@@ -1,7 +1,6 @@
 package servlets;
 
 import exceptions.RegistrationFailedException;
-import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -26,7 +25,7 @@ public class RegistrationServlet extends HttpServlet {
 
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws IOException {
 
         String email = request.getParameter("email");
         String password = request.getParameter("password");
@@ -42,7 +41,7 @@ public class RegistrationServlet extends HttpServlet {
 
         HttpSession session = request.getSession();
         try {
-            UtenteRegisterService utenteRegisterService = new UtenteRegisterService(new UtenteDao());
+            UtenteRegisterService utenteRegisterService = new UtenteRegisterService(UtenteDao.getInstance());
 
             if (utenteRegisterService.registrazioneUtente(email, password, ruoloId, nome, cognome, valutatoreId, mansione, jobLevel, societàOperativa, dataNascita)>0) {
                 session.setAttribute("successMsg", "Registered Successfully");

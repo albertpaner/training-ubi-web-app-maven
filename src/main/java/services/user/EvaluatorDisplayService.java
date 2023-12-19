@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 
 public class EvaluatorDisplayService extends UtenteService {
 
-    public EvaluatorDisplayService(UtenteDao utenteDao) {
+    public EvaluatorDisplayService(UtenteDao utenteDao) throws SQLException, ClassNotFoundException {
         super(utenteDao);
     }
 

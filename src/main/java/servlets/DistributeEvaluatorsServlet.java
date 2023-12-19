@@ -50,7 +50,7 @@ public class DistributeEvaluatorsServlet extends HttpServlet {
         int sogliaAvg = 0;
 
         try {
-            UtenteEvaluationService utenteEvaluationService = new UtenteEvaluationService(new UtenteDao());
+            UtenteEvaluationService utenteEvaluationService = new UtenteEvaluationService(UtenteDao.getInstance());
             evaluators = utenteEvaluationService.getEvaluatorsOccupiedFree(soglia);
             sogliaAvg = utenteEvaluationService.getAverageValued();
             waitingList = utenteEvaluationService.getWaitingList();
@@ -95,7 +95,7 @@ public class DistributeEvaluatorsServlet extends HttpServlet {
 
         int res = 0;
         try {
-            UtenteEvaluationService utenteEvaluationService = new UtenteEvaluationService(new UtenteDao());
+            UtenteEvaluationService utenteEvaluationService = new UtenteEvaluationService(UtenteDao.getInstance());
             evaluators = utenteEvaluationService.getEvaluatorsOccupiedFree(soglia);
             res = utenteEvaluationService.distributeValutatori(evaluators, soglia);
             evaluators = utenteEvaluationService.getEvaluatorsOccupiedFree(soglia);

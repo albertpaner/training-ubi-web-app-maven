@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 
 public class UtenteEvaluationService extends UtenteService {
 
-    public UtenteEvaluationService(UtenteDao utenteDao) {
+    public UtenteEvaluationService(UtenteDao utenteDao) throws SQLException, ClassNotFoundException {
         super(utenteDao);
     }
 
